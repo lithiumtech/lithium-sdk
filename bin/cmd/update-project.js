@@ -12,6 +12,6 @@ module.exports = {
       /* console.log(error); */
     });
   },
-  help: 'Updates the li-sdk project.  Use this when updating a project to a new version of the SDK.' +
-    '\nRun this command from the root directory of an li-sdk project.'
+  help: 'Updates the lithium-sdk project.  Use this when updating a project to a new version of the SDK.' +
+    '\nRun this command from the root directory of an lithium-sdk project.'
 };

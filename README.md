@@ -1,4 +1,4 @@
-## Community SDK
+## Lithium-Klout SDK
 
 ### Lithium Developer Community Area
 

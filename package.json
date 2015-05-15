@@ -1,6 +1,7 @@
 {
-  "name": "li-sdk",
+  "name": "lithium-sdk",
   "version": "0.0.1",
+  "author": "nikhilmodak",
   "bin": {
     "li": "bin/li.js"
   },
@@ -75,8 +76,31 @@
   "engines": {
     "node": ">=0.8.0"
   },
+  "keywords": [
+    "lithium",
+    "klout",
+    "community",
+    "sdk"
+  ],
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lithiumtech/li-sdk.git"
-  }
+    "url": "https://github.com/lithiumtech/lithium-sdk.git"
+  },
+  "description": "### Lithium Developer Community Area",
+  "bugs": {
+    "url": "https://github.com/lithiumtech/lithium-sdk/issues"
+  },
+  "homepage": "https://github.com/lithiumtech/lithium-sdk",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "Apache 2.0"
 }
