@@ -1,0 +1,23 @@
+{
+  "name": "<%= name %>",
+  "version": "0.0.1",
+  "ignore": [
+    "build",
+    "test",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    ".jscs.json",
+    ".jshintrc",
+    "Gruntfile.js",
+    "gulpfile.js",
+    "bower.json",
+    "karma-e2e.conf.js",
+    "karma.conf.js",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "angular-li": "git@github.com:lithiumtech/angular-li.git#<%= branch %>"
+  }
+}

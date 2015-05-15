@@ -1,0 +1,15 @@
+/**
+  * This is a template to create a server configuration file. To use in your application,
+  * copy and rename this file in this location to 'server.conf.json'.
+  *
+  * serverUrl: (required) URL of the LIA server you are working on (starting with http).
+  * pluginToken: (optional) Token that will be used to upload your plugin asset to the above server.
+  * pluginUploadProtocol: (optional) protocal if
+  *
+  * NOTE: Remove this comment before executing gulp <task> scripts.
+  **/
+{
+  "serverUrl": "lia server (port optional)",
+  "pluginToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "pluginUploadProtocol": "http or https"
+}
