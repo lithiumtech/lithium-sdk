@@ -26,13 +26,17 @@ module.exports = function (req) {
     try {
       req(ext + '/gulp/includes')(gulp, gutil);
     } catch (err) {
-      extensions[ext].forEach(function (task) {
-        gulp.task(task, [], function () {
-          console.log('Requires extension: ' + ext);
-          console.log('run \'npm install ' + ext + ' --save\'');
-          throw err;
+      if (err.code !== 'MODULE_NOT_FOUND') {
+        throw err;
+      } else {
+        extensions[ext].forEach(function (task) {
+          gulp.task(task, [], function () {
+            console.log('Requires extension: ' + ext);
+            console.log('run \'npm install ' + ext + ' --save\'');
+            throw err;
+          });
         });
-      });
+      }
     }
   });
 
