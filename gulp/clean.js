@@ -3,7 +3,7 @@
 var lazyReq = require('lazy-req')(require);
 var clean = lazyReq('gulp-rimraf');
 
-module.exports = function (gulp) {
+module.exports = function (gulp, gutil) {
   gulp.task('clean-tmp', function () {
     return gulp.src('.tmp').pipe(clean()({ force: true }));
   });
