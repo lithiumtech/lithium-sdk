@@ -1,6 +1,6 @@
 This directory contains layout files.  
 
-Layout files are xml files that end with the `.layout.xml` file extenstion.  
+Layout files are xml files that end with the `.layout.xml` file extension.
 
 Layout files contain information about the rows and columns that exist on a given page.  Every Quilt you define (in `res/quilts`) must specify 1 (and only 1) layout to determine what columns it can add compoents to.  
 
