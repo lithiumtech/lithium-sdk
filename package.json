@@ -65,7 +65,7 @@
     "rewire": "^2.1.2",
     "semver": "^4.1.0",
     "shelljs": "^0.3.0",
-    "spawn-series": "0.2.2",
+    "spawn-series": "0.2.3",
     "stringmap": "^0.2.2",
     "through2": "0.6.2",
     "urllib": "^2.3.4",
