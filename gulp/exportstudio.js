@@ -9,10 +9,10 @@ module.exports = function (gulp, gutil) {
 
 	function exportPlugin(stream, pluginPointAnswers) {
 		if (!pluginExport) {
-        	pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
+        	pluginExport = require('../lib/studio-plugin-export.js')(gulp, gutil);
       	}
       	
-      	pluginExport.exportPlugin(pluginPointAnswers);
+      	pluginExport.exportPlugin(false, gutil.env['verbose'], pluginPointAnswers);
 	}
 
 	function pluginPoint(pointName) {
@@ -21,7 +21,7 @@ module.exports = function (gulp, gutil) {
 		};
 	}
 
-	gulp.task('plugin-export', ['clean'], function () {
+	gulp.task('studio-plugin-export', ['clean'], function () {
     	var stream = through().obj();
     	if (gutil.env['force']) {
       		exportPlugin(stream);
@@ -76,5 +76,5 @@ module.exports = function (gulp, gutil) {
     	return stream;
   	});
 
-	gulp.task('export', ['plugin-export']);
+	gulp.task('exportstudio', ['studio-plugin-export']);
 };

@@ -13,5 +13,5 @@ module.exports = {
     });
   },
   help: 'Updates the lithium-sdk project.  Use this when updating a project to a new version of the SDK.' +
-    '\nRun this command from the root directory of an lithium-sdk project.'
+    '\nRun this command from the root directory of a lithium-sdk project.'
 };

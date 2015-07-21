@@ -24,7 +24,8 @@ module.exports = function (req) {
   require('./sandbox.js')(gulp, gutil);
   require('./generate.js')(gulp, gutil);
   require('./project.js')(gulp, gutil);
-  require('./export.js')(gulp, gutil);
+  require('./exportstudio.js')(gulp, gutil);
+  require('./clearstudio.js')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {
