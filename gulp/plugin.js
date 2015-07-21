@@ -12,7 +12,15 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var scripts, text, plugin, pluginUpload, sandboxApi;
+  var scripts, text, plugin, pluginUpload, pluginServer, sandboxApi;
+
+  function getPluginServer() {
+    if (!pluginServer) {
+      pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
+    }
+
+    return pluginServer;
+  }
 
   gulp.task('plugin-init', ['clean'], function (cb) {
     scripts = require('../lib/scripts.js')(gulp, gutil);
@@ -92,11 +100,12 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-upload', ['plugin-ready'], function () {
     var stream = through().obj();
-    if (gutil.env['force']) {
+    var server = getPluginServer().getServer();
+    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
       if (!pluginUpload) {
         pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
       }
-      pluginUpload.upload().pipe(stream);
+      pluginUpload.upload(server).pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginUpload',

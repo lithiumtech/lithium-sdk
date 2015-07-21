@@ -10,7 +10,14 @@ module.exports = {
   help: 'Prompts to export the studio plugin from the server.' +
     '\nRun this command from the root directory of a lithium-sdk project.' +
     gutil.colors.bold('\nOptions:') +
-    '\n--force: Skips the prompt and exports the studio plugin' +
-    '\n--verbose: if set, will log out each file that is exported from the Studio plugin' +
-    '\n--points: A comma-delimited set of 5 or less plugin points to include (in case you only want to export a sub-set of the studio plugin)'
+    '\n--force:   Skips the prompt and exports the studio plugin' +
+    '\n           You can also set the force property to true in server.conf.json to always force this.' +
+	'\n           Use --points flag or pluginPoints property in server.conf.json to specify up to five ' + 
+	'\n           plugin points to export if you do not want to export the entire plugin.' +
+    '\n--verbose: If set, will log out each file that is exported from the Studio plugin' +
+    '\n           You can also set the verbose property to true in server.conf.json to always do this.' +
+    '\n--points:  A comma-delimited set of 5 or less plugin points to include, in case' +
+    '\n           you only want to export a sub-set of the studio plugin)' +
+	'\n           You can also set the pluginPoints property in server.conf.json to always only export the' +
+    '\n           plugin points you specify.'
 };

@@ -5,14 +5,22 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 
 module.exports = function (gulp, gutil) {
-	var pluginExport, pluginPointChoices;
+	var pluginExport, pluginServer;
+
+  function getPluginServer() {
+    if (!pluginServer) {
+      pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
+    }
+
+    return pluginServer;
+  }
 
   function clearPlugin(stream, pluginPointAnswers) {
     if (!pluginExport) {
       pluginExport = require('../lib/studio-plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin(true, gutil.env['verbose'], pluginPointAnswers);
+    pluginExport.exportPlugin(true, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
   }
 
   function clearPluginFinalCheck(stream, pluginPointAnswers) {
@@ -31,60 +39,44 @@ module.exports = function (gulp, gutil) {
     });
   }
 
-	function pluginPoint(pointName) {
-		return {
-			name: pointName
-		};
-	}
-
   gulp.task('plugin-clear', ['clean'], function () {
     var stream = through().obj();
-    inquirer().prompt({
-      name: 'pluginExport',
-      message: 'Would you like to clear the entire studio plugin?',
-      type: 'confirm'
-    }, function (answers) {
-      if (answers.pluginExport) {
-        clearPluginFinalCheck(stream);
-      } else {
-      	if (!pluginPointChoices) {
-      		pluginPointChoices = [
-      			pluginPoint('asset'),
-      			pluginPoint('badge_icon'),
-      			pluginPoint('component'),
-      			pluginPoint('endpoint'),
-      			pluginPoint('init'),
-      			pluginPoint('layout'),
-      			pluginPoint('macro'),
-      			pluginPoint('quilt'),
-      			pluginPoint('rank_icon'),
-      			pluginPoint('skin'),
-      			pluginPoint('text')
-      		];
-      	}
-      	inquirer().prompt({
-      		name: 'pluginPoints',
-      		message: 'What plugin points would you like to clear? (choose up to 5)',
-      		type: 'checkbox',
-      		choices: pluginPointChoices,
-      		validate: function(answer) {
-						if (answer.length < 1) {
-							return 'You must choose at least one plugin point.';
-						} else if (answer.length > 5) {
-							return 'You cannot choose more than 5 plugin points.';
-						}
+    var server = getPluginServer().getServer();
+    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+      clearPlugin(stream, getPluginServer().getPluginPoints());
+    } else {
+      inquirer().prompt({
+        name: 'pluginExport',
+        message: 'Would you like to clear the entire studio plugin?',
+        type: 'confirm'
+      }, function (answers) {
+        if (answers.pluginExport) {
+          clearPluginFinalCheck(stream, getPluginServer().getPluginPoints());
+        } else {
+        	inquirer().prompt({
+        		name: 'pluginPoints',
+        		message: 'What plugin points would you like to clear? (choose up to 5)',
+        		type: 'checkbox',
+        		choices: getPluginServer().getPluginPointChoices(),
+        		validate: function(answer) {
+  						if (answer.length < 1) {
+  							return 'You must choose at least one plugin point.';
+  						} else if (answer.length > 5) {
+  							return 'You cannot choose more than 5 plugin points.';
+  						}
 
-						return true;
-					},
-				}, function(answers) {
-          if (answers.pluginPoints) {
-            clearPluginFinalCheck(stream, answers);
-          } else {
-            stream.end();
-          }
-        });
-      }
-    });
+  						return true;
+  					},
+  				}, function(answers) {
+            if (answers.pluginPoints) {
+              clearPluginFinalCheck(stream, server, answers);
+            } else {
+              stream.end();
+            }
+          });
+        }
+      });
+    }
 
     return stream;
   });

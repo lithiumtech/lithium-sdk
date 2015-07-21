@@ -9,5 +9,5 @@ module.exports = {
   run: function () {
     require('../../lib/project.js')(gulp, gutil).scaffold();
   },
-  help: 'Creates an lithium-sdk project.'
+  help: 'Creates a lithium-sdk project.'
 };

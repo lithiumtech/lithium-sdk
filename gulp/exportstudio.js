@@ -5,26 +5,29 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 
 module.exports = function (gulp, gutil) {
-	var pluginExport, pluginPointChoices;
+	var pluginExport, pluginServer;
+
+	function getPluginServer() {
+	    if (!pluginServer) {
+	      pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
+	    }
+
+	    return pluginServer;
+	  }
 
 	function exportPlugin(stream, pluginPointAnswers) {
 		if (!pluginExport) {
         	pluginExport = require('../lib/studio-plugin-export.js')(gulp, gutil);
       	}
       	
-      	pluginExport.exportPlugin(false, gutil.env['verbose'], pluginPointAnswers);
-	}
-
-	function pluginPoint(pointName) {
-		return {
-			name: pointName
-		};
+      	pluginExport.exportPlugin(false, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
 	}
 
 	gulp.task('studio-plugin-export', ['clean'], function () {
     	var stream = through().obj();
-    	if (gutil.env['force']) {
-      		exportPlugin(stream);
+    	var server = getPluginServer().getServer();
+    	if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+      		exportPlugin(stream, getPluginServer().getPluginPoints());
     	} else {
       		inquirer().prompt({
         		name: 'pluginExport',
@@ -32,28 +35,13 @@ module.exports = function (gulp, gutil) {
         		type: 'confirm'
       		}, function (answers) {
         		if (answers.pluginExport) {
-          			exportPlugin(stream);
+          			exportPlugin(stream, getPluginServer().getPluginPoints());
         		} else {
-        			if (!pluginPointChoices) {
-        				pluginPointChoices = [
-        					pluginPoint('asset'),
-        					pluginPoint('badge_icon'),
-        					pluginPoint('component'),
-        					pluginPoint('endpoint'),
-        					pluginPoint('init'),
-        					pluginPoint('layout'),
-        					pluginPoint('macro'),
-        					pluginPoint('quilt'),
-        					pluginPoint('rank_icon'),
-        					pluginPoint('skin'),
-        					pluginPoint('text')
-        				];
-        			}
         			inquirer().prompt({
         				name: 'pluginPoints',
         				message: 'What plugin points would you like to download? (choose up to 5)',
         				type: 'checkbox',
-        				choices: pluginPointChoices,
+        				choices: getPluginServer().getPluginPointChoices(),
         				validate: function(answer) {
 							if (answer.length < 1) {
 								return 'You must choose at least one plugin point.';
