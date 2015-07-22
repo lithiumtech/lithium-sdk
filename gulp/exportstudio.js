@@ -8,19 +8,19 @@ module.exports = function (gulp, gutil) {
 	var pluginExport, pluginServer;
 
 	function getPluginServer() {
-	    if (!pluginServer) {
-	      pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
-	    }
+		if (!pluginServer) {
+			pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
+		}
 
-	    return pluginServer;
-	  }
+		return pluginServer;
+	}
 
 	function exportPlugin(stream, pluginPointAnswers) {
 		if (!pluginExport) {
-        	pluginExport = require('../lib/studio-plugin-export.js')(gulp, gutil);
+        	pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
       	}
       	
-      	pluginExport.exportPlugin(false, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
+      	pluginExport.exportPlugin('studio', false, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
 	}
 
 	gulp.task('studio-plugin-export', ['clean'], function () {

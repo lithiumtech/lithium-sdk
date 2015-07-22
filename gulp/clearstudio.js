@@ -17,10 +17,10 @@ module.exports = function (gulp, gutil) {
 
   function clearPlugin(stream, pluginPointAnswers) {
     if (!pluginExport) {
-      pluginExport = require('../lib/studio-plugin-export.js')(gulp, gutil);
+      pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin(true, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
+    pluginExport.exportPlugin('studio', true, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
   }
 
   function clearPluginFinalCheck(stream, pluginPointAnswers) {
