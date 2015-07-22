@@ -27,6 +27,7 @@
     "gulp-expect-file": "0.0.7",
     "gulp-extend": "0.2.0",
     "gulp-foreach": "0.0.1",
+    "gulp-if": "1.2.5",
     "gulp-jscs": "^1.6.0",
     "gulp-jshint": "1.9.2",
     "gulp-ng-annotate": "^0.5.2",

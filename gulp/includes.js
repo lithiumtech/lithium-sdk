@@ -16,8 +16,8 @@ module.exports = function (req) {
   var gulp = req('gulp');
   var startTime = process.hrtime();
   var prettyTime = require('pretty-hrtime');
-
   var gutil = require('../lib/env-util.js')(gulp);
+
   require('./clean.js')(gulp, gutil);
   require('./plugin.js')(gulp, gutil);
   require('./test.js')(gulp, gutil);
