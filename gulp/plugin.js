@@ -116,7 +116,7 @@ module.exports = function (gulp, gutil) {
           if (!pluginUpload) {
             pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
           }
-          pluginUpload.upload().pipe(stream);
+          pluginUpload.upload(server).pipe(stream);
         } else {
           stream.end();
         }

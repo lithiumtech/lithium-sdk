@@ -15,7 +15,7 @@ module.exports = function (gulp, gutil) {
 		return pluginServer;
 	}
 
-	function exportPlugin(stream, pluginPointAnswers) {
+	function exportPlugin(pluginPointAnswers) {
 		if (!pluginExport) {
         	pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
       	}
@@ -27,7 +27,7 @@ module.exports = function (gulp, gutil) {
     	var stream = through().obj();
     	var server = getPluginServer().getServer();
     	if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      		exportPlugin(stream, getPluginServer().getPluginPoints());
+      		exportPlugin(getPluginServer().getPluginPoints());
     	} else {
       		inquirer().prompt({
         		name: 'pluginExport',
@@ -35,7 +35,7 @@ module.exports = function (gulp, gutil) {
         		type: 'confirm'
       		}, function (answers) {
         		if (answers.pluginExport) {
-          			exportPlugin(stream, getPluginServer().getPluginPoints());
+          			exportPlugin(getPluginServer().getPluginPoints());
         		} else {
         			inquirer().prompt({
         				name: 'pluginPoints',
@@ -52,7 +52,7 @@ module.exports = function (gulp, gutil) {
 						},
 					}, function(answers) {
 						if (answers.pluginPoints) {
-							exportPlugin(stream, answers);
+							exportPlugin(answers);
 						} else {
 							stream.end();
 						}
