@@ -3,6 +3,8 @@
  */
 
 var gutil = require('gulp-util');
+var pluginPoints = require('../../lib/plugin-points');
+
 module.exports = {
   run: function () {
     require('../../lib/spawn-gulp')(['exportstudio'].concat(process.argv.splice(3)));
@@ -19,5 +21,6 @@ module.exports = {
     '\n--points:  A comma-delimited set of 5 or less plugin points to include, in case' +
     '\n           you only want to export a sub-set of the studio plugin)' +
 	'\n           You can also set the pluginPoints property in server.conf.json to always only export the' +
-    '\n           plugin points you specify.'
+    '\n           plugin points you specify. Plugin points you can specify are: ' +
+    '\n           ' + pluginPoints.getPoints().join()
 };
