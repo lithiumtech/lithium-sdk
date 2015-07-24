@@ -20,7 +20,12 @@ module.exports = function (gulp, gutil) {
       pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin('studio', true, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
+    pluginExport.exportPlugin(getPluginServer().getServer(), {
+        pluginType: 'studio',
+        doClear: true,
+        verboseMode: gutil.env['verbose'],
+        debugMode: gutil.env['debug']
+    }, pluginPointAnswers);
   }
 
   function clearPluginFinalCheck(pluginPointAnswers) {
@@ -66,7 +71,7 @@ module.exports = function (gulp, gutil) {
   						}
 
   						return true;
-  					},
+  					}
   				}, function(answers) {
                     if (answers.pluginPoints) {
                         clearPluginFinalCheck(answers);

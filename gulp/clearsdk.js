@@ -15,19 +15,24 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  function clearPlugin(stream) {
+  function clearPlugin() {
     if (!pluginExport) {
       pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin('sdk', true, gutil.env['verbose'], getPluginServer().getServer());
+    pluginExport.exportPlugin(getPluginServer().getServer(), {
+        pluginType: 'sdk',
+        doClear: true,
+        verboseMode: gutil.env['verbose'],
+        debugMode: gutil.env['debug']
+    });
   }
 
   gulp.task('sdk-clear', ['clean'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      clearPlugin(stream);
+      clearPlugin();
     } else {
       inquirer().prompt({
         name: 'pluginClear',
@@ -35,7 +40,7 @@ module.exports = function (gulp, gutil) {
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginClear) {
-          clearPlugin(stream);
+          clearPlugin();
         } else {
         	stream.end();
         }

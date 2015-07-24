@@ -26,6 +26,7 @@ module.exports = function (req) {
   require('./project.js')(gulp, gutil);
   require('./exportstudio.js')(gulp, gutil);
   require('./clearstudio.js')(gulp, gutil);
+  require('./exportsdk.js')(gulp, gutil);
   require('./clearsdk.js')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {

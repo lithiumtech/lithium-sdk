@@ -19,8 +19,16 @@ module.exports = function (gulp, gutil) {
 		if (!pluginExport) {
         	pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
       	}
-      	
-      	pluginExport.exportPlugin('studio', false, gutil.env['verbose'], getPluginServer().getServer(), pluginPointAnswers);
+
+        var server = getPluginServer().getServer();
+
+      	pluginExport.exportPlugin(server, {
+            pluginType: 'studio',
+            doClear: false,
+            verboseMode: gutil.env['verbose'],
+            debugMode: gutil.env['debug'],
+            sdkOutputDir: gutil.env['todir'] || server.sdkOutputDir()
+        }, pluginPointAnswers);
 	}
 
 	gulp.task('studio-plugin-export', ['clean'], function () {
@@ -49,7 +57,7 @@ module.exports = function (gulp, gutil) {
 								return 'You cannot choose more than 5 plugin points.';
 							}
 							return true;
-						},
+						}
 					}, function(answers) {
 						if (answers.pluginPoints) {
 							exportPlugin(answers);
