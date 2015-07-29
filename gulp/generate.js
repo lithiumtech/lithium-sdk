@@ -28,7 +28,10 @@ module.exports = function (gulp, gutil) {
     } else {
       generate()(gulp, gutil).clone(cb);
     }
+  });
 
+  gulp.task('generate-skin', function (cb) {
+    generate()(gulp, gutil).skin(cb);
   });
 
 };
