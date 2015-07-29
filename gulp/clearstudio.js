@@ -56,7 +56,7 @@ module.exports = function (gulp, gutil) {
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginExport) {
-          clearPluginFinalCheck(getPluginServer().getPluginPoints());
+          clearPluginFinalCheck(stream, getPluginServer().getPluginPoints());
         } else {
         	inquirer().prompt({
         		name: 'pluginPoints',
@@ -73,11 +73,11 @@ module.exports = function (gulp, gutil) {
   						return true;
   					}
   				}, function(answers) {
-                    if (answers.pluginPoints) {
-                        clearPluginFinalCheck(stream, answers);
-                    } else {
-                        stream.end();
-                    }
+            if (answers.pluginPoints) {
+              clearPluginFinalCheck(stream, answers);
+            } else {
+              stream.end();
+            }
             });
         }
       });
