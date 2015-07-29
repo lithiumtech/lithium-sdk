@@ -28,7 +28,7 @@ module.exports = function (gulp, gutil) {
     }, pluginPointAnswers);
   }
 
-  function clearPluginFinalCheck(pluginPointAnswers) {
+  function clearPluginFinalCheck(stream, pluginPointAnswers) {
     var msg = (typeof pluginPointAnswers === 'undefined') ? 'Are you sure you want to clear the entire studio plugin?'
       : 'Are you sure to want to clear the plugin points you selected from the studio plugin?';
     inquirer().prompt({
@@ -74,7 +74,7 @@ module.exports = function (gulp, gutil) {
   					}
   				}, function(answers) {
                     if (answers.pluginPoints) {
-                        clearPluginFinalCheck(answers);
+                        clearPluginFinalCheck(stream, answers);
                     } else {
                         stream.end();
                     }
