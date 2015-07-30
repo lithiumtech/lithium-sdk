@@ -10,6 +10,5 @@
   **/
 {
   "serverUrl": "lia server (port optional)",
-  "pluginToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  "pluginUploadProtocol": "http or https"
+  "pluginToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
