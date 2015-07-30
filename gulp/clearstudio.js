@@ -28,7 +28,7 @@ module.exports = function (gulp, gutil) {
     }, pluginPointAnswers);
   }
 
-  function clearPluginFinalCheck(pluginPointAnswers) {
+  function clearPluginFinalCheck(stream, pluginPointAnswers) {
     var msg = (typeof pluginPointAnswers === 'undefined') ? 'Are you sure you want to clear the entire studio plugin?'
       : 'Are you sure to want to clear the plugin points you selected from the studio plugin?';
     inquirer().prompt({
@@ -56,7 +56,7 @@ module.exports = function (gulp, gutil) {
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginExport) {
-          clearPluginFinalCheck(getPluginServer().getPluginPoints());
+          clearPluginFinalCheck(stream, getPluginServer().getPluginPoints());
         } else {
         	inquirer().prompt({
         		name: 'pluginPoints',
@@ -73,11 +73,11 @@ module.exports = function (gulp, gutil) {
   						return true;
   					}
   				}, function(answers) {
-                    if (answers.pluginPoints) {
-                        clearPluginFinalCheck(answers);
-                    } else {
-                        stream.end();
-                    }
+            if (answers.pluginPoints) {
+              clearPluginFinalCheck(stream, answers);
+            } else {
+              stream.end();
+            }
             });
         }
       });

@@ -1,0 +1,1 @@
+Put badge icon images in this directory.
