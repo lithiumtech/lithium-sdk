@@ -30,8 +30,8 @@ module.exports = function (gulp, gutil) {
     }
   });
 
-  gulp.task('generate-skin', function (cb) {
-    generate()(gulp, gutil).skin(cb);
+  gulp.task('generate-bootstrap-base-child', function (cb) {
+    generate()(gulp, gutil).bootstrapBaseChild(cb);
   });
 
 };
