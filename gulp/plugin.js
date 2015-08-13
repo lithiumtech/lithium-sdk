@@ -57,7 +57,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-git-version', ['plugin-init'], function (cb) {
-    if (gutil.env.ng.gitReposForVersion.length > 0) {
+    if (gutil.env.gitStatusVersion) {
       var gitVersion = require('../lib/git-version.js')(gulp, gutil);
       return gitVersion.create('plugin');
     } else {
@@ -68,8 +68,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-ng', [
     'plugin-script-deps',
-    'plugin-text',
-    'plugin-git-version'
+    'plugin-text'
   ]);
 
   gulp.task('plugin-res', gutil.env.ng ? ['plugin-ng'] : ['plugin-init'], function () {
@@ -85,7 +84,8 @@ module.exports = function (gulp, gutil) {
   /* plugin task */
   gulp.task('plugin-build', [
     'plugin-res',
-    'plugin-web'
+    'plugin-web',
+    'plugin-git-version'
   ]);
 
   gulp.task('plugin-verify', ['plugin-build'], function () {
