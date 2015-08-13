@@ -11,17 +11,26 @@ chai.use(sinonChai);
 
 var fs = require('fs');
 var path = require('path');
+var gutil = require('gulp-util');
 var testRoot = path.resolve(__dirname) + '/..';
 
+var apiHost = 'https://mycommunity.com:443';
+
 function createExportRequestScope(path, zipFileName) {
-  return nock('https://mycommunity.com:443').persist()
+  return nock(apiHost).persist()
     .get(path)
     .reply(201, function() {
-      return fs.createReadStream(testRoot + '/lib/' + zipFileName + '.zip');
+      return fs.createReadStream(testRoot + '/lib/replies/' + zipFileName + '.zip');
     }, {
       'Content-Type': 'archive/zip',
       'Content-Disposition': 'attachment; filename="' + zipFileName + '.zip"'
     });
+}
+
+function createXmlResponseRequestScope(path, responseFileName) {
+  return nock(apiHost).persist()
+    .post(path)
+    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.xml');
 }
 
 function createServerMock(serverConfig) {
@@ -57,23 +66,71 @@ function createDefaultServerMock() {
   });
 }
 
-describe('testexportPlugin', function() {
+describe('test exporting plugin', function() {
+  this.slow(500);
   var sandbox;
   var pluginExport;
-  var scope;
+  var exportedFiles;
+  var gulp;
+  var server;
+
+  function exportPlugin(pluginType, done, expectedLength) {
+    var opts = {
+      pluginType: pluginType,
+      doClear: false,
+      verboseMode: false,
+      debugMode: false,
+      sdkOutputDir: undefined
+    };
+
+    createExportRequestScope('/restapi/ldntool/plugins/' + pluginType, pluginType + '_plugin');
+
+    pluginExport(gulp, gutil).exportPlugin(server, opts, undefined, function() {
+      expect(exportedFiles.length).to.equal(expectedLength);
+      done();
+    });
+  }
+
+  function clearPlugin(pluginType, done) {
+    var opts = {
+      pluginType: pluginType,
+      doClear: true,
+      verboseMode: false,
+      debugMode: false,
+      sdkOutputDir: undefined
+    };
+
+    createXmlResponseRequestScope('/restapi/ldntool/plugins/' + pluginType + '/clear', pluginType + '_clear');
+
+    pluginExport(gulp, gutil).exportPlugin(server, opts, undefined, function() {
+
+      done();
+    });
+  }
 
   before(function() {
-
+    sandbox = sinon.sandbox.create();
+    gulp = sandbox.stub();
+    server = createDefaultServerMock();
+    pluginExport = rewire(testRoot + '/../lib/plugin-export.js');
+    pluginExport.__set__("AdmZip", function(input) {
+      var admZip = new AdmZip(input);
+      return {
+        getEntries: function() {
+          return admZip.getEntries();
+        },
+        extractEntryTo: function(entry, targetPath, maintainEntryPath, overwrite) {
+          exportedFiles.push(entry);
+        }
+      };
+    });
   });
 
   beforeEach(function() {
-    sandbox = sinon.sandbox.create();
-    scope = createExportRequestScope('/restapi/ldntool/plugins/studio', 'studio_plugin');
-    pluginExport = rewire(testRoot + '/../lib/plugin-export.js');
+    exportedFiles = [];
   });
 
   afterEach(function() {
-    scope.cleanAll();
     // restore the environment as it was before
     sandbox.restore();
   });
@@ -83,51 +140,25 @@ describe('testexportPlugin', function() {
 
   describe('export studio plugin', function() {
     it('should export my studio plugin', function(done) {
-      var exportedFiles = [];
-      pluginExport.__set__("AdmZip", function(input) {
-        var admZip = new AdmZip(input);
-        return {
-          getEntries: function() {
-            return admZip.getEntries();
-          },
-          extractEntryTo: function(entry, targetPath, maintainEntryPath, overwrite) {
-            exportedFiles.push(entry);
-          }
-        };
-      });
-
-      var server = createDefaultServerMock();
-
-      var opts = {
-        pluginType: 'studio',
-        doClear: false,
-        verboseMode: false,
-        debugMode: true,
-        sdkOutputDir: undefined
-      };
-
-      var gulp = sandbox.stub();
-      var gutil = {
-        log: sandbox.spy(),
-        colors: {
-          cyan: sandbox.stub(),
-          yellow: sandbox.stub(),
-          green: sandbox.stub(),
-          grey: sandbox.stub()
-        }
-      };
-      pluginExport(gulp, gutil).exportPlugin(server, opts, undefined, function() {
-        expect(exportedFiles.length).to.equal(96);
-        done();
-      });
+      exportPlugin('studio', done, 96);
     });
   });
 
   describe('export sdk plugin', function() {
     it('should export my sdk plugin', function(done) {
-      expect(true).to.equal(true);
-      done();
+      exportPlugin('sdk', done, 8);
     });
   });
 
+  describe('clear studio plugin', function() {
+    it('should clear my studio plugin', function(done) {
+      clearPlugin('studio', done);
+    });
+  });
+
+  describe('clear sdk plugin', function() {
+    it('should clear my studio plugin', function(done) {
+      clearPlugin('sdk', done);
+    });
+  });
 });
