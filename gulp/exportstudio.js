@@ -28,7 +28,7 @@ module.exports = function (gulp, gutil) {
             verboseMode: gutil.env['verbose'],
             debugMode: gutil.env['debug'],
             sdkOutputDir: gutil.env['todir'] || server.sdkOutputDir()
-        }, pluginPointAnswers);
+        }, pluginPointAnswers, function() {});
 	}
 
 	gulp.task('studio-plugin-export', ['clean'], function () {

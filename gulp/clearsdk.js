@@ -25,7 +25,7 @@ module.exports = function (gulp, gutil) {
         doClear: true,
         verboseMode: gutil.env['verbose'],
         debugMode: gutil.env['debug']
-    });
+    }, function() {});
   }
 
   gulp.task('sdk-clear', ['clean'], function () {
