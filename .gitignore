@@ -17,5 +17,5 @@ server.conf.json
 .*.swp
 .*.swo
 .iml
-
+test/lib/uploadplugin/Manifest.MF
 
