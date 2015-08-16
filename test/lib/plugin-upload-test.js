@@ -203,6 +203,7 @@ describe('test uploading plugin', function() {
   });
 
   after(function() {
+    fs.unlinkSync(testRoot + '/lib/uploadplugin/Manifest.MF');
   });
 
   describe('errors during upload', function() {
