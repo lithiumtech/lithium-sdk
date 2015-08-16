@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service-response>
+    <hard-failures>
+        <code>PLUGIN_POINT_CLEAR_FAILURE</code>
+        <details>The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /res/quilts/</details>
+        <message>No files were found for the quilt plugin point</message>
+        <ruleFailed>CUSTOM_RULE</ruleFailed>
+        <suggestion>Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin</suggestion>
+    </hard-failures>
+    <hard-failures>
+        <code>PLUGIN_POINT_CLEAR_FAILURE</code>
+        <details>The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /web/html/assets/</details>
+        <message>No files were found for the asset plugin point</message>
+        <ruleFailed>CUSTOM_RULE</ruleFailed>
+        <suggestion>Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin</suggestion>
+    </hard-failures>
+    <hard-failures>
+        <code>PLUGIN_POINT_CLEAR_FAILURE</code>
+        <details>The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /res/components/</details>
+        <message>No files were found for the component plugin point</message>
+        <ruleFailed>CUSTOM_RULE</ruleFailed>
+        <suggestion>Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin</suggestion>
+    </hard-failures><message>Error trying to clear studio plugin points</message>
+    <status>CLEAR_FAILED</status>
+</service-response>

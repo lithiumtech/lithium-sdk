@@ -12,7 +12,15 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var scripts, text, plugin, pluginUpload, sandboxApi;
+  var scripts, text, plugin, pluginUpload, pluginServer, sandboxApi;
+
+  function getPluginServer() {
+    if (!pluginServer) {
+      pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
+    }
+
+    return pluginServer;
+  }
 
   gulp.task('plugin-init', ['clean'], function (cb) {
     scripts = require('../lib/scripts.js')(gulp, gutil);
@@ -49,7 +57,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-git-version', ['plugin-init'], function (cb) {
-    if (gutil.env.ng.gitReposForVersion.length > 0) {
+    if (gutil.env.gitStatusVersion) {
       var gitVersion = require('../lib/git-version.js')(gulp, gutil);
       return gitVersion.create('plugin');
     } else {
@@ -60,8 +68,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-ng', [
     'plugin-script-deps',
-    'plugin-text',
-    'plugin-git-version'
+    'plugin-text'
   ]);
 
   gulp.task('plugin-res', gutil.env.ng ? ['plugin-ng'] : ['plugin-init'], function () {
@@ -77,7 +84,8 @@ module.exports = function (gulp, gutil) {
   /* plugin task */
   gulp.task('plugin-build', [
     'plugin-res',
-    'plugin-web'
+    'plugin-web',
+    'plugin-git-version'
   ]);
 
   gulp.task('plugin-verify', ['plugin-build'], function () {
@@ -92,11 +100,14 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-upload', ['plugin-ready'], function () {
     var stream = through().obj();
-    if (gutil.env['force']) {
+    var server = getPluginServer().getServer();
+    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
       if (!pluginUpload) {
         pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
       }
-      pluginUpload.upload().pipe(stream);
+      pluginUpload.upload(server, {
+        debugMode: gutil.env['debug']
+      }).pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginUpload',
@@ -107,7 +118,9 @@ module.exports = function (gulp, gutil) {
           if (!pluginUpload) {
             pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
           }
-          pluginUpload.upload().pipe(stream);
+          pluginUpload.upload(server, {
+            debugMode: gutil.env['debug']
+          }).pipe(stream);
         } else {
           stream.end();
         }

@@ -1,0 +1,56 @@
+// imported-skin-properties imports variables from skin.properties.
+// All variables can be used by replacing . with _ and prepending with $.
+//
+// Example: size.pixel.spacing_wide in skin.properties would be
+//          $lia_size_pixel_spacing_wide in Sass.
+@import 'skin.properties';
+
+// skin-properties-mapping maps skin.properties values to Bootstrap.
+// See the file for the variables that are set.
+//@import 'skin-properties-mapping';
+
+// default-variables sets the default variables for the vendor libraries.  These
+// values are set with the !default and will not replace identical variable set
+// before or after these files.
+@import 'vendor/default-variables';
+
+// skin-properties-extensions override variables from included libraries or set
+// new variables which will be used throughout Sass.
+@import 'skin-properties-extensions';
+
+
+// vendor - external libraries. These files should not be modified so that
+// updates can be drop-in replacements. Any overrides or extensions of these
+// belong in the /lithium directory.
+//
+//
+// only 1 of the two following includes should be uncommented.
+//
+// vendor/includes-full includes all Bootstrap files along with their classes
+// including components that are not currently used by the current skin.
+// note: bootstrap.js is not included by default in either of the libraries and
+// may be required for some components to function.
+// CAUTION: using includes-full more than doubles the size of the final CSS!
+//
+// vendor/includes-min includes only Boostrap components which are used by
+// the base skin. Bootstrap classes are included as placeholders
+// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholder_selectors_
+// and are not included in the final CSS to keep the filesize smaller.
+//@import 'vendor/includes-full';
+@import 'vendor/includes-min';
+
+// import Bootstrap libraries here after Bootstrap but before Lithium.
+// This location provides the ability to alter vendor files or add libraries
+// which lithium then extends, inheriting the altered files.
+
+ 
+
+// lia-responsive-base are the Lithium Sass files that both extend the vendor
+// libraries as well as provide mixins and CSS for the rest of the components.
+// ** FUTURE - does not exist yet  _lia-mobile-base.scss           mobile only set of scss.  I’m torn between making this a configuration vs different includes.
+// ** FUTURE - does not exist yet  _lia-mobile-tablet-base.scss    mobile and tablet scss.  As these files diverge from desktop / responsive, a config may be messier in the long run than splitting the files now.
+
+@import 'lithium/lia-responsive-base';
+@import 'custom-css';
+
+@import 'overrides';

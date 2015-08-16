@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service-response>
+    <hard-failures>
+        <code>QUILT_INVALID_LAYOUT_FAILURE</code>
+        <details>Layout referenced in the quilt is invalid</details>
+        <message>Quilt file res/quilts/custom/mytestpage.quilt.xml in the plugin has a possible issue</message>
+        <ruleFailed>CUSTOM_RULE</ruleFailed>
+        <suggestion>Update the layout referenced in the quilt to a valid layout</suggestion>
+    </hard-failures>
+    <hard-failures>
+        <code>LAYOUT_PARSE_FAILURE</code>
+        <details>Not parsable as a layout xml file. xml parsing failed</details>
+        <message>Layout file res/layouts/mytestpage.layout.xml in the plugin has a possible issue</message>
+        <ruleFailed>CUSTOM_RULE</ruleFailed>
+        <suggestion>Fix the layout file to be a valid layout xml file</suggestion>
+    </hard-failures>
+    <status>UPLOAD_FAILED</status>
+</service-response>

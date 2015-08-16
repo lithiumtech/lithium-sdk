@@ -1,0 +1,1 @@
+Put rank icon images in this directory.

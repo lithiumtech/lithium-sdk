@@ -7,6 +7,7 @@ bower_components
 dist
 gulp/build
 generated
+coverage
 
 # Files
 *.log
@@ -16,5 +17,3 @@ server.conf.json
 .*.swp
 .*.swo
 .iml
-
-

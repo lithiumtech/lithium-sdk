@@ -2,8 +2,12 @@
 
 var extensions = {
   'lithium-sdk-doctools': [
-    'build-docs',
-    'serve-docs'
+    'ngdoc-build',
+    'ngdoc-server'
+  ],
+  'lithium-sdk-kss-doctools': [
+    'kss-build',
+    'kss-server'
   ]
 };
 
@@ -12,15 +16,18 @@ module.exports = function (req) {
   var gulp = req('gulp');
   var startTime = process.hrtime();
   var prettyTime = require('pretty-hrtime');
-
   var gutil = require('../lib/env-util.js')(gulp);
+
   require('./clean.js')(gulp, gutil);
   require('./plugin.js')(gulp, gutil);
   require('./test.js')(gulp, gutil);
   require('./sandbox.js')(gulp, gutil);
-  require('./docs.js')(gulp, gutil);
   require('./generate.js')(gulp, gutil);
   require('./project.js')(gulp, gutil);
+  require('./exportstudio.js')(gulp, gutil);
+  require('./clearstudio.js')(gulp, gutil);
+  require('./exportsdk.js')(gulp, gutil);
+  require('./clearsdk.js')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {
