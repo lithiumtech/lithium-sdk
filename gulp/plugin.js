@@ -105,7 +105,9 @@ module.exports = function (gulp, gutil) {
       if (!pluginUpload) {
         pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
       }
-      pluginUpload.upload(server).pipe(stream);
+      pluginUpload.upload(server, {
+        debugMode: gutil.env['debug']
+      }).pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginUpload',
@@ -116,7 +118,9 @@ module.exports = function (gulp, gutil) {
           if (!pluginUpload) {
             pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
           }
-          pluginUpload.upload(server).pipe(stream);
+          pluginUpload.upload(server, {
+            debugMode: gutil.env['debug']
+          }).pipe(stream);
         } else {
           stream.end();
         }

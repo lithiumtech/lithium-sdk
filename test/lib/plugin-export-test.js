@@ -111,7 +111,7 @@ describe('test exporting plugin', function() {
   var returnFileName;
   var opts;
 
-  function processOptions(pluginType, doClear, options) {
+  function processOptions(doClear, options) {
     if (defined(options)) {
       if (defined(options.doRecord) && options.doRecord) {
         nock.recorder.rec();
@@ -159,7 +159,7 @@ describe('test exporting plugin', function() {
     path = '/restapi/ldntool/plugins/' + pluginType;
     returnFileName = pluginType + '_plugin';
 
-    processOptions(pluginType, false, options);
+    processOptions(false, options);
 
     if (expects.requestError) {
       createErrorRequestScope(path, 'something bad happened', false);
@@ -176,7 +176,6 @@ describe('test exporting plugin', function() {
       done();
     };
 
-
     pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb);
   }
 
@@ -192,7 +191,7 @@ describe('test exporting plugin', function() {
     path = '/restapi/ldntool/plugins/' + pluginType + '/clear';
     returnFileName = pluginType + '_clear';
 
-    processOptions(pluginType, true, options);
+    processOptions(true, options);
     if (expects.requestError) {
       createErrorRequestScope(path, 'something bad happened', true);
     } else if (expects.anonymous) {
@@ -223,7 +222,7 @@ describe('test exporting plugin', function() {
         getEntries: function() {
           return admZip.getEntries();
         },
-        extractEntryTo: function(entry, targetPath, maintainEntryPath, overwrite) {
+        extractEntryTo: function(entry) {
           exportedFiles.push(entry);
         }
       };
