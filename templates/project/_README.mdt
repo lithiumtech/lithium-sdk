@@ -25,3 +25,6 @@
 [FreeMarker documentation] (http://freemarker.org/docs/index.html)
 
 [node.js NodeSchool Tutorials] (https://nodejs.org/documentation/tutorials/)
+
+Important Git/SVN information
+There is a .gitignore file that gets added when you create a project. This file is there to prevent you from accidentally checking in your server.conf.json and node_modules directory to your Git repository. The server.conf.json file contains your plugin token that is confidential and you certainly do not want to check that in. Please make sure to ignore these files/folders if you are using SVN or any other source control.
