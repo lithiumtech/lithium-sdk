@@ -1,4 +1,8 @@
 ## Lithium-Klout SDK
+### Build Status
+Master: [![Build Status][travis-image]][travis-url]
+
+Develop: [![Build Status][travis-dev-image]][travis-dev-url]
 
 ### Lithium Developer Community Area
 
@@ -22,3 +26,8 @@
 [FreeMarker documentation] (http://freemarker.org/docs/index.html)
 
 [node.js NodeSchool Tutorials] (https://nodejs.org/documentation/tutorials/)
+
+[travis-url]: https://travis-ci.org/lithiumtech/lithium-sdk
+[travis-image]: https://travis-ci.org/lithiumtech/lithium-sdk.svg?branch=master
+[travis-dev-url]: https://travis-ci.org/lithiumtech/lithium-sdk/branches
+[travis-dev-image]: https://travis-ci.org/lithiumtech/lithium-sdk.svg?branch=develop
