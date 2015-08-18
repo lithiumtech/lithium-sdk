@@ -1,5 +1,5 @@
 ## Lithium-Klout SDK
-### Build Status
+
 [![Build Status][travis-image]][travis-url]
 
 ### Lithium Developer Community Area
