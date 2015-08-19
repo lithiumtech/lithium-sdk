@@ -28,7 +28,7 @@ module.exports = function (gulp, gutil) {
     }, undefined, function() {});
   }
 
-  gulp.task('sdk-clear', ['clean'], function () {
+  gulp.task('sdk-clear', ['clean','version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
