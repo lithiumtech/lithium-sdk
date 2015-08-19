@@ -1,6 +1,6 @@
 {
   "name": "lithium-sdk",
-  "version": "0.5.0",
+  "version": "0.1.1",
   "author": "nikhilmodak",
   "bin": {
     "li": "bin/li.js"
