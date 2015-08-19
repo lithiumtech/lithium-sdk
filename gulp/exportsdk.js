@@ -31,7 +31,7 @@ module.exports = function (gulp, gutil) {
         }, pluginPointAnswers, function() {});
     }
 
-    gulp.task('sdk-plugin-export', ['clean'], function () {
+    gulp.task('sdk-plugin-export', ['clean','version-check'], function () {
         var stream = through().obj();
         var server = getPluginServer().getServer();
         if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {

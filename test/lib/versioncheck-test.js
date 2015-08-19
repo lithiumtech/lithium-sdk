@@ -54,7 +54,7 @@ describe('test version check', function() {
       //sinon.stub(gulp, "task" , function() { return; } );
       sandbox = sinon.sandbox.create();
       gulp = sinon.mock();
-      sinon.
+      sinon.stub(gulp, "task", function() {});
       versioncheck = rewire(testRoot + '/../gulp/versioncheck.js');
       //serverMock.__set__("serverConfigPath", "mock.server.conf.json");
     });
