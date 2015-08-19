@@ -3,6 +3,7 @@
 var request = require('request');
 var pluginUtils = require('../lib/plugin-utils');
 var supportedMinVersion = 15.7;
+var sdkVersion = '0.0.5';
 
 module.exports = function (gulp, gutil) {
 
@@ -12,8 +13,14 @@ module.exports = function (gulp, gutil) {
                 var errMessage = 'A server URL is required in your configuration. ';
                 callbackOrThrowError(cb, errMessage);
             }
+            var options = {
+                headers: {
+                    Authorization: 'Bearer ' + server.pluginToken()
+                }
+            };
+
             var versionCheckUrl = pluginUtils.urlBldr(server.serverUrl() + 'status/version').build();
-            request(versionCheckUrl, function (error, response, body) {
+            request(versionCheckUrl, options, function (error, response, body) {
                 if (error || response.statusCode > 201) {
                     callbackOrThrowError(cb, error.message);
                 } else {
@@ -21,11 +28,13 @@ module.exports = function (gulp, gutil) {
                     if (matches) {
                         var versionOnServer = matches[1];
                         if (versionOnServer < supportedMinVersion) {
-                            var errorMessage = "Supported minimum version on server is " + supportedMinVersion;
+                            var errorMessage = 'Supported minimum version on server is ' + supportedMinVersion+'.';
+                            errorMessage +=  ' Either contact support to get your stage server upgraded to version '
+                                + supportedMinVersion + 'or else downgrade your version of the sdk to ' + sdkVersion;
                             callbackOrThrowError(cb, errorMessage);
                         }
                     } else {
-                        callbackOrThrowError(cb, "Invalid version check response from server");
+                        callbackOrThrowError(cb, 'Invalid version check response from server');
                     }
                 }
             });

@@ -120,7 +120,7 @@ describe('test version check', function() {
     it('should return error for lower version', function(done) {
       check( { respondSuccess: true }, lowerVersion,
           { cb: function(err) {
-            expect(err.message).to.equal("Supported minimum version on server is "+successVersion);
+            expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
             done();
           }
       });
