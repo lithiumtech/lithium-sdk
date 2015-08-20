@@ -14,10 +14,12 @@ var successVersion = 15.7;
 var higherVersion = '15.7.1';
 var higherVersion2 = 16.1;
 var lowerVersion = 12.1;
+var emptyErrorResponse = 'Empty version check response';
+var errorResponse = 'Invalid version check response';
 
 describe('test version check', function() {
   this.slow(1000);
-  var versionCheckApi = "/status/version";
+  var versionCheckApi = "/restapi/ldntool/version";
 
   function createErrorRequest(errMsg) {
     return nock(apiHost)
@@ -26,13 +28,33 @@ describe('test version check', function() {
         .replyWithError(errMsg);
   }
 
+  function createErrorResponse() {
+    return nock(apiHost)
+        .log(console.log)
+        .get(versionCheckApi)
+        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>error</status></version-response>');
+  }
+
+  function createMangledResponse() {
+    return nock(apiHost)
+        .log(console.log)
+        .get(versionCheckApi)
+        .reply(200, 'NonXMLResponse');
+  }
+
+  function createMangledVersionResponse() {
+    return nock(apiHost)
+        .log(console.log)
+        .get(versionCheckApi)
+        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>BadVersion</version></version-response>');
+  }
 
   function createResponse(versionNum) {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<!doctype html><html><head><title>Lithium InterActive Version</title></head><body>'+versionNum+' (' +
-          versionNum + '-release r266968)</body></html>');
+        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>'+versionNum
+         + '</version></version-response>');
   }
 
   function createServerMock(serverConfig) {
@@ -82,6 +104,12 @@ describe('test version check', function() {
         createErrorRequest(badErrorRespnse);
       } else if (expects.respondSuccess) {
         createResponse(versionNumber);
+      } else if (expects.errorResponse) {
+        createErrorResponse();
+      } else if (expects.mangledVersion) {
+        createMangledVersionResponse();
+      } else if (expects.mangledResponse) {
+        createMangledResponse();
       }
       var gulp = {
         task: function(name, required, fn) {
@@ -107,6 +135,38 @@ describe('test version check', function() {
             done();
           }
       });
+    });
+
+    it('should return error response from server with empty version', function(done) {
+      var cb = function(err) {
+        expect(err.message).to.equal(emptyErrorResponse);
+        done();
+      };
+      check({ respondSuccess: true }, ' ', { cb: cb});
+    });
+
+    it('should return error for bad response from server', function(done) {
+      var cb = function(err) {
+        expect(err.message).to.contains(errorResponse);
+        done();
+      };
+      check({ errorResponse: true }, ' ', { cb: cb});
+    });
+
+    it('should return error for mangled response from server', function(done) {
+      var cb = function(err) {
+
+        done();
+      };
+      check({ mangledResponse: true }, ' ', { cb: cb});
+    });
+
+    it('should return error for mangled version response from server', function(done) {
+      var cb = function(err) {
+        expect(err.message).to.contains(errorResponse);
+        done();
+      };
+      check({ mangledVersion: true }, ' ', { cb: cb});
     });
 
     it('should return success', function(done) {
