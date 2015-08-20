@@ -22,7 +22,7 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  gulp.task('plugin-init', ['clean'], function (cb) {
+  gulp.task('plugin-init', ['clean','version-check'], function (cb) {
     scripts = require('../lib/scripts.js')(gulp, gutil);
     text = require('../lib/text.js')(gulp, gutil);
     plugin = require('../lib/plugin-create.js')(gulp, gutil);

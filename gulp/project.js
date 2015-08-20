@@ -12,7 +12,7 @@ module.exports = function (gulp, gutil) {
 
   /** update the lia instance url and plugin token for a project
    **/
-  gulp.task('update', function (cb) {
+  gulp.task('update', ['version-check'], function (cb) {
     projectLib().update(cb);
   });
 
