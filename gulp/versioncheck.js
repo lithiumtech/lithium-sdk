@@ -20,31 +20,26 @@ module.exports = function (gulp, gutil) {
             }
         };
 
-        var versionCheckUrl = pluginUtils.urlBldr(server.serverUrl() + 'restapi/ldntool/version').build();
+        var versionCheckUrl = pluginUtils.urlBldr(server.serverUrl() + '/restapi/ldntool/plugins/version').build();
         request(versionCheckUrl, options, function (error, response, body) {
             if (error || response.statusCode > 201) {
-                callbackOrThrowError(cb, error.message);
+                parseResponse(cb, body);
+                return;
             }
             try {
-                var versionResponse = JSON.parse(parser.toJson(body))['version-response'];
-                if ('OK' === versionResponse.status) {
-                    var version = versionResponse.version;
-                    if (!version || !version.toString().trim()) {
-                        callbackOrThrowError(cb, 'Empty version check response');
-                    }
-                    var matches = version.toString().match(/(\d+(\.\d)*)/i);
-                    if (!matches || matches.length < 1) {
-                        callbackOrThrowError(cb, 'Invalid version check response ' + version);
-                    }
-                    var versionOnServer = matches[1];
-                    if (versionOnServer < supportedMinVersion) {
-                        var errorMessage = 'Supported minimum version on server is ' + supportedMinVersion + '.';
-                        errorMessage += ' Either contact support to get your stage server upgraded to version '
-                            + supportedMinVersion + ' or else downgrade your version of the sdk to ' + sdkVersion;
-                        callbackOrThrowError(cb, errorMessage);
-                    }
-                } else {
-                    callbackOrThrowError(cb, 'Invalid version check response ' + versionResponse.status);
+                var versionResponse = parseResponse(cb, body);
+                var version = versionResponse.version;
+                var matches = version.toString().match(/(\d+(\.\d)*)/i);
+                if (!matches || matches.length < 1) {
+                    callbackOrThrowError(cb, 'Invalid version check response ' + version);
+                    return;
+                }
+                var versionOnServer = matches[1];
+                if (versionOnServer < supportedMinVersion) {
+                    var errorMessage = 'Supported minimum version on server is ' + supportedMinVersion + '.';
+                    errorMessage += ' Either contact support to get your stage server upgraded to version '
+                        + supportedMinVersion + ' or else downgrade your version of the sdk to ' + sdkVersion;
+                    callbackOrThrowError(cb, errorMessage);
                 }
             } catch (error) {
                 callbackOrThrowError(cb, error.message);
@@ -59,6 +54,27 @@ module.exports = function (gulp, gutil) {
         } else {
             throw new Error(errorMsg);
         }
+    }
+
+    function parseResponse(cb, body) {
+        if ( !body ) {
+            callbackOrThrowError(cb, 'Empty version check response');
+            return;
+        }
+        var responseBody = JSON.parse(parser.toJson(body));
+        if (!responseBody['version-response']) {
+            var errorMessage = responseBody['service-response'] ? responseBody['service-response'].message :
+                'Invalid response from server';
+            throw new Error(errorMessage);
+        }
+        var versionResponse = responseBody['version-response'];
+        if ('status' in versionResponse && 'OK' === versionResponse.status ) {
+            return versionResponse;
+        }
+        if ( !('version' in versionResponse) || !versionResponse.version.toString().trim()) {
+            throw new Error('Empty version check response');
+        }
+        throw new Error(versionResponse);
     }
 
     gulp.task('version-check', function() {

@@ -5,7 +5,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var path = require('path');
 var gutil = require('gulp-util');
-var apiHost = 'https://mycommunity.com/';
+var apiHost = 'https://mycommunity.com';
 var testRoot = path.resolve(__dirname) + '/..';
 var spawn = require('child_process').spawn;
 var rewire = require('rewire');
@@ -19,7 +19,7 @@ var errorResponse = 'Invalid version check response';
 
 describe('test version check', function() {
   this.slow(1000);
-  var versionCheckApi = "/restapi/ldntool/version";
+  var versionCheckApi = "/restapi/ldntool/plugins/version";
 
   function createErrorRequest(errMsg) {
     return nock(apiHost)
@@ -56,6 +56,13 @@ describe('test version check', function() {
         .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>'+versionNum
          + '</version></version-response>');
   }
+  function createInvalidPluginTokenResponse() {
+    return nock(apiHost)
+        .log(console.log)
+        .get(versionCheckApi)
+        .reply(200, '<service-response><message>Anonymous users cannot view or modify community plugins. Go to Studio > SDK and confirm that your upload token has not expired.' +
+        '</message> <status>UPLOAD_FAIL</status> </service-response>');
+  }
 
   function createServerMock(serverConfig) {
     var serverApi = {};
@@ -84,7 +91,7 @@ describe('test version check', function() {
       force: false,
       pluginPoints: [],
       pluginToken: 'c95a3357-baed-4f09-9596-86583189b33e',
-      serverUrl: 'https://mycommunity.com/',
+      serverUrl: apiHost,
       strictMode: false,
       verbose: false,
       toolVersion: '1.0.0',
@@ -94,12 +101,10 @@ describe('test version check', function() {
 
   describe('version check response', function() {
     var versioncheck;
-    var sandbox;
     var server;
 
     function check(expects, versionNumber, opts) {
 
-      var taskError;
       if (expects.serverError) {
         createErrorRequest(badErrorRespnse);
       } else if (expects.respondSuccess) {
@@ -110,6 +115,8 @@ describe('test version check', function() {
         createMangledVersionResponse();
       } else if (expects.mangledResponse) {
         createMangledResponse();
+      } else if (expects.invalidPluginTokenResponse) {
+        createInvalidPluginTokenResponse();
       }
       var gulp = {
         task: function(name, required, fn) {
@@ -131,7 +138,7 @@ describe('test version check', function() {
     it('should return error response from server', function(done) {
       check( { serverError: true }, 15.7,
           { cb: function(err) {
-            expect(err.message).to.equal(badErrorRespnse);
+            expect(err.message).to.equal(emptyErrorResponse);
             done();
           }
       });
@@ -139,7 +146,7 @@ describe('test version check', function() {
 
     it('should return error response from server with empty version', function(done) {
       var cb = function(err) {
-        expect(err.message).to.equal(emptyErrorResponse);
+        expect(err.message).to.contains(errorResponse);
         done();
       };
       check({ respondSuccess: true }, ' ', { cb: cb});
@@ -147,7 +154,7 @@ describe('test version check', function() {
 
     it('should return error for bad response from server', function(done) {
       var cb = function(err) {
-        expect(err.message).to.contains(errorResponse);
+        expect(err.message).to.contains(emptyErrorResponse);
         done();
       };
       check({ errorResponse: true }, ' ', { cb: cb});
@@ -167,6 +174,14 @@ describe('test version check', function() {
         done();
       };
       check({ mangledVersion: true }, ' ', { cb: cb});
+    });
+
+    it('should return error for bad plugin token response from server', function(done) {
+      var cb = function(err) {
+        expect(err.message).to.contains('Anonymous users cannot view or modify community plugins');
+        done();
+      };
+      check({ invalidPluginTokenResponse : true }, ' ', { cb: cb});
     });
 
     it('should return success', function(done) {
