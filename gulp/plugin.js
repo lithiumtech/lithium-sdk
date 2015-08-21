@@ -22,7 +22,7 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  gulp.task('plugin-init', ['clean','version-check'], function (cb) {
+  gulp.task('plugin-init', ['clean'], function (cb) {
     scripts = require('../lib/scripts.js')(gulp, gutil);
     text = require('../lib/text.js')(gulp, gutil);
     plugin = require('../lib/plugin-create.js')(gulp, gutil);
@@ -98,7 +98,7 @@ module.exports = function (gulp, gutil) {
     cb();
   });
 
-  gulp.task('plugin-upload', ['plugin-ready'], function () {
+  gulp.task('plugin-upload', ['plugin-ready', 'version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
