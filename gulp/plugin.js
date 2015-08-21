@@ -98,7 +98,7 @@ module.exports = function (gulp, gutil) {
     cb();
   });
 
-  gulp.task('plugin-upload', ['plugin-ready'], function () {
+  gulp.task('plugin-upload', ['plugin-ready', 'version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
