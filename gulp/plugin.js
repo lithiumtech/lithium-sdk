@@ -130,7 +130,7 @@ module.exports = function (gulp, gutil) {
   });
 
   var pluginTaskDependencies = [];
-  if (gutil.env['skip-version-check']) {
+  if (!gutil.env['skip-version-check']) {
     pluginTaskDependencies.push('version-check');
   }
   if (gutil.env['skip-upload']) {
