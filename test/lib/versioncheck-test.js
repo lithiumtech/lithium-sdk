@@ -39,7 +39,7 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, 'NonXMLResponse');
+        .reply(500, 'NonXMLResponse');
   }
 
   function createMangledVersionResponse() {
@@ -123,7 +123,7 @@ describe('test version check', function() {
         }
 
       };
-      rewire(testRoot + '/../gulp/versioncheck.js')(gulp, gutil).process(server, opts.cb);
+      rewire(testRoot + '/../lib/version-check.js')(gulp, gutil).process(server, opts.cb);
     }
 
     before(function() {
