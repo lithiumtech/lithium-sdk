@@ -22,7 +22,7 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  gulp.task('plugin-init', ['clean','version-check'], function (cb) {
+  gulp.task('plugin-init', ['clean'], function (cb) {
     scripts = require('../lib/scripts.js')(gulp, gutil);
     text = require('../lib/text.js')(gulp, gutil);
     plugin = require('../lib/plugin-create.js')(gulp, gutil);
@@ -129,11 +129,16 @@ module.exports = function (gulp, gutil) {
     return stream;
   });
 
-  gulp.task('plugin', [
-    gutil.env['skip-upload'] ?
-      'plugin-ready' :
-      'plugin-upload'
-  ]);
+  var pluginTaskDependencies = [];
+  if (gutil.env['skip-version-check']) {
+    pluginTaskDependencies.push('version-check');
+  }
+  if (gutil.env['skip-upload']) {
+    pluginTaskDependencies.push('plugin-ready');
+  } else {
+    pluginTaskDependencies.push('plugin-upload');
+  }
+  gulp.task('plugin', pluginTaskDependencies);
 
   /** Watch tasks for deleopment **/
   gulp.task('watch-init', ['plugin-ready'], function () {
