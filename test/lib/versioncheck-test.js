@@ -39,7 +39,7 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(500, 'NonXMLResponse');
+        .reply(500, '<html><body>NonXMLResponse</body><body>test</body></html>');
   }
 
   function createMangledVersionResponse() {
@@ -162,7 +162,6 @@ describe('test version check', function() {
 
     it('should return error for mangled response from server', function(done) {
       var cb = function(err) {
-
         done();
       };
       check({ mangledResponse: true }, ' ', { cb: cb});
