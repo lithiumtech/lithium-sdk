@@ -16,6 +16,7 @@ var higherVersion2 = 16.1;
 var lowerVersion = 12.1;
 var emptyErrorResponse = 'Empty version check response';
 var errorResponse = 'Invalid version check response';
+var errorResponse2 = 'Invalid response from server';
 
 describe('test version check', function() {
   this.slow(1000);
@@ -154,7 +155,7 @@ describe('test version check', function() {
 
     it('should return error for bad response from server', function(done) {
       var cb = function(err) {
-        expect(err.message).to.contains(emptyErrorResponse);
+        expect(err.message).to.contains(errorResponse2);
         done();
       };
       check({ errorResponse: true }, ' ', { cb: cb});
