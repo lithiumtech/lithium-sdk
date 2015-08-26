@@ -185,11 +185,11 @@ describe('test version check', function() {
     });
 
     it('should return success', function(done) {
-      var cb = function(err) {
-        expect.fail(true, "Did not expect errors");
+      var cb = function() {
+        done();
       };
       check({ respondSuccess: true }, successVersion, { cb: cb});
-      done();
+
     });
 
     it('should return error for lower version', function(done) {
@@ -203,20 +203,20 @@ describe('test version check', function() {
 
     it('should return success for higher version', function(done) {
       check( { respondSuccess: true }, higherVersion,
-          { cb: function(err) {
-            expect.fail(true, "Should not return error");
+          { cb: function() {
+            done();
           }
       });
-      done();
+
     });
 
     it('should return success for higher version with major.min.subminor', function(done) {
       check( { respondSuccess: true }, higherVersion2,
-          { cb: function(err) {
-            expect.fail(true, "Should not return error");
+          { cb: function() {
+            done();
           }
           });
-      done();
+
     });
 
   });
