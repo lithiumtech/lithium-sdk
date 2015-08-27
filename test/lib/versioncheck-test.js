@@ -101,7 +101,6 @@ describe('test version check', function() {
   }
 
   describe('version check response', function() {
-    var versioncheck;
     var server;
 
     function check(expects, versionNumber, opts) {
@@ -124,7 +123,7 @@ describe('test version check', function() {
         }
 
       };
-      rewire(testRoot + '/../lib/version-check.js')(gulp, gutil).process(server, opts.cb);
+      rewire(testRoot + '/../lib/version-check.js')(gulp, gutil).process(server, opts.cb, opts.errorCallback);
     }
 
     before(function() {
@@ -138,8 +137,8 @@ describe('test version check', function() {
 
     it('should return error response from server', function(done) {
       check( { serverError: true }, 15.7,
-          { cb: function(err) {
-            expect(err.message).to.equal(emptyErrorResponse);
+          { errorCallback: function(err) {
+            expect(err.message).to.contains(errorResponse2);
             done();
           }
       });
@@ -150,7 +149,7 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse);
         done();
       };
-      check({ respondSuccess: true }, ' ', { cb: cb});
+      check({ respondSuccess: true }, ' ', { errorCallback: cb});
     });
 
     it('should return error for bad response from server', function(done) {
@@ -158,14 +157,14 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse2);
         done();
       };
-      check({ errorResponse: true }, ' ', { cb: cb});
+      check({ errorResponse: true }, ' ', { errorCallback: cb});
     });
 
     it('should return error for mangled response from server', function(done) {
       var cb = function(err) {
         done();
       };
-      check({ mangledResponse: true }, ' ', { cb: cb});
+      check({ mangledResponse: true }, ' ', { errorCallback: cb});
     });
 
     it('should return error for mangled version response from server', function(done) {
@@ -173,7 +172,7 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse);
         done();
       };
-      check({ mangledVersion: true }, ' ', { cb: cb});
+      check({ mangledVersion: true }, ' ', { errorCallback: cb});
     });
 
     it('should return error for bad plugin token response from server', function(done) {
@@ -181,7 +180,7 @@ describe('test version check', function() {
         expect(err.message).to.contains('Anonymous users cannot view or modify community plugins');
         done();
       };
-      check({ invalidPluginTokenResponse : true }, ' ', { cb: cb});
+      check({ invalidPluginTokenResponse : true }, ' ', { errorCallback: cb});
     });
 
     it('should return success', function(done) {
@@ -194,7 +193,7 @@ describe('test version check', function() {
 
     it('should return error for lower version', function(done) {
       check( { respondSuccess: true }, lowerVersion,
-          { cb: function(err) {
+          { errorCallback: function(err) {
             expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
             done();
           }
