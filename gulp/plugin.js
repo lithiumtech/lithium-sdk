@@ -101,38 +101,46 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin-upload', ['plugin-ready'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
-    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      if (!pluginUpload) {
-        pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
-      }
-      pluginUpload.upload(server, {
-        debugMode: gutil.env['debug']
-      }).pipe(stream);
-    } else {
-      inquirer().prompt({
-        name: 'pluginUpload',
-        message: 'Would you like to upload plugin to server?',
-        type: 'confirm'
-      }, function (answers) {
-        if (answers.pluginUpload) {
-          if (!pluginUpload) {
-            pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
-          }
-          pluginUpload.upload(server, {
-            debugMode: gutil.env['debug']
-          }).pipe(stream);
-        } else {
-          stream.end();
+    var uploadCallBack = function() {
+      if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+        if (!pluginUpload) {
+          pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
         }
-      });
+        pluginUpload.upload(server, {
+          debugMode: gutil.env['debug']
+        }).pipe(stream);
+      } else {
+        inquirer().prompt({
+          name: 'pluginUpload',
+          message: 'Would you like to upload plugin to server?',
+          type: 'confirm'
+        }, function (answers) {
+          if (answers.pluginUpload) {
+            if (!pluginUpload) {
+              pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
+            }
+            pluginUpload.upload(server, {
+              debugMode: gutil.env['debug']
+            }).pipe(stream);
+          } else {
+            stream.end();
+          }
+        });
+      }
+      return stream;
+    };
+
+    if (!gutil.env['skip-version-check']) {
+        var versioncheck = require('../lib/version-check.js')(gulp, gutil);
+        versioncheck.validate(server.serverUrl(), server.pluginToken(), uploadCallBack);
+    } else {
+      return uploadCallBack();
     }
-    return stream;
+
   });
 
   var pluginTaskDependencies = [];
-  if (!gutil.env['skip-version-check']) {
-    pluginTaskDependencies.push('version-check');
-  }
+
   if (gutil.env['skip-upload']) {
     pluginTaskDependencies.push('plugin-ready');
   } else {
