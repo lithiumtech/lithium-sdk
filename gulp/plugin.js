@@ -134,9 +134,9 @@ module.exports = function (gulp, gutil) {
         var versioncheck = require('../lib/version-check.js')(gulp, gutil);
         versioncheck.validate(server.serverUrl(), server.pluginToken(), uploadCallBack);
     } else {
-      return uploadCallBack();
+        uploadCallBack();
     }
-
+    return;
   });
 
   var pluginTaskDependencies = [];
