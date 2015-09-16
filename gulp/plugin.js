@@ -4,6 +4,7 @@ var lazyReq = require('lazy-req')(require);
 var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 var path = lazyReq('path');
+var livereload = require('gulp-livereload');
 
 var PLUGIN_PATHS = {
   SCRIPTS: 'plugin/res/js/angularjs',
@@ -12,7 +13,7 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var scripts, text, plugin, pluginUpload, pluginServer, sandboxApi;
+  var scripts, text, plugin, pluginUpload, pluginServer, sandboxApi, lrListening;
 
   function getPluginServer() {
     if (!pluginServer) {
@@ -156,8 +157,15 @@ module.exports = function (gulp, gutil) {
   });
 
   function addWatch(pattern, callback, cb) {
+    if (!lrListening) {
+      lrListening = true;
+      livereload.listen();
+    }
+
     gulp.watch(pattern, function (file) {
-      callback(file).pipe(sandboxApi.uploadToSandbox());
+      callback(file).pipe(sandboxApi.uploadToSandbox(false, function () {
+        livereload.reload(file);
+      }));
     });
     cb();
   }
