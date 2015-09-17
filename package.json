@@ -71,7 +71,8 @@
     "stringmap": "^0.2.2",
     "through2": "0.6.2",
     "urllib": "^2.3.4",
-    "xml2json": "0.5.1"
+    "xml2json": "0.5.1",
+    "gulp-livereload": "^3.8.0"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -108,8 +109,7 @@
     "rewire": "^2.3.4",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "glob-stream": "^3.1.5",
-    "gulp-livereload": "^3.8.0"
+    "glob-stream": "^3.1.5"
   },
   "scripts": {
     "test": "istanbul test _mocha"
