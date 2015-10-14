@@ -11,9 +11,11 @@ var spawn = require('child_process').spawn;
 var rewire = require('rewire');
 var badErrorRespnse = 'Bad response';
 var successVersion = 15.7;
-var higherVersion = '15.7.1';
-var higherVersion2 = '15.10';
+var higherVersion = '16.1';
+var higherVersion2 = '15.7.1';
+var higherVersion3 = '15.10';
 var lowerVersion = 12.1;
+var lowerVersion1 = 15.4;
 var emptyErrorResponse = 'Empty version check response';
 var errorResponse = 'Invalid version check response';
 var errorResponse2 = 'Invalid response from server';
@@ -197,7 +199,16 @@ describe('test version check', function() {
             expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
             done();
           }
-      });
+          });
+    });
+
+    it('should return error for lower version2', function(done) {
+      check( { respondSuccess: true }, lowerVersion1,
+          { errorCallback: function(err) {
+            expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
+            done();
+          }
+          });
     });
 
     it('should return success for higher version', function(done) {
@@ -211,6 +222,15 @@ describe('test version check', function() {
 
     it('should return success for higher version with major.min.subminor', function(done) {
       check( { respondSuccess: true }, higherVersion2,
+          { cb: function() {
+            done();
+          }
+          });
+
+    });
+
+    it('should return success for higher version with higher version 2', function(done) {
+      check( { respondSuccess: true }, higherVersion3,
           { cb: function() {
             done();
           }
