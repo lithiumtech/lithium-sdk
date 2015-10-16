@@ -125,7 +125,7 @@ describe('test version check', function() {
         }
 
       };
-      rewire(testRoot + '/../lib/version-check.js')(gulp, gutil).process(server, opts.cb, opts.errorCallback);
+      rewire(testRoot + '/../lib/version-check.js')(gulp, gutil).process(server, opts, opts.cb, opts.errorCallback);
     }
 
     before(function() {
@@ -142,7 +142,7 @@ describe('test version check', function() {
           { errorCallback: function(err) {
             expect(err.message).to.contains(errorResponse2);
             done();
-          }
+          }, debugMode: false
       });
     });
 
@@ -151,7 +151,7 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse);
         done();
       };
-      check({ respondSuccess: true }, ' ', { errorCallback: cb});
+      check({ respondSuccess: true }, ' ', { errorCallback: cb, debugMode: false });
     });
 
     it('should return error for bad response from server', function(done) {
@@ -159,14 +159,14 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse2);
         done();
       };
-      check({ errorResponse: true }, ' ', { errorCallback: cb});
+      check({ errorResponse: true }, ' ', { errorCallback: cb, debugMode: false });
     });
 
     it('should return error for mangled response from server', function(done) {
       var cb = function(err) {
         done();
       };
-      check({ mangledResponse: true }, ' ', { errorCallback: cb});
+      check({ mangledResponse: true }, ' ', { errorCallback: cb, debugMode: false });
     });
 
     it('should return error for mangled version response from server', function(done) {
@@ -174,7 +174,7 @@ describe('test version check', function() {
         expect(err.message).to.contains(errorResponse);
         done();
       };
-      check({ mangledVersion: true }, ' ', { errorCallback: cb});
+      check({ mangledVersion: true }, ' ', { errorCallback: cb, debugMode: false });
     });
 
     it('should return error for bad plugin token response from server', function(done) {
@@ -182,14 +182,14 @@ describe('test version check', function() {
         expect(err.message).to.contains('Anonymous users cannot view or modify community plugins');
         done();
       };
-      check({ invalidPluginTokenResponse : true }, ' ', { errorCallback: cb});
+      check({ invalidPluginTokenResponse : true }, ' ', { errorCallback: cb, debugMode: false });
     });
 
     it('should return success', function(done) {
       var cb = function() {
         done();
       };
-      check({ respondSuccess: true }, successVersion, { cb: cb});
+      check({ respondSuccess: true }, successVersion, { cb: cb, debugMode: false });
 
     });
 
@@ -198,7 +198,7 @@ describe('test version check', function() {
           { errorCallback: function(err) {
             expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
             done();
-          }
+          }, debugMode: false
           });
     });
 
@@ -207,7 +207,7 @@ describe('test version check', function() {
           { errorCallback: function(err) {
             expect(err.message).to.contains("Supported minimum version on server is "+successVersion);
             done();
-          }
+          }, debugMode: false
           });
     });
 
@@ -215,7 +215,7 @@ describe('test version check', function() {
       check( { respondSuccess: true }, higherVersion,
           { cb: function() {
             done();
-          }
+          }, debugMode: false
       });
 
     });
@@ -224,7 +224,7 @@ describe('test version check', function() {
       check( { respondSuccess: true }, higherVersion2,
           { cb: function() {
             done();
-          }
+          }, debugMode: false
           });
 
     });
@@ -233,7 +233,7 @@ describe('test version check', function() {
       check( { respondSuccess: true }, higherVersion3,
           { cb: function() {
             done();
-          }
+          }, debugMode: false
           });
 
     });
