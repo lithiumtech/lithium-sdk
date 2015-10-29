@@ -133,7 +133,7 @@ module.exports = function (gulp, gutil) {
 
     if (!gutil.env['skip-version-check']) {
         var versioncheck = require('../lib/version-check.js')(gulp, gutil);
-        versioncheck.validate(server.serverUrl(), server.pluginToken(), uploadCallBack);
+        versioncheck.validate(server.serverUrl(), server.pluginToken(), server, uploadCallBack);
     } else {
         uploadCallBack();
     }
