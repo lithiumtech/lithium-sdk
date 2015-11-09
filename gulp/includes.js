@@ -39,9 +39,16 @@ module.exports = function (req) {
       } else {
         extensions[ext].forEach(function (task) {
           gulp.task(task, [], function () {
-            console.log('Requires extension: ' + ext);
-            console.log('run \'npm install ' + ext + ' --save\'');
-            throw err;
+            var cyan = gutil.colors.cyan;
+            var yellow = gutil.colors.yellow;
+            var red = gutil.colors.red;
+            var taskOutput = yellow('[' + task + ']');
+            var extOutput = yellow('[' + ext + ']');
+
+            gutil.log(cyan('Gulp task ') + taskOutput + cyan(' requires ext ') + extOutput +
+                cyan('. Please run the following command from the lithium-sdk directory.'));
+            gutil.log(red('npm install lithiumtech/' + ext));
+            process.exit(1);
           });
         });
       }
