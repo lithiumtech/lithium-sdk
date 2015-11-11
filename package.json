@@ -109,7 +109,8 @@
     "rewire": "^2.3.4",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "glob-stream": "^3.1.5"
+    "glob-stream": "^3.1.5",
+    "mock-stdin": "^0.3.0"
   },
   "scripts": {
     "test": "istanbul test _mocha"
