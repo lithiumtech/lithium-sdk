@@ -10,5 +10,5 @@ module.exports = {
     require('../../lib/project.js')(gulp, gutil).server(function () {
     });
   },
-  help: 'Creates a server.conf.json file.'
+  help: 'Creates a server.conf.json file with project configuration information (including information needed to connect to a stage site).'
 };
