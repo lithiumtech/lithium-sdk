@@ -48,7 +48,7 @@ module.exports = function (req) {
             var extOutput = yellow('[' + ext + ']');
 
             gutil.log(cyan('Gulp task ') + taskOutput + cyan(' requires ext ') + extOutput +
-                cyan('. Please run the following command from the lithium-sdk directory.'));
+                cyan('. Please run the following command from the current directory.'));
             gutil.log(red('npm install lithiumtech/' + ext));
             process.exit(1);
           });
