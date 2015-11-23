@@ -2,10 +2,12 @@
 
 var extensions = {
   'lithium-sdk-doctools': [
+    'ngdoc',
     'ngdoc-build',
     'ngdoc-server'
   ],
   'lithium-sdk-kss-doctools': [
+    'kss',
     'kss-build',
     'kss-server'
   ]
