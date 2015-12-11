@@ -5,6 +5,7 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 var path = lazyReq('path');
 var livereload = lazyReq('gulp-livereload');
+var through = lazyReq('through2');
 
 var PLUGIN_PATHS = {
   SCRIPTS: 'plugin/res/js/angularjs',
@@ -150,10 +151,14 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin', pluginTaskDependencies);
 
   /** Watch tasks for deleopment **/
-  gulp.task('watch-init', ['plugin-ready'], function () {
+  gulp.task('watch-init', ['plugin-ready'], function (cb) {
     sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
-    return gulp.src(['plugin/**'])
-      .pipe(sandboxApi.uploadToSandbox(true));
+
+    sandboxApi.deleteFiles(function () {
+      sandboxApi.copyFiles('plugin/', function () {
+        sandboxApi.refreshPlugin({ all: true }, cb);
+      });
+    });
   });
 
   function addWatch(pattern, callback, cb) {
@@ -163,11 +168,19 @@ module.exports = function (gulp, gutil) {
     }
 
     gulp.watch(pattern, function (file) {
-      callback(file).pipe(sandboxApi.uploadToSandbox(false, function () {
-        livereload().reload(file);
+      callback(file).pipe(through().obj(function (file, en, localCb) {
+        var reloadQuery = sandboxApi.createReloadQuery(file);
+
+        gutil.log('Staging file for upload: ', gutil.colors.cyan(file.path.substr(
+          path.join(process.cwd(), 'plugin').length + 1)));
+
+        sandboxApi.refreshPlugin(reloadQuery, function () {
+          livereload().reload(file);
+          localCb();
+          cb();
+        });
       }));
     });
-    cb();
   }
 
   gulp.task('watch-scripts', ['plugin-ready'], function (cb) {
@@ -217,9 +230,22 @@ module.exports = function (gulp, gutil) {
     );
   });
 
+  var ignorePaths = [
+    '!res/feature/responsive-peak/v1.0/res/skins/responsive_peak/**',
+    '!res/feature/responsive-peak/v1.1/res/skins/responsive_peak/**',
+    '!res/feature/responsive-peak/v1.2/res/skins/responsive_peak/**',
+    '!res/feature/responsive-peak/v1.4/res/skins/responsive_peak/**',
+    '!res/feature/responsive-skin/v1.0/res/skins/bootstrap_base/**',
+    '!res/feature/responsive-skin/v1.1/res/skins/bootstrap_base/**',
+    '!res/feature/responsive-skin/v1.2/res/skins/bootstrap_base/**',
+    '!res/feature/responsive-skin/v1.3/res/skins/bootstrap_base/**',
+    '!res/feature/responsive-skin/v1.4/res/skins/bootstrap_base/**'
+  ];
+
   gulp.task('watch-res', ['watch-init'], function (cb) {
+    cb();
     addWatch(
-      ['res/**', '!res/**/README.md', '!res/**/*.example'],
+      ['res/**', '!res/**/README.md', '!res/**/*.example'].concat(ignorePaths),
       function (file) {
         return gulp.src(['res/**', '!res/**/README.md', '!res/**/*.example'])
           .pipe(gutil.env.filterFiles([file.path]))
