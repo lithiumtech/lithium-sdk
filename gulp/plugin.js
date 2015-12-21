@@ -5,7 +5,9 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 var path = lazyReq('path');
 var livereload = lazyReq('gulp-livereload');
-var through = lazyReq('through2');
+var watch = lazyReq('gulp-watch');
+var filelog = require('gulp-filelog');
+var fs = require('fs-extra');
 
 var PLUGIN_PATHS = {
   SCRIPTS: 'plugin/res/js/angularjs',
@@ -14,7 +16,12 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var scripts, text, plugin, pluginUpload, pluginServer, sandboxApi, lrListening;
+  var text, plugin, pluginUpload, pluginServer, lrListening;
+
+  var scripts = require('../lib/scripts.js')(gulp, gutil);
+  var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
+  var text = require('../lib/text.js')(gulp, gutil);
+  var plugin = require('../lib/plugin-create.js')(gulp, gutil);
 
   function getPluginServer() {
     if (!pluginServer) {
@@ -24,14 +31,7 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  gulp.task('plugin-init', ['clean'], function (cb) {
-    scripts = require('../lib/scripts.js')(gulp, gutil);
-    text = require('../lib/text.js')(gulp, gutil);
-    plugin = require('../lib/plugin-create.js')(gulp, gutil);
-    cb();
-  });
-
-  gulp.task('plugin-scripts', ['plugin-init'], function () {
+  gulp.task('plugin-scripts', function () {
     return scripts.process(
       [
         scripts.JS_MAIN_PATTERN,
@@ -51,14 +51,14 @@ module.exports = function (gulp, gutil) {
       PLUGIN_PATHS.SCRIPT_DEPENDENCIES);
   });
 
-  gulp.task('plugin-text', ['plugin-init'], function () {
+  gulp.task('plugin-text', function () {
     var textPropPattern = gutil.env.ng.textProperties.map(function (dir) {
       return path().join(dir, text.FILES_PATTERN);
     });
     return text.process(textPropPattern, PLUGIN_PATHS.TEXT);
   });
 
-  gulp.task('plugin-git-version', ['plugin-init'], function (cb) {
+  gulp.task('plugin-git-version', function (cb) {
     if (gutil.env.gitStatusVersion) {
       var gitVersion = require('../lib/git-version.js')(gulp, gutil);
       return gitVersion.create('plugin');
@@ -73,12 +73,12 @@ module.exports = function (gulp, gutil) {
     'plugin-text'
   ]);
 
-  gulp.task('plugin-res', gutil.env.ng ? ['plugin-ng'] : ['plugin-init'], function () {
+  gulp.task('plugin-res', gutil.env.ng ? ['plugin-ng'] : [], function () {
     return gulp.src(['res/**', '!res/**/README.md', '!res/**/*.example'])
       .pipe(gulp.dest('plugin/res'));
   });
 
-  gulp.task('plugin-web', gutil.env.ng ? ['plugin-ng'] : ['plugin-init'], function () {
+  gulp.task('plugin-web', gutil.env.ng ? ['plugin-ng'] : [], function () {
     return gulp.src(['web/**', '!web/**/README.md', '!web/**/*.example'])
       .pipe(gulp.dest('plugin/web'));
   });
@@ -90,8 +90,12 @@ module.exports = function (gulp, gutil) {
     'plugin-git-version'
   ]);
 
-  gulp.task('plugin-verify', ['plugin-build'], function () {
-    return plugin.verify();
+  gulp.task('plugin-verify', ['plugin-build'], function (cb) {
+    if (gutil.env.verifyPlugin === false) {
+      cb();
+    } else {
+      return plugin.verify();
+    }
   });
 
   gulp.task('plugin-ready', ['plugin-verify'], function (cb) {
@@ -150,15 +154,16 @@ module.exports = function (gulp, gutil) {
   }
   gulp.task('plugin', pluginTaskDependencies);
 
-  /** Watch tasks for deleopment **/
-  gulp.task('watch-init', ['plugin-ready'], function (cb) {
-    sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
+  gulp.task('plugin-dev-clean', function () {
+    return sandboxApi.deletePlugin();
+  });
 
-    sandboxApi.deleteFiles(function () {
-      sandboxApi.copyFiles('plugin/', function () {
-        sandboxApi.refreshPlugin({ all: true }, cb);
-      });
-    });
+  gulp.task('plugin-dev-sync', ['plugin-dev-clean', 'plugin-ready'], function (cb) {
+    return sandboxApi.syncPlugin();
+  });
+
+  gulp.task('plugin-dev-refresh', ['plugin-dev-sync'], function (cb) {
+    return sandboxApi.refreshPlugin({ all: true });
   });
 
   function addWatch(pattern, callback, cb) {
@@ -167,55 +172,52 @@ module.exports = function (gulp, gutil) {
       livereload().listen();
     }
 
-    gulp.watch(pattern, function (file) {
-      callback(file).pipe(through().obj(function (file, en, localCb) {
-        var reloadQuery = sandboxApi.createReloadQuery(file);
+    watch()(pattern, function (file) {
+      callback(file, function () {
+        gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
 
-        gutil.log('Staging file for upload: ', gutil.colors.cyan(file.path.substr(
-          path.join(process.cwd(), 'plugin').length + 1)));
-
-        sandboxApi.refreshPlugin(reloadQuery, function () {
+        sandboxApi.syncPlugin().then(function () {
+          var reloadQuery = sandboxApi.createReloadQuery(file.relative);
+          return sandboxApi.refreshPlugin(reloadQuery);
+        }).then(function () {
           livereload().reload(file);
-          localCb();
-          cb();
         });
-      }));
+      });
     });
+    cb();
   }
 
-  gulp.task('watch-scripts', ['plugin-ready'], function (cb) {
+  gulp.task('watch-scripts', function (cb) {
     addWatch(
       [scripts.JS_MAIN_PATTERN, scripts.TPL_MAIN_PATTERN],
-      function (file) {
+      function (file, done) {
         return scripts.process(
           [scripts.JS_MAIN_PATTERN, scripts.TPL_MAIN_PATTERN],
           PLUGIN_PATHS.SCRIPTS,
           [file.path],
           true,
           true
-        );
+        ).on('end', done);
       },
       cb
     );
   });
 
   gulp.task('watch-script-deps', ['plugin-ready'], function (cb) {
-    // TODO: currently goes through all files -
-    // try optimizing this for processing updated file only
     addWatch(
-      path().join(PLUGIN_PATHS.SCRIPTS, '**/*.js'),
-      function () {
+      './sdk.conf.json',
+      function (file, done) {
         return scripts.createDependencies(
           PLUGIN_PATHS.SCRIPTS,
           PLUGIN_PATHS.SCRIPT_DEPENDENCIES,
           true
-        );
+        ).on('end', done);
       },
       cb
     );
   });
 
-  gulp.task('watch-text', ['watch-init'], function (cb) {
+  gulp.task('watch-text', function (cb) {
     var textPropPattern = gutil.env.ng.textProperties.map(function (dir) {
       return path().join(dir, text.FILES_PATTERN);
     });
@@ -223,45 +225,28 @@ module.exports = function (gulp, gutil) {
     // try optimizing this for processing updated file only
     addWatch(
       textPropPattern,
-      function () {
-        return text.process(textPropPattern, PLUGIN_PATHS.TEXT);
+      function (file, done) {
+        return text.process(textPropPattern, PLUGIN_PATHS.TEXT).on('end', done);
       },
       cb
     );
   });
 
-  var ignorePaths = [
-    '!res/feature/responsive-peak/v1.0/res/skins/responsive_peak/**',
-    '!res/feature/responsive-peak/v1.1/res/skins/responsive_peak/**',
-    '!res/feature/responsive-peak/v1.2/res/skins/responsive_peak/**',
-    '!res/feature/responsive-peak/v1.4/res/skins/responsive_peak/**',
-    '!res/feature/responsive-skin/v1.0/res/skins/bootstrap_base/**',
-    '!res/feature/responsive-skin/v1.1/res/skins/bootstrap_base/**',
-    '!res/feature/responsive-skin/v1.2/res/skins/bootstrap_base/**',
-    '!res/feature/responsive-skin/v1.3/res/skins/bootstrap_base/**',
-    '!res/feature/responsive-skin/v1.4/res/skins/bootstrap_base/**'
-  ];
-
-  gulp.task('watch-res', ['watch-init'], function (cb) {
-    cb();
+  gulp.task('watch-res', function (cb) {
     addWatch(
-      ['res/**', '!res/**/README.md', '!res/**/*.example'].concat(ignorePaths),
-      function (file) {
-        return gulp.src(['res/**', '!res/**/README.md', '!res/**/*.example'])
-          .pipe(gutil.env.filterFiles([file.path]))
-          .pipe(gulp.dest('plugin/res'));
+      ['res/**'].concat(gutil.env.watchResIgnore || []),
+      function (file, done) {
+        fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
       },
       cb
     );
   });
 
-  gulp.task('watch-web', ['watch-init'], function (cb) {
+  gulp.task('watch-web', function (cb) {
     addWatch(
-      ['web/**', '!web/**/README.md', '!web/**/*.example'],
-      function (file) {
-        return gulp.src(['web/**', '!web/**/README.md', '!web/**/*.example'])
-          .pipe(gutil.env.filterFiles([file.path]))
-          .pipe(gulp.dest('plugin/web'));
+      'web/**',
+      function (file, done) {
+        fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
       },
       cb
     );
@@ -274,6 +259,8 @@ module.exports = function (gulp, gutil) {
   ] : []);
 
   gulp.task('dev', [
+    'plugin-dev-refresh',
+    'plugin-ready',
     'watch-ng',
     'watch-res',
     'watch-web'

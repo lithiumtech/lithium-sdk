@@ -1,19 +1,19 @@
 'use strict';
 
 var lazyReq = require('lazy-req')(require);
-var clean = lazyReq('gulp-rimraf');
+var del = lazyReq('del');
 
 module.exports = function (gulp, gutil) {
-  gulp.task('clean-tmp', function () {
-    return gulp.src('.tmp').pipe(clean()({ force: true }));
+  gulp.task('clean-tmp', function (cb) {
+    return del()('.tmp', { force: true });
   });
 
-  gulp.task('clean-plugin', function () {
-    return gulp.src('plugin').pipe(clean()({ force: true }));
+  gulp.task('clean-plugin', function (cb) {
+    return del()('plugin', { force: true });
   });
 
-  gulp.task('clean-plugin-zip', function () {
-    return gulp.src('plugin.lar').pipe(clean()({ force: true }));
+  gulp.task('clean-plugin-zip', function (cb) {
+    return del()('plugin.lar', { force: true });
   });
 
   gulp.task('clean', ['clean-tmp', 'clean-plugin', 'clean-plugin-zip']);
