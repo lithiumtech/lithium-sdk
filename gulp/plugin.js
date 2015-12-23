@@ -6,7 +6,6 @@ var through = lazyReq('through2');
 var path = lazyReq('path');
 var livereload = lazyReq('gulp-livereload');
 var watch = lazyReq('gulp-watch');
-var filelog = require('gulp-filelog');
 var fs = require('fs-extra');
 
 var PLUGIN_PATHS = {
