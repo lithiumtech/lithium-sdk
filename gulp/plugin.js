@@ -7,6 +7,7 @@ var path = lazyReq('path');
 var livereload = lazyReq('gulp-livereload');
 var watch = lazyReq('gulp-watch');
 var fs = require('fs-extra');
+var runSequence = require('run-sequence');
 
 var PLUGIN_PATHS = {
   SCRIPTS: 'plugin/res/js/angularjs',
@@ -21,6 +22,8 @@ module.exports = function (gulp, gutil) {
   var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
   var text = require('../lib/text.js')(gulp, gutil);
   var plugin = require('../lib/plugin-create.js')(gulp, gutil);
+
+  runSequence = runSequence.use(gulp);
 
   function getPluginServer() {
     if (!pluginServer) {
@@ -83,11 +86,15 @@ module.exports = function (gulp, gutil) {
   });
 
   /* plugin task */
-  gulp.task('plugin-build', [
-    'plugin-res',
-    'plugin-web',
-    'plugin-git-version'
-  ]);
+  gulp.task('plugin-build', function (cb) {
+    runSequence('clean',
+      [
+        'plugin-res',
+        'plugin-web',
+        'plugin-git-version'
+      ],
+      cb);
+  });
 
   gulp.task('plugin-verify', ['plugin-build'], function (cb) {
     if (gutil.env.verifyPlugin === false) {
