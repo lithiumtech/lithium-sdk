@@ -16,12 +16,23 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var text, plugin, pluginUpload, pluginServer, lrListening;
+  var scripts, sandboxApi, text, plugin, pluginUpload, pluginServer, lrListening;
 
-  var scripts = require('../lib/scripts.js')(gulp, gutil);
-  var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
-  var text = require('../lib/text.js')(gulp, gutil);
-  var plugin = require('../lib/plugin-create.js')(gulp, gutil);
+  function getScripts() {
+    return scripts ? scripts : scripts = require('../lib/scripts.js')(gulp, gutil);
+  }
+
+  function getSandboxApi() {
+    return sandboxApi ? sandboxApi : sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
+  }
+
+  function getText() {
+    return text ? text : text = require('../lib/text.js')(gulp, gutil);;
+  }
+
+  function getPlugin() {
+    return plugin ? plugin : plugin = require('../lib/plugin-create.js')(gulp, gutil);
+  }
 
   runSequence = runSequence.use(gulp);
 
@@ -34,11 +45,11 @@ module.exports = function (gulp, gutil) {
   }
 
   gulp.task('plugin-scripts', function () {
-    return scripts.process(
+    return getScripts().process(
       [
-        scripts.JS_MAIN_PATTERN,
-        scripts.TPL_MAIN_PATTERN,
-        scripts.DEPENDENCIES
+        getScripts().JS_MAIN_PATTERN,
+        getScripts().TPL_MAIN_PATTERN,
+        getScripts().DEPENDENCIES
       ],
       PLUGIN_PATHS.SCRIPTS,
       undefined,
@@ -48,16 +59,16 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-script-deps', ['plugin-scripts'], function () {
-    return scripts.createDependencies(
+    return getScripts().createDependencies(
       PLUGIN_PATHS.SCRIPTS,
       PLUGIN_PATHS.SCRIPT_DEPENDENCIES);
   });
 
   gulp.task('plugin-text', function () {
     var textPropPattern = gutil.env.ng.textProperties.map(function (dir) {
-      return path().join(dir, text.FILES_PATTERN);
+      return path().join(dir, getText().FILES_PATTERN);
     });
-    return text.process(textPropPattern, PLUGIN_PATHS.TEXT);
+    return getText().process(textPropPattern, PLUGIN_PATHS.TEXT);
   });
 
   gulp.task('plugin-git-version', function (cb) {
@@ -97,10 +108,11 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-verify', ['plugin-build'], function (cb) {
-    if (gutil.env.verifyPlugin === false) {
+    var originalTask = gutil.env._[0];
+    if (gutil.env.verifyPlugin === false && originalTask !== 'plugin-verify') {
       cb();
     } else {
-      return plugin.verify();
+      return getPlugin().verify();
     }
   });
 
@@ -161,15 +173,15 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin', pluginTaskDependencies);
 
   gulp.task('plugin-dev-clean', function () {
-    return sandboxApi.deletePlugin();
+    return getSandboxApi().deletePlugin();
   });
 
   gulp.task('plugin-dev-sync', ['plugin-dev-clean', 'plugin-ready'], function (cb) {
-    return sandboxApi.syncPlugin();
+    return getSandboxApi().syncPlugin();
   });
 
   gulp.task('plugin-dev-refresh', ['plugin-dev-sync'], function (cb) {
-    return sandboxApi.refreshPlugin({ all: true });
+    return getSandboxApi().refreshPlugin({ all: true });
   });
 
   function addWatch(pattern, callback, cb) {
@@ -182,9 +194,9 @@ module.exports = function (gulp, gutil) {
       callback(file, function () {
         gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
 
-        sandboxApi.syncPlugin().then(function () {
-          var reloadQuery = sandboxApi.createReloadQuery(file.relative);
-          return sandboxApi.refreshPlugin(reloadQuery);
+        getSandboxApi().syncPlugin().then(function () {
+          var reloadQuery = getSandboxApi().createReloadQuery(file.relative);
+          return getSandboxApi().refreshPlugin(reloadQuery);
         }).then(function () {
           livereload().reload(file);
         });
@@ -195,10 +207,10 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('watch-scripts', function (cb) {
     addWatch(
-      [scripts.JS_MAIN_PATTERN, scripts.TPL_MAIN_PATTERN],
+      [getScripts().JS_MAIN_PATTERN, getScripts().TPL_MAIN_PATTERN],
       function (file, done) {
-        return scripts.process(
-          [scripts.JS_MAIN_PATTERN, scripts.TPL_MAIN_PATTERN],
+        return getScripts().process(
+          [getScripts().JS_MAIN_PATTERN, getScripts().TPL_MAIN_PATTERN],
           PLUGIN_PATHS.SCRIPTS,
           [file.path],
           true,
@@ -213,7 +225,7 @@ module.exports = function (gulp, gutil) {
     addWatch(
       './sdk.conf.json',
       function (file, done) {
-        return scripts.createDependencies(
+        return getScripts().createDependencies(
           PLUGIN_PATHS.SCRIPTS,
           PLUGIN_PATHS.SCRIPT_DEPENDENCIES,
           true
@@ -225,14 +237,14 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('watch-text', function (cb) {
     var textPropPattern = gutil.env.ng.textProperties.map(function (dir) {
-      return path().join(dir, text.FILES_PATTERN);
+      return path().join(dir, getText().FILES_PATTERN);
     });
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     addWatch(
       textPropPattern,
       function (file, done) {
-        return text.process(textPropPattern, PLUGIN_PATHS.TEXT).on('end', done);
+        return getText().process(textPropPattern, PLUGIN_PATHS.TEXT).on('end', done);
       },
       cb
     );
