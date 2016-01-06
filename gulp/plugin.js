@@ -206,7 +206,7 @@ module.exports = function (gulp, gutil) {
       callback(file, function () {
         gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
 
-        if (getServer().useLocalCompile) {
+        if (usePluginCacheClear) {
           getSandboxApi().syncPlugin().then(function () {
             var reloadQuery = getSandboxApi().createReloadQuery(file.relative);
             return getSandboxApi().refreshPlugin(reloadQuery);
