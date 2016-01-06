@@ -321,6 +321,7 @@ module.exports = function (gulp, gutil) {
     'plugin-ready',
     'watch-ng',
     'watch-res',
+    'watch-res-sass',
     'watch-web'
   ]);
 
