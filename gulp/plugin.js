@@ -16,7 +16,7 @@ var PLUGIN_PATHS = {
 };
 
 module.exports = function (gulp, gutil) {
-  var scripts, sandboxApi, text, plugin, pluginUpload, pluginServer, lrListening;
+  var scripts, sandboxApi, text, plugin, pluginUpload, pluginServer, lrListening, skins, server;
 
   function getScripts() {
     return scripts ? scripts : scripts = require('../lib/scripts.js')(gulp, gutil);
@@ -32,6 +32,14 @@ module.exports = function (gulp, gutil) {
 
   function getPlugin() {
     return plugin ? plugin : plugin = require('../lib/plugin-create.js')(gulp, gutil);
+  }
+
+  function getSkins() {
+    return skins ? skins : skins = require('../lib/skins.js')(gulp, gutil);
+  }
+
+  function getServer() {
+    return server ? server : server = require('../lib/server.js')(gulp, gutil);
   }
 
   runSequence = runSequence.use(gulp);
@@ -184,22 +192,28 @@ module.exports = function (gulp, gutil) {
     return getSandboxApi().refreshPlugin({ all: true });
   });
 
-  function addWatch(pattern, callback, cb) {
+  function startLr() {
     if (!lrListening) {
       lrListening = true;
       livereload().listen();
     }
+  }
+
+  function addWatch(pattern, callback, cb, usePluginCacheClear) {
+    startLr();
 
     watch()(pattern, function (file) {
       callback(file, function () {
         gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
 
-        getSandboxApi().syncPlugin().then(function () {
-          var reloadQuery = getSandboxApi().createReloadQuery(file.relative);
-          return getSandboxApi().refreshPlugin(reloadQuery);
-        }).then(function () {
-          livereload().reload(file);
-        });
+        if (getServer().useLocalCompile) {
+          getSandboxApi().syncPlugin().then(function () {
+            var reloadQuery = getSandboxApi().createReloadQuery(file.relative);
+            return getSandboxApi().refreshPlugin(reloadQuery);
+          }).then(function () {
+            livereload().reload(file);
+          });
+        }
       });
     });
     cb();
@@ -217,7 +231,8 @@ module.exports = function (gulp, gutil) {
           true
         ).on('end', done);
       },
-      cb
+      cb,
+      true
     );
   });
 
@@ -231,7 +246,8 @@ module.exports = function (gulp, gutil) {
           true
         ).on('end', done);
       },
-      cb
+      cb,
+      true
     );
   });
 
@@ -246,17 +262,40 @@ module.exports = function (gulp, gutil) {
       function (file, done) {
         return getText().process(textPropPattern, PLUGIN_PATHS.TEXT).on('end', done);
       },
-      cb
+      cb,
+      true
     );
   });
 
   gulp.task('watch-res', function (cb) {
     addWatch(
-      ['res/**'].concat(gutil.env.watchResIgnore || []),
+      ['res/**', '!res/**/*.scss'].concat(gutil.env.watchResIgnore || []),
       function (file, done) {
         fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
       },
-      cb
+      cb,
+      true
+    );
+  });
+
+  gulp.task('watch-res-sass', function (cb) {
+    if (getServer().useLocalCompile) {
+      startLr();
+      getSkins().compile(livereload());
+      getSkins().server();
+    }
+
+    addWatch(
+        ['res/**/*.scss'].concat(gutil.env.watchResIgnore || []),
+        function (file, done) {
+          if (getServer().useLocalCompile) {
+            getSkins().compile(livereload()).on('end', done);
+          } else {
+            fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
+          }
+        },
+        cb,
+        !getServer().useLocalCompile
     );
   });
 
@@ -266,7 +305,8 @@ module.exports = function (gulp, gutil) {
       function (file, done) {
         fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
       },
-      cb
+      cb,
+      true
     );
   });
 
