@@ -8,6 +8,7 @@ var livereload = lazyReq('gulp-livereload');
 var watch = lazyReq('gulp-watch');
 var fs = require('fs-extra');
 var runSequence = require('run-sequence');
+var prettyTime = lazyReq('pretty-hrtime');
 
 var PLUGIN_PATHS = {
   SCRIPTS: 'plugin/res/js/angularjs',
@@ -204,9 +205,8 @@ module.exports = function (gulp, gutil) {
 
     watch()(pattern, function (file) {
       callback(file, function () {
-        gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
-
         if (usePluginCacheClear) {
+          gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
           getSandboxApi().syncPlugin().then(function () {
             var reloadQuery = getSandboxApi().createReloadQuery(file.relative);
             return getSandboxApi().refreshPlugin(reloadQuery);
@@ -281,7 +281,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('watch-res-sass', function (cb) {
     if (getServer().useLocalCompile) {
       startLr();
-      getSkins().compile(livereload());
+      getSkins().compile();
       getSkins().server();
     }
 
@@ -289,7 +289,12 @@ module.exports = function (gulp, gutil) {
         ['res/**/*.scss'].concat(gutil.env.watchResIgnore || []),
         function (file, done) {
           if (getServer().useLocalCompile) {
-            getSkins().compile(livereload()).on('end', done);
+            var startTime = process.hrtime();
+            gutil.log('Starting sass skin compile');
+            getSkins().compile(livereload()).on('end', function () {
+              gutil.log('Completed sass skin compile in: ' + gutil.colors.green(prettyTime()(process.hrtime(startTime))));
+              done();
+            });
           } else {
             fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), done);
           }
