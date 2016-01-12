@@ -1,0 +1,1 @@
+Put value analytics survey icon images in this directory.
