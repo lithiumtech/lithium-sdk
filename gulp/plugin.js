@@ -95,6 +95,10 @@ module.exports = function (gulp, gutil) {
     'plugin-text'
   ]);
 
+  gulp.task('plugin-skins-vars', gutil.env.ng ? ['plugin-ng'] : [], function () {
+    return getSkins().vars();
+  });
+
   gulp.task('plugin-res', gutil.env.ng ? ['plugin-ng'] : [], function () {
     return gulp.src(['res/**', '!res/**/README.md', '!res/**/*.example'])
       .pipe(gulp.dest('plugin/res'));
@@ -109,6 +113,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin-build', function (cb) {
     runSequence('clean',
       [
+        'plugin-skins-vars',
         'plugin-res',
         'plugin-web',
         'plugin-git-version'
