@@ -12,7 +12,7 @@ angular.module('li.<%= type %>s.<%= subModule %>.<%= name %>', [])
  * @description
  * TODO: add description
  */
-.directive('<%= camel %>', function () {
+.directive('<%= directiveName %>', function () {
   return {
     restrict: 'AE',
     templateUrl: '<%= subModule %>/<%= name %>/<%= name %>.tpl.html'

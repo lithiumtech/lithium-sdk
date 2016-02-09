@@ -35,6 +35,6 @@ describe('<%= name %>', function () {
     $rootScope.$digest();
     content = element.find('.<%= cssClass %>');
 
-    expect(content.text().trim()).toEqual('<%= name %>');
+    expect(content.text().trim()).toEqual('<%= directiveName %>');
   });
 });

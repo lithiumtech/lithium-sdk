@@ -2,7 +2,7 @@
 
 describe('<%= name %>', function () {
 
-  var <%= camel %>;
+  var <%= serviceName %>;
 
   beforeEach(function () {
     module('li.<%= type %>s.<%= subModule %>.<%= name %>');
@@ -22,14 +22,14 @@ describe('<%= name %>', function () {
     });
     */
 
-    inject(function (_<%= camel  %>_) {
-      <%= camel  %> = _<%= camel  %>_;
+    inject(function (_<%= serviceName  %>_) {
+      <%= serviceName  %> = _<%= serviceName  %>_;
     });
 
   });
 
   it('should test method', function () {
-    expect(<%= camel  %>.dummyMethod({a: 'a'})).toBe(JSON.stringify({a: 'a'}));
+    expect(<%= serviceName  %>.dummyMethod({a: 'a'})).toBe(JSON.stringify({a: 'a'}));
   });
 
 });

@@ -10,12 +10,12 @@ angular.module('li.<%= type %>s.<%= subModule %>.<%= name %>', [])
  * @description
  * TODO: add description
  */
-.factory('<%= camel %>', function () {
+.factory('<%= serviceName %>', function () {
   return {
     /**
      * @module <%= subModule %>
      * @ngdoc method
-     * @name <%= camel %>#dummyMethod
+     * @name <%= serviceName %>#dummyMethod
      *
      * @param {param1} javascript object
      *
