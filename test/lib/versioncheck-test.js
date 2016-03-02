@@ -10,10 +10,10 @@ var testRoot = path.resolve(__dirname) + '/..';
 var spawn = require('child_process').spawn;
 var rewire = require('rewire');
 var badErrorRespnse = 'Bad response';
-var successVersion = 15.7;
-var higherVersion = '16.1';
-var higherVersion2 = '15.7.1';
-var higherVersion3 = '15.10';
+var successVersion = 16.2;
+var higherVersion = '16.4';
+var higherVersion2 = '16.3.1';
+var higherVersion3 = '16.3';
 var lowerVersion = 12.1;
 var lowerVersion1 = 15.4;
 var emptyErrorResponse = 'Empty version check response';
@@ -22,7 +22,7 @@ var errorResponse2 = 'Invalid response from server';
 
 describe('test version check', function() {
   this.slow(1000);
-  var versionCheckApi = "/restapi/ldntool/plugins/version";
+  var versionCheckApi = "/restapi/ldntool/plugins/version?format=json";
 
   function createErrorRequest(errMsg) {
     return nock(apiHost)
@@ -35,7 +35,7 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>error</status></version-response>');
+        .reply(200, '{"status": "error"}');
   }
 
   function createMangledResponse() {
@@ -49,22 +49,21 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>BadVersion</version></version-response>');
+        .reply(200, '{"status":"OK", "version": "BadVersion"}');
   }
 
   function createResponse(versionNum) {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>'+versionNum
-         + '</version></version-response>');
+        .reply(200, '{"status":"OK", "version": "' + versionNum + '"}');
   }
   function createInvalidPluginTokenResponse() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<service-response><message>Anonymous users cannot view or modify community plugins. Go to Studio > SDK and confirm that your upload token has not expired.' +
-        '</message> <status>UPLOAD_FAIL</status> </service-response>');
+        .reply(200, '{"service-response": {"hard-failures": [ ], "message": "Anonymous users cannot view or modify community plugins. Go to Studio > SDK and confirm that your upload token has not expired.' +
+        '", "soft-failures":[ ], "status":"UPLOAD_FAIL", "success": false }}');
   }
 
   function createServerMock(serverConfig) {

@@ -33,14 +33,14 @@ function createUploadErrorResponseScope(path, statusCode, error) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.xml');
+    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
 function createUploadResponseScope(path, responseFileName) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.xml');
+    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.json');
 }
 
 function createServerMock(serverConfig, options) {
@@ -129,7 +129,7 @@ describe('test uploading plugin', function() {
   function uploadPlugin(done, expects, options) {
     processOptions(options);
 
-    path = '/restapi/ldntool/larservice/submit-lar';
+    path = '/restapi/ldntool/larservice/submit-lar?format=json';
     if (defined(options) && defined(options.strictMode) && options.strictMode) {
       path = path + (path.indexOf('?') > -1 ? '&' : '?') + 'lar.strict_mode=true';
     }

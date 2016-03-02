@@ -35,14 +35,14 @@ function createExportErrorResponseScope(path, statusCode, error) {
   return nock(apiHost)
     .log(console.log)
     .get(path)
-    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.xml');
+    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
 function createClearResponseRequestScope(path, responseFileName) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.xml');
+    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.json');
 }
 
 function createErrorRequestScope(path, errMsg, isPost) {
@@ -54,7 +54,7 @@ function createClearErrorResponseScope(path, statusCode, error) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.xml');
+    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
 function createServerMock(serverConfig, options) {
@@ -156,7 +156,7 @@ describe('test exporting plugin', function() {
       sdkOutputDir: undefined
     };
 
-    path = '/restapi/ldntool/plugins/' + pluginType;
+    path = '/restapi/ldntool/plugins/' + pluginType + '?format=json';
     returnFileName = pluginType + '_plugin';
 
     processOptions(false, options);
@@ -188,7 +188,7 @@ describe('test exporting plugin', function() {
       sdkOutputDir: undefined
     };
 
-    path = '/restapi/ldntool/plugins/' + pluginType + '/clear';
+    path = '/restapi/ldntool/plugins/' + pluginType + '/clear?format=json';
     returnFileName = pluginType + '_clear';
 
     processOptions(true, options);

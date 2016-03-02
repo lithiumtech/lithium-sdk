@@ -1,0 +1,1 @@
+{ "service-response": { "message": "SDK cleared all studio plugin points", "status": "CLEAR_SUCCEEDED", "touched-paths": ["/res/init/Common.init.ftl", "/res/layouts/testLayout.layout.xml", "/res/quilts/CommunityPage.quilt.xml", "/res/quilts/custom/testPage.quilt.xml"]}}

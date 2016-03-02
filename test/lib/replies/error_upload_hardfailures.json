@@ -1,0 +1,21 @@
+{
+  "service-response": {
+    "hard-failures": [
+      {
+        "code": "QUILT_INVALID_LAYOUT_FAILURE",
+        "details": "Layout referenced in the quilt is invalid",
+        "message": "Quilt file res/quilts/custom/mytestpage.quilt.xml in the plugin has a possible issue",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Update the layout referenced in the quilt to a valid layout"
+      },
+      {
+        "code": "LAYOUT_PARSE_FAILURE",
+        "details": "Not parsable as a layout xml file. xml parsing failed",
+        "message": "Layout file res/layouts/mytestpage.layout.xml in the plugin has a possible issue",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Fix the layout file to be a valid layout xml file"
+      }
+    ],
+    "status": "UPLOAD_FAILED"
+  }
+}

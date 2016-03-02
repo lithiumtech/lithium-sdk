@@ -18,7 +18,7 @@ var path = require('path');
 
 describe('test project creation', function() {
     this.slow(5000);
-    var versionCheckApi = "/restapi/ldntool/plugins/version";
+    var versionCheckApi = "/restapi/ldntool/plugins/version?format=json";
     var stdin;
     var sandbox;
     var sandboxTestFolder = "/tmp/sandboxtest/";
@@ -27,15 +27,14 @@ describe('test project creation', function() {
         return nock(apiHost)
             .log(console.log)
             .get(versionCheckApi)
-            .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>error</status></version-response>');
+            .reply(200, '{"status": "error"}');
     }
 
     function createResponse(url) {
         return nock(url)
             .log(console.log)
             .get(versionCheckApi)
-            .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>' +
-            '15.8</version></version-response>');
+            .reply(200, '{"status":"OK", "version": "16.2"}');
     }
 
     describe('create project tests', function() {
