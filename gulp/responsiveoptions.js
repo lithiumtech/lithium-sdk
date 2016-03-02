@@ -25,9 +25,11 @@ module.exports = function (gulp, gutil) {
   }
 
   function getOptions(cb) {
-    getResponsiveOptions().handleOptions(getPluginServer().getServer(), {
+    var server = getPluginServer().getServer();
+    getResponsiveOptions().handleOptions(server, {
       pluginType: 'responsive',
       doPut: false,
+      noCache: true,
       skinOpts: {},
       verboseMode: gutil.env['verbose'],
       debugMode: gutil.env['debug'],
@@ -58,17 +60,5 @@ module.exports = function (gulp, gutil) {
     return repsonsiveGulpTask(true);
   });
 
-  gulp.task('responsive-options-get', ['clean','version-check'], function () {
-    return repsonsiveGulpTask(false);
-  });
-
-  var taskDependencies = [];
-
-  if (gutil.env['set']) {
-    taskDependencies.push('responsive-options-set');
-  } else {
-    taskDependencies.push('responsive-options-get');
-  }
-
-  gulp.task('responsive-options', taskDependencies);
+  gulp.task('responsive-options', ['responsive-options-set']);
 };
