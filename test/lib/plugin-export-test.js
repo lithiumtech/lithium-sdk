@@ -11,6 +11,7 @@ chai.use(sinonChai);
 
 var fs = require('fs');
 var path = require('path');
+var serverMocks = require('./server-mocks');
 var testRoot = path.resolve(__dirname) + '/..';
 var gutil = require('gulp-util');
 var apiHost = 'https://mycommunity.com:443';
@@ -57,47 +58,6 @@ function createClearErrorResponseScope(path, statusCode, error) {
     .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
-function createServerMock(serverConfig, options) {
-  var serverApi = {};
-  Object.keys(serverConfig).forEach(function (key) {
-    serverApi[key] = function () {
-      return serverConfig[key];
-    };
-  });
-
-  if (defined(options)) {
-    Object.keys(options).forEach(function (key) {
-      serverApi[key] = function () {
-        return options[key];
-      };
-    });
-  }
-
-  serverApi['pluginUploadProtocol'] = function() {
-    var serverUrl = serverApi['serverUrl']();
-    if (serverUrl && serverUrl.indexOf('http://') > -1) {
-      return 'http';
-    }
-
-    return 'https';
-  };
-
-  return serverApi;
-}
-
-function createDefaultServerMock(options) {
-  return createServerMock({
-    //community: '',
-    dryRun: false,
-    force: false,
-    pluginPoints: [],
-    pluginToken: 'c95a3357-baed-4f09-9596-86583189b33e',
-    serverUrl: 'https://mycommunity.com',
-    strictMode: false,
-    verbose: false
-  }, options);
-}
-
 describe('test exporting plugin', function() {
   this.slow(500);
   var sandbox;
@@ -126,7 +86,7 @@ describe('test exporting plugin', function() {
         var pointsStr = options.fileNameSuffix.replace(/_/g, ',');
         var points = pointsStr.split(',');
         answers = {pluginPoints: points};
-        server = createServerMock({
+        server = serverMocks.createServerMock({
           //community: '',
           dryRun: false,
           force: false,
@@ -233,7 +193,7 @@ describe('test exporting plugin', function() {
     nock.cleanAll();
     clearedFiles = [];
     exportedFiles = [];
-    server = createDefaultServerMock();
+    server = serverMocks.createDefaultServerMock();
   });
 
   afterEach(function() {

@@ -9,6 +9,7 @@ var apiHost = 'https://mycommunity.com';
 var testRoot = path.resolve(__dirname) + '/..';
 var spawn = require('child_process').spawn;
 var rewire = require('rewire');
+var serverMocks = require('./server-mocks');
 var badErrorRespnse = 'Bad response';
 var successVersion = 16.2;
 var higherVersion = '16.4';
@@ -16,7 +17,6 @@ var higherVersion2 = '16.3.1';
 var higherVersion3 = '16.3';
 var lowerVersion = 12.1;
 var lowerVersion1 = 15.4;
-var emptyErrorResponse = 'Empty version check response';
 var errorResponse = 'Invalid version check response';
 var errorResponse2 = 'Invalid response from server';
 
@@ -66,41 +66,6 @@ describe('test version check', function() {
         '", "soft-failures":[ ], "status":"UPLOAD_FAIL", "success": false }}');
   }
 
-  function createServerMock(serverConfig) {
-    var serverApi = {};
-    Object.keys(serverConfig).forEach(function (key) {
-      serverApi[key] = function () {
-        return serverConfig[key];
-      };
-    });
-
-    serverApi['pluginUploadProtocol'] = function() {
-      var serverUrl = serverApi['serverUrl']();
-      if (serverUrl && serverUrl.indexOf('http://') > -1) {
-        return 'http';
-      }
-
-      return 'https';
-    };
-
-    return serverApi;
-  }
-
-  function createDefaultServerMock() {
-    return createServerMock({
-      //community: '',
-      dryRun: false,
-      force: false,
-      pluginPoints: [],
-      pluginToken: 'c95a3357-baed-4f09-9596-86583189b33e',
-      serverUrl: apiHost,
-      strictMode: false,
-      verbose: false,
-      toolVersion: '1.0.0',
-      allowStudioOverrides: false
-    });
-  }
-
   describe('version check response', function() {
     var server;
 
@@ -128,12 +93,11 @@ describe('test version check', function() {
     }
 
     before(function() {
-      server = createDefaultServerMock();
+      server = serverMocks.createDefaultServerMock();
     });
 
     beforeEach(function() {
       nock.cleanAll();
-
     });
 
     it('should return error response from server', function(done) {
