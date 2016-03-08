@@ -97,10 +97,10 @@ describe('test skin object creation', function() {
 
   it('should return all the responsive skins', function(done) {
     var config = {
-      skins: [ 'responsive_base', 'responsive_peak' ]
+      skins: [ 'responsive_peak' ]
     };
-    var responsiveSkinIds = skinLib.getResponsiveSkinIds(config);
-    var responsiveSkins = skinLib.getResponsiveSkins(config);
+    var responsiveSkinIds = skinLib.getResponsiveSkinIds();
+    var responsiveSkins = skinLib.getResponsiveSkins();
     console.log(JSON.stringify(responsiveSkins));
 
     expect(responsiveSkinIds).to.deep.equal(responsiveSkins
