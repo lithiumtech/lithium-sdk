@@ -286,7 +286,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('watch-res-sass', function (cb) {
     if (getServer().useLocalCompile()) {
       startLr();
-      getSkins().compile();
+      getSkins().compile(true);
       getSkins().server();
     }
 
@@ -296,7 +296,7 @@ module.exports = function (gulp, gutil) {
           if (getServer().useLocalCompile()) {
             var startTime = process.hrtime();
             gutil.log('Starting sass skin compile');
-            getSkins().compile(livereload()).on('end', function () {
+            getSkins().compile(false, livereload()).on('end', function () {
                 gutil.log('Completed sass skin compile in: ' + gutil.colors.green(prettyTime()(process.hrtime(startTime))));
                 done();
             });
