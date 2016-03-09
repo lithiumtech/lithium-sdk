@@ -22,7 +22,7 @@ module.exports = function (gulp, gutil) {
 
     var server = getPluginServer().getServer();
 
-    pluginExport.exportPlugin(server, {
+    return pluginExport.exportPlugin(server, {
       pluginType: 'core',
       doClear: false,
       verboseMode: gutil.env['verbose'],
@@ -35,7 +35,7 @@ module.exports = function (gulp, gutil) {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      exportPlugin();
+      exportPlugin().pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginExport',
@@ -43,7 +43,7 @@ module.exports = function (gulp, gutil) {
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginExport) {
-          exportPlugin();
+          exportPlugin().pipe(stream);
         } else {
           stream.end();
         }

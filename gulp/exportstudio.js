@@ -17,25 +17,25 @@ module.exports = function (gulp, gutil) {
 
 	function exportPlugin(pluginPointAnswers) {
 		if (!pluginExport) {
-        	pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
-      	}
+      pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
+    }
 
-        var server = getPluginServer().getServer();
+    var server = getPluginServer().getServer();
 
-      	pluginExport.exportPlugin(server, {
-            pluginType: 'studio',
-            doClear: false,
-            verboseMode: gutil.env['verbose'],
-            debugMode: gutil.env['debug'],
-            sdkOutputDir: gutil.env['todir'] || server.sdkOutputDir()
-        }, pluginPointAnswers, function() {});
+    return pluginExport.exportPlugin(server, {
+        pluginType: 'studio',
+        doClear: false,
+        verboseMode: gutil.env['verbose'],
+        debugMode: gutil.env['debug'],
+        sdkOutputDir: gutil.env['todir'] || server.sdkOutputDir()
+    }, pluginPointAnswers, function() {});
 	}
 
 	gulp.task('studio-plugin-export', ['clean', 'version-check' ], function () {
     	var stream = through().obj();
     	var server = getPluginServer().getServer();
     	if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      		exportPlugin(getPluginServer().getPluginPoints());
+      		exportPlugin(getPluginServer().getPluginPoints()).pipe(stream);
     	} else {
       		inquirer().prompt({
         		name: 'pluginExport',
@@ -43,7 +43,7 @@ module.exports = function (gulp, gutil) {
         		type: 'confirm'
       		}, function (answers) {
         		if (answers.pluginExport) {
-          			exportPlugin(getPluginServer().getPluginPoints());
+          			exportPlugin(getPluginServer().getPluginPoints()).pipe(stream);
         		} else {
         			inquirer().prompt({
         				name: 'pluginPoints',
@@ -60,7 +60,7 @@ module.exports = function (gulp, gutil) {
 						}
 					}, function(answers) {
 						if (answers.pluginPoints) {
-							exportPlugin(answers);
+							exportPlugin(answers).pipe(stream);
 						} else {
 							stream.end();
 						}

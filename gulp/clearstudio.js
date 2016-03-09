@@ -20,7 +20,7 @@ module.exports = function (gulp, gutil) {
       pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin(getPluginServer().getServer(), {
+    return pluginExport.exportPlugin(getPluginServer().getServer(), {
         pluginType: 'studio',
         doClear: true,
         verboseMode: gutil.env['verbose'],
@@ -37,7 +37,7 @@ module.exports = function (gulp, gutil) {
       type: 'confirm'
     }, function (answers) {
       if (answers.pluginFinalCheck) {
-        clearPlugin(pluginPointAnswers);
+        clearPlugin(pluginPointAnswers).pipe(stream);
       } else {
         stream.end();
       }
@@ -48,7 +48,7 @@ module.exports = function (gulp, gutil) {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      clearPlugin(getPluginServer().getPluginPoints());
+      clearPlugin(getPluginServer().getPluginPoints()).pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginExport',

@@ -2,6 +2,7 @@
 
 var AdmZip = require('adm-zip');
 var rewire = require('rewire');
+var through = require('through2');
 var nock = require('nock');
 var chai = require('chai');
 var sinon = require('sinon');
@@ -136,7 +137,7 @@ describe('test exporting plugin', function() {
       done();
     };
 
-    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb);
+    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb).pipe(through.obj());
   }
 
   function clearPlugin(pluginType, done, expects, options) {
@@ -169,7 +170,7 @@ describe('test exporting plugin', function() {
       done();
     };
 
-    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb);
+    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb).pipe(through.obj());
   }
 
   before(function() {
@@ -216,7 +217,7 @@ describe('test exporting plugin', function() {
         {
           cb: function(err) {
             //console.log(err);
-            expect(err.message).to.equal('studio plugin write failed');
+            expect(err.message).to.equal('studio plugin export failed');
             done();
           }
         });
@@ -228,7 +229,7 @@ describe('test exporting plugin', function() {
         {
           cb: function(err) {
             //console.log(err);
-            expect(err.message).to.equal('studio plugin write failed');
+            expect(err.message).to.equal('studio plugin export failed');
             done();
           }
         });

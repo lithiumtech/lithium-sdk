@@ -37,7 +37,10 @@ if (cmds.indexOf(cmd) > -1) {
   console.log(gutil.colors.bold('\nValid Commands'));
   var tab = addSpaces('', maxWordLength);
   cmds.forEach(function (cm) {
-    console.log(gutil.colors.bold(addSpaces(cm, maxWordLength)) +
-      require('./cmd/' + cm).help.replace(/\n/gm, '\n' + tab));
+    var helpObj = require('./cmd/' + cm);
+    if (helpObj.help) {
+      console.log(gutil.colors.bold(addSpaces(cm, maxWordLength)) +
+      helpObj.help.replace(/\n/gm, '\n' + tab));
+    }
   });
 }

@@ -20,7 +20,7 @@ module.exports = function (gulp, gutil) {
       pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
     
-    pluginExport.exportPlugin(getPluginServer().getServer(), {
+    return pluginExport.exportPlugin(getPluginServer().getServer(), {
         pluginType: 'sdk',
         doClear: true,
         verboseMode: gutil.env['verbose'],
@@ -32,7 +32,7 @@ module.exports = function (gulp, gutil) {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      clearPlugin();
+      clearPlugin().pipe(stream);
     } else {
       inquirer().prompt({
         name: 'pluginClear',
@@ -40,7 +40,7 @@ module.exports = function (gulp, gutil) {
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginClear) {
-          clearPlugin();
+          clearPlugin().pipe(stream);
         } else {
         	stream.end();
         }
