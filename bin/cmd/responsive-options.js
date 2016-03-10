@@ -2,12 +2,11 @@
 
 'use strict';
 
-var gulp = require('gulp');
 var gutil = require('gulp-util');
 
 module.exports = {
   run: function () {
-    require('../../lib/responsive-options.js')(gulp, gutil).handleOptionsWithPrompt(function() {});
+    require('../../lib/spawn-gulp')(['responsive-options'].concat(process.argv.splice(3)));
   },
   help: 'Creates responsive options file with configuration information, based on answers to a few questions.'
 };
