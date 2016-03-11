@@ -32,6 +32,14 @@ module.exports = function (gulp, gutil) {
     return skinLib;
   }
 
+  function validateSkinId(val) {
+    return typeof val != 'undefined' && val.trim().length > 4;
+  }
+
+  function validatePort(val) {
+    return putils.validate(val, /^[0-9]+$/);
+  }
+
   gulp.task('responsive-options', ['version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
@@ -44,6 +52,16 @@ module.exports = function (gulp, gutil) {
         throw new Error('must pass both --skin and --port parameters when using the --force flag');
       }
 
+      if (!validateSkinId(skinId)) {
+        throw new Error('the value passed for skin is not valid.');
+      }
+
+      var portValidate = validatePort(port);
+
+      if (portValidate != true) {
+        throw new Error('port: ' + portValidate);
+      }
+
       getResponsiveOptions().putOptions(server, {
         skinOpts: {
           enabled: true,
@@ -54,7 +72,9 @@ module.exports = function (gulp, gutil) {
         verboseMode: gutil.env['verbose'],
         debugMode: gutil.env['debug'],
         configDir: gutil.env['configdir'] || server.configDir()
-      }, cb).pipe(stream);
+      }, function(err) {
+        if (err) throw err;
+      }).pipe(stream);
     } else {
       var skins = getSkinLib().getResponsiveSkinIds();
       if (skins.length < 1) {
@@ -68,9 +88,7 @@ module.exports = function (gulp, gutil) {
           type: 'list',
           message: 'Select a skin id from the list.',
           choices: skins,
-          validate: function (val) {
-            return typeof val != 'undefined' && val.trim().length > 4;
-          }
+          validate: validateSkinId
         },
         {
           name: 'port',
@@ -78,9 +96,7 @@ module.exports = function (gulp, gutil) {
           message: function () {
             return 'Enter the Port you would like to serve the css on, or press enter to use the default';
           },
-          validate: function (val) {
-            return putils.validate(val, /^[0-9]+$/);
-          },
+          validate: validatePort,
           default: function () {
             return '9000';
           }
@@ -95,7 +111,9 @@ module.exports = function (gulp, gutil) {
           verboseMode: gutil.env['verbose'],
           debugMode: gutil.env['debug'],
           configDir: gutil.env['configdir'] || server.configDir()
-        }, function() {}).pipe(stream);
+        }, function(err) {
+          if (err) throw err;
+        }).pipe(stream);
       });
     }
 
