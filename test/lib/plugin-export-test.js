@@ -367,4 +367,17 @@ describe('test exporting plugin', function() {
         { verboseMode: true, debugMode: true});
     });
   });
+
+  describe('export core plugin', function() {
+    it('should export my core plugin', function(done) {
+      exportPlugin('core', done,
+        { itemCount: 8 });
+    });
+
+    it('should export my core plugin verbosely', function(done) {
+      exportPlugin('core', done,
+        { itemCount: 8 },
+        { verboseMode: true, debugMode: true});
+    });
+  });
 });
