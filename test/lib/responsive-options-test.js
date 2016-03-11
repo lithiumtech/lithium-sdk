@@ -94,7 +94,7 @@ describe('test responsive options', function() {
           }
         });
       } else if (expects.respondSuccess) {
-        createResponse(config, {
+        createResponse(opts.doPut ? { status:'OK', message:''}  : config, {
           "dev_skin":{
             "enabled":true,
             "id":"my_responsive_skin",
@@ -102,6 +102,7 @@ describe('test responsive options', function() {
             "anonymous_viewing":true
           }
         });
+        createResponse(config);
       } else if (expects.errorResponse) {
         createErrorResponse({
           "dev_skin":{
@@ -142,12 +143,25 @@ describe('test responsive options', function() {
 
         return path;
       };
+
+      var configFileValue = null;
+
       var fsMock = {
-        existsSync: function(dir) {
-          return fs.existsSync(fixDir(dir));
+        existsSync: function(path) {
+          if (path == 'configs/responsive.conf.json') {
+            return configFileValue != null;
+          }
+          return fs.existsSync(fixDir(path));
         },
         readFileSync: function(path) {
+          if (path == 'configs/responsive.conf.json') {
+            return configFileValue;
+          }
           return fs.readFileSync(fixDir(path));
+        },
+        writeFile: function(path, val, cb) {
+          configFileValue = val;
+          return cb();
         },
         mkdirSync: function(path) {
           return fs.mkdirSync(fixDir(path));
@@ -157,7 +171,7 @@ describe('test responsive options', function() {
       responsiveOptions.__set__({
         fs: fsMock
       });
-      var cb = opts.errorCallback ? opts.errorCallback : function(err) {
+      var cb = opts.cb ? opts.cb : function(err) {
        done();
       };
       responsiveOptions(gulp, gutil).putOptions(server, opts, cb).pipe(through.obj());;
@@ -173,7 +187,7 @@ describe('test responsive options', function() {
 
     it('should return error response from server', function(done) {
       check(done, { serverError: true }, undefined,
-        { errorCallback: function(err) {
+        { cb: function(err) {
           expect(err.message).to.contain('Error making request to save responsive options');
           done();
         }, debugMode: false
@@ -185,7 +199,7 @@ describe('test responsive options', function() {
         expect(err.message).to.contain('Error making request to save responsive options');
         done();
       };
-      check(done, { errorResponse: true }, undefined, { errorCallback: cb, debugMode: false });
+      check(done, { errorResponse: true }, undefined, { cb: cb, debugMode: false });
     });
 
     it('should return error for mangled response from server', function(done) {
@@ -193,7 +207,7 @@ describe('test responsive options', function() {
         expect(err.message).to.contain('server returned status code 500');
         done();
       };
-      check(done, { mangledResponse: true }, undefined, { errorCallback: cb, debugMode: false });
+      check(done, { mangledResponse: true }, undefined, { cb: cb, debugMode: false });
     });
 
     it('should return error for bad plugin token response from server', function(done) {
@@ -201,14 +215,18 @@ describe('test responsive options', function() {
         expect(err.message).to.contain('Error making request to save responsive options');
         done();
       };
-      check(done, { invalidPluginTokenResponse : true }, undefined, { errorCallback: cb, debugMode: false });
+      check(done, { invalidPluginTokenResponse : true }, undefined, { cb: cb, debugMode: false });
     });
 
     it('should return success', function(done) {
-      var cb = function() {
+      var cb = function(err, config, msg) {
+        expect(err).to.be.null;
+        expect(config).to.not.be.null;
+        expect(msg).to.equal('saved configs/responsive.conf.json');
         done();
       };
       check(done, { respondSuccess: true }, {
+        status: 'OK',
         features: ['responsivepeak', 'responsivebase'],
         feature: {
           responsivepeak: {
