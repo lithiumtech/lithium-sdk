@@ -2,6 +2,7 @@
 
 var AdmZip = require('adm-zip');
 var rewire = require('rewire');
+var through = require('through2');
 var nock = require('nock');
 var chai = require('chai');
 var sinon = require('sinon');
@@ -11,6 +12,7 @@ chai.use(sinonChai);
 
 var fs = require('fs');
 var path = require('path');
+var serverMocks = require('./server-mocks');
 var testRoot = path.resolve(__dirname) + '/..';
 var gutil = require('gulp-util');
 var apiHost = 'https://mycommunity.com:443';
@@ -35,14 +37,14 @@ function createExportErrorResponseScope(path, statusCode, error) {
   return nock(apiHost)
     .log(console.log)
     .get(path)
-    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.xml');
+    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
 function createClearResponseRequestScope(path, responseFileName) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.xml');
+    .replyWithFile(200, testRoot + '/lib/replies/' + responseFileName + '.json');
 }
 
 function createErrorRequestScope(path, errMsg, isPost) {
@@ -54,48 +56,7 @@ function createClearErrorResponseScope(path, statusCode, error) {
   return nock(apiHost)
     .log(console.log)
     .post(path)
-    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.xml');
-}
-
-function createServerMock(serverConfig, options) {
-  var serverApi = {};
-  Object.keys(serverConfig).forEach(function (key) {
-    serverApi[key] = function () {
-      return serverConfig[key];
-    };
-  });
-
-  if (defined(options)) {
-    Object.keys(options).forEach(function (key) {
-      serverApi[key] = function () {
-        return options[key];
-      };
-    });
-  }
-
-  serverApi['pluginUploadProtocol'] = function() {
-    var serverUrl = serverApi['serverUrl']();
-    if (serverUrl && serverUrl.indexOf('http://') > -1) {
-      return 'http';
-    }
-
-    return 'https';
-  };
-
-  return serverApi;
-}
-
-function createDefaultServerMock(options) {
-  return createServerMock({
-    //community: '',
-    dryRun: false,
-    force: false,
-    pluginPoints: [],
-    pluginToken: 'c95a3357-baed-4f09-9596-86583189b33e',
-    serverUrl: 'https://mycommunity.com',
-    strictMode: false,
-    verbose: false
-  }, options);
+    .replyWithFile(statusCode, testRoot + '/lib/replies/error_' + error + '.json');
 }
 
 describe('test exporting plugin', function() {
@@ -126,7 +87,7 @@ describe('test exporting plugin', function() {
         var pointsStr = options.fileNameSuffix.replace(/_/g, ',');
         var points = pointsStr.split(',');
         answers = {pluginPoints: points};
-        server = createServerMock({
+        server = serverMocks.createServerMock({
           //community: '',
           dryRun: false,
           force: false,
@@ -156,7 +117,7 @@ describe('test exporting plugin', function() {
       sdkOutputDir: undefined
     };
 
-    path = '/restapi/ldntool/plugins/' + pluginType;
+    path = '/restapi/ldntool/plugins/' + pluginType + '?format=json';
     returnFileName = pluginType + '_plugin';
 
     processOptions(false, options);
@@ -176,7 +137,7 @@ describe('test exporting plugin', function() {
       done();
     };
 
-    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb);
+    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb).pipe(through.obj());
   }
 
   function clearPlugin(pluginType, done, expects, options) {
@@ -188,7 +149,7 @@ describe('test exporting plugin', function() {
       sdkOutputDir: undefined
     };
 
-    path = '/restapi/ldntool/plugins/' + pluginType + '/clear';
+    path = '/restapi/ldntool/plugins/' + pluginType + '/clear?format=json';
     returnFileName = pluginType + '_clear';
 
     processOptions(true, options);
@@ -209,7 +170,7 @@ describe('test exporting plugin', function() {
       done();
     };
 
-    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb);
+    pluginExport(gulp, gutil).exportPlugin(server, opts, answers, cb).pipe(through.obj());
   }
 
   before(function() {
@@ -233,7 +194,7 @@ describe('test exporting plugin', function() {
     nock.cleanAll();
     clearedFiles = [];
     exportedFiles = [];
-    server = createDefaultServerMock();
+    server = serverMocks.createDefaultServerMock();
   });
 
   afterEach(function() {
@@ -256,7 +217,7 @@ describe('test exporting plugin', function() {
         {
           cb: function(err) {
             //console.log(err);
-            expect(err.message).to.equal('studio plugin write failed');
+            expect(err.message).to.equal('studio plugin export failed');
             done();
           }
         });
@@ -268,7 +229,7 @@ describe('test exporting plugin', function() {
         {
           cb: function(err) {
             //console.log(err);
-            expect(err.message).to.equal('studio plugin write failed');
+            expect(err.message).to.equal('studio plugin export failed');
             done();
           }
         });
@@ -403,6 +364,19 @@ describe('test exporting plugin', function() {
     it('should clear my sdk plugin verbosely', function(done) {
       clearPlugin('sdk', done,
         { itemCount: 1 },
+        { verboseMode: true, debugMode: true});
+    });
+  });
+
+  describe('export core plugin', function() {
+    it('should export my core plugin', function(done) {
+      exportPlugin('core', done,
+        { itemCount: 8 });
+    });
+
+    it('should export my core plugin verbosely', function(done) {
+      exportPlugin('core', done,
+        { itemCount: 8 },
         { verboseMode: true, debugMode: true});
     });
   });

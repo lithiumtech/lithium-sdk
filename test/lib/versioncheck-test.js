@@ -9,20 +9,20 @@ var apiHost = 'https://mycommunity.com';
 var testRoot = path.resolve(__dirname) + '/..';
 var spawn = require('child_process').spawn;
 var rewire = require('rewire');
+var serverMocks = require('./server-mocks');
 var badErrorRespnse = 'Bad response';
-var successVersion = 15.7;
-var higherVersion = '16.1';
-var higherVersion2 = '15.7.1';
-var higherVersion3 = '15.10';
+var successVersion = 16.2;
+var higherVersion = '16.4';
+var higherVersion2 = '16.3.1';
+var higherVersion3 = '16.10';
 var lowerVersion = 12.1;
 var lowerVersion1 = 15.4;
-var emptyErrorResponse = 'Empty version check response';
 var errorResponse = 'Invalid version check response';
 var errorResponse2 = 'Invalid response from server';
 
 describe('test version check', function() {
   this.slow(1000);
-  var versionCheckApi = "/restapi/ldntool/plugins/version";
+  var versionCheckApi = "/restapi/ldntool/plugins/version?format=json";
 
   function createErrorRequest(errMsg) {
     return nock(apiHost)
@@ -35,7 +35,7 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>error</status></version-response>');
+        .reply(200, '{"status": "error"}');
   }
 
   function createMangledResponse() {
@@ -49,57 +49,21 @@ describe('test version check', function() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>BadVersion</version></version-response>');
+        .reply(200, '{"status":"OK", "version": "BadVersion"}');
   }
 
   function createResponse(versionNum) {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><version-response><status>OK</status><version>'+versionNum
-         + '</version></version-response>');
+        .reply(200, '{"status":"OK", "version": "' + versionNum + '"}');
   }
   function createInvalidPluginTokenResponse() {
     return nock(apiHost)
         .log(console.log)
         .get(versionCheckApi)
-        .reply(200, '<service-response><message>Anonymous users cannot view or modify community plugins. Go to Studio > SDK and confirm that your upload token has not expired.' +
-        '</message> <status>UPLOAD_FAIL</status> </service-response>');
-  }
-
-  function createServerMock(serverConfig) {
-    var serverApi = {};
-    Object.keys(serverConfig).forEach(function (key) {
-      serverApi[key] = function () {
-        return serverConfig[key];
-      };
-    });
-
-    serverApi['pluginUploadProtocol'] = function() {
-      var serverUrl = serverApi['serverUrl']();
-      if (serverUrl && serverUrl.indexOf('http://') > -1) {
-        return 'http';
-      }
-
-      return 'https';
-    };
-
-    return serverApi;
-  }
-
-  function createDefaultServerMock() {
-    return createServerMock({
-      //community: '',
-      dryRun: false,
-      force: false,
-      pluginPoints: [],
-      pluginToken: 'c95a3357-baed-4f09-9596-86583189b33e',
-      serverUrl: apiHost,
-      strictMode: false,
-      verbose: false,
-      toolVersion: '1.0.0',
-      allowStudioOverrides: false
-    });
+        .reply(200, '{"service-response": {"hard-failures": [ ], "message": "Anonymous users cannot view or modify community plugins. Go to Studio > SDK and confirm that your upload token has not expired.' +
+        '", "soft-failures":[ ], "status":"UPLOAD_FAIL", "success": false }}');
   }
 
   describe('version check response', function() {
@@ -129,12 +93,11 @@ describe('test version check', function() {
     }
 
     before(function() {
-      server = createDefaultServerMock();
+      server = serverMocks.createDefaultServerMock();
     });
 
     beforeEach(function() {
       nock.cleanAll();
-
     });
 
     it('should return error response from server', function(done) {

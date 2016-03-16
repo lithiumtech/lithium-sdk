@@ -1,0 +1,14 @@
+{
+  "service-response": {
+    "hard-failures": [
+      {
+        "code": "PLUGIN_POINT_DOWNLOAD_FAILURE",
+        "details": "The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /res/layouts/",
+        "message": "No files were found for the layout plugin point",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Either select Y to download the entire plugin, or only choose plugin points that are in the Studio plugin"
+      }
+    ],
+    "status": "DOWNLOAD_FAIL"
+  }
+}

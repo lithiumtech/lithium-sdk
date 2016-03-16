@@ -5,7 +5,7 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 
 module.exports = function (gulp, gutil) {
-	var pluginExport, pluginServer;
+  var pluginExport, pluginServer;
 
   function getPluginServer() {
     if (!pluginServer) {
@@ -15,34 +15,37 @@ module.exports = function (gulp, gutil) {
     return pluginServer;
   }
 
-  function clearPlugin() {
+  function exportPlugin() {
     if (!pluginExport) {
       pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
     }
-    
-    return pluginExport.exportPlugin(getPluginServer().getServer(), {
-        pluginType: 'sdk',
-        doClear: true,
-        verboseMode: gutil.env['verbose'],
-        debugMode: gutil.env['debug']
+
+    var server = getPluginServer().getServer();
+
+    return pluginExport.exportPlugin(server, {
+      pluginType: 'core',
+      doClear: false,
+      verboseMode: gutil.env['verbose'],
+      debugMode: gutil.env['debug'],
+      coreOutputDir: gutil.env['todir'] || server.coreOutputDir()
     }, undefined, function() {});
   }
 
-  gulp.task('sdk-clear', ['clean','version-check'], function () {
+  gulp.task('core-plugin-export', ['clean','version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      clearPlugin().pipe(stream);
+      exportPlugin().pipe(stream);
     } else {
       inquirer().prompt({
-        name: 'pluginClear',
-        message: 'Would you like to clear the entire sdk plugin from the server?',
+        name: 'pluginExport',
+        message: 'Are you sure you would like to download the entire core plugin?',
         type: 'confirm'
       }, function (answers) {
-        if (answers.pluginClear) {
-          clearPlugin().pipe(stream);
+        if (answers.pluginExport) {
+          exportPlugin().pipe(stream);
         } else {
-        	stream.end();
+          stream.end();
         }
       });
     }
@@ -50,5 +53,5 @@ module.exports = function (gulp, gutil) {
     return stream;
   });
 
-  gulp.task('clearsdk', ['sdk-clear']);
+  gulp.task('exportcore', ['core-plugin-export']);
 };

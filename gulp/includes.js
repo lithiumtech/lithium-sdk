@@ -30,6 +30,8 @@ module.exports = function (req) {
   require('./clearstudio.js')(gulp, gutil);
   require('./exportsdk.js')(gulp, gutil);
   require('./clearsdk.js')(gulp, gutil);
+  require('./exportcore.js')(gulp, gutil);
+  require('./responsiveoptions')(gulp, gutil);
   require('./versioncheck')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {

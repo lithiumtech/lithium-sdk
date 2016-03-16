@@ -1,0 +1,6 @@
+{
+  "service-response": {
+    "message": "Anonymous users cannot view or modify community plugins. Go to Studio &gt; SDK and confirm that your upload token has not expired.",
+    "status": "CLEAR_FAIL"
+  }
+}

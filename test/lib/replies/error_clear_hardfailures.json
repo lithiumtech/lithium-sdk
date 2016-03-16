@@ -1,0 +1,29 @@
+{
+  "service-response": {
+    "hard-failures": [
+      {
+        "code": "PLUGIN_POINT_CLEAR_FAILURE",
+        "details": "The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /res/quilts/",
+        "message": "No files were found for the quilt plugin point",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin"
+      },
+      {
+        "code": "PLUGIN_POINT_CLEAR_FAILURE",
+        "details": "The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /web/html/asset/",
+        "message": "No files were found for the asset plugin point",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin"
+      },
+      {
+        "code": "PLUGIN_POINT_CLEAR_FAILURE",
+        "details": "The Studio plugin does not have any files in one or more of these directories in the Studio plugin: /res/components/",
+        "message": "No files were found for the component plugin point",
+        "ruleFailed": "CUSTOM_RULE",
+        "suggestion": "Either select Y to clear the entire plugin, or only choose plugin points that are in the Studio plugin"
+      }
+    ],
+    "message": "Error trying to clear studio plugin points",
+    "status": "CLEAR_FAILED"
+  }
+}
