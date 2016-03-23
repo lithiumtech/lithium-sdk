@@ -1,0 +1,12 @@
+@mixin core\components\first-component {
+  .lia-first-component {
+    .first-component-tab .first-component-link:hover {
+      cursor: pointer;
+    }
+
+    .first-component-batch {
+      left: $padding-base-horizontal;
+      position: absolute;
+    }
+  }
+}

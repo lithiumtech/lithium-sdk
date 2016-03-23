@@ -1,0 +1,16 @@
+@mixin my-second-mixin($side: left) {
+  $other-side: right;
+
+  @if ($side == right) {
+    $other-side: left;
+    float: right;
+  }
+
+  margin-#{$side}: floor($padding-base-horizontal * 2.5);
+  margin-top: floor(($li-icon-size - $line-height-computed) / 2);
+
+  @include media(tablet) {
+    #{$other-side}: 20%;
+    position: absolute;
+  }
+}

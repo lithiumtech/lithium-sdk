@@ -1,0 +1,12 @@
+$brand-primary:                 #0691c1;
+$brand-success:                 #5c9165;
+$font-size-base:                14px !default;
+$line-height-base:              1.428571429 !default; // 20/14
+$li-triangletop-size:           45px !default;
+$btn-primary-color:             #fff !default;
+$li-triangletop-font-size:      18px !default;
+$padding-base-vertical:         6px !default;
+$padding-base-horizontal:       12px !default;
+$li-icon-size:                  35px !default;
+$line-height-computed:          floor(($font-size-base * $line-height-base)) !default; // ~20px
+$li-bootstrap-classes-included: false
