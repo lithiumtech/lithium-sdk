@@ -47,6 +47,7 @@ describe('test responsive options', function() {
 
     return n;
   }
+
   function createInvalidPluginTokenResponse(requestBody) {
     var n = nock(apiHost).log(console.log);
     n = requestBody ? n.post(apiPath, requestBody) : n.get(apiPath);

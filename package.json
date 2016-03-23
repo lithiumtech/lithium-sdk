@@ -119,7 +119,8 @@
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
     "glob-stream": "^3.1.5",
-    "mock-stdin": "^0.3.0"
+    "mock-stdin": "^0.3.0",
+    "temp": "^0.8.3"
   },
   "scripts": {
     "test": "istanbul test _mocha"

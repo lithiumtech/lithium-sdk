@@ -1,0 +1,6 @@
+@import 'mixins';
+@import 'components';
+
+@mixin core\all {
+  @include core\components\all;
+}

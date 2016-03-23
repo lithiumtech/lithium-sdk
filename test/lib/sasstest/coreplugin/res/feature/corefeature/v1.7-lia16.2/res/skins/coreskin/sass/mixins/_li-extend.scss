@@ -1,0 +1,12 @@
+@mixin li-extend($classname, $optional: '') {
+  @if str-index($classname, ' !optional') != null {
+    $classname: str-replace($classname, ' !optional', '');
+    $optional: ' !optional';
+  }
+
+  @if $li-bootstrap-classes-included and str-index($classname, '.lia') == null {
+    @extend #{str-replace($classname, '.', '%')} #{$optional};
+  } @else {
+    @extend #{$classname} #{$optional};
+  }
+}

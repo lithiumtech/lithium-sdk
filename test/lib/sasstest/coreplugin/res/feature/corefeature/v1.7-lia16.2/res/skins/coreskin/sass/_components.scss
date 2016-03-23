@@ -1,0 +1,6 @@
+// framework components which are more likely to be overridden later
+@import 'components/first-component';
+
+@mixin core\components\all {
+  @include core\components\first-component;
+}

@@ -1,0 +1,5 @@
+@import 'variables';
+@import 'coreskin/sass/core-all';
+
+@include core\all;
+@import 'style';

@@ -1,0 +1,27 @@
+@mixin my-first-mixin($color, $icon) {
+  position: relative;
+
+  @include media(phone) {
+    position: static;
+  }
+
+  &:before {
+    border-left: $li-triangletop-size solid transparent;
+    border-top: $li-triangletop-size solid;
+    border-top-color: $color;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &:after {
+    @include li-extend('.lia-fa');
+    color: $btn-primary-color;
+    content: $icon;
+    font-size: $li-triangletop-font-size;
+    position: absolute;
+    right: $padding-base-vertical;
+    top: $padding-base-vertical;
+  }
+}
