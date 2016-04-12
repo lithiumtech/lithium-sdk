@@ -32,6 +32,7 @@ module.exports = function (req) {
   require('./clearsdk.js')(gulp, gutil);
   require('./exportcore.js')(gulp, gutil);
   require('./responsiveoptions')(gulp, gutil);
+  require('./createskin.js')(gulp, gutil);
   require('./versioncheck')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
