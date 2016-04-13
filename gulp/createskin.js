@@ -127,15 +127,27 @@ module.exports = function (gulp, gutil) {
                 type: 'list',
                 message: 'Select a parent skin from the list.',
                 choices: function(repo) {
+                    var otherCommunitySkins = skinLib.getOtherCommunitySkins();
+
                     if (repo.isResponsive) {
-                        //All core responsive skins are allowed parents. All local SDK skins that are responsive are also
-                        //valid parents.
-                        return skinLib.getResponsiveSkinIds().concat(skinLib.getCoreResponsiveSkinIds());
+                        var communityResponsiveSkinIds = otherCommunitySkins.filter(function(skin) {
+                            return skin.isResponsive();
+                        }).map(function(skin) {
+                            return skin.getId();
+                        });
+                        //All core responsive skins are allowed parents. All local SDK skins and community skins from
+                        //other plugins that are responsive are allowed parents
+                        return skinLib.getResponsiveSkinIds().concat(skinLib.getCoreResponsiveSkinIds()).concat(communityResponsiveSkinIds);
                     } else {
-                        //All core skins plus all sdk local skins are valid parents
+                        //All core and community skins plus all sdk local skins are valid parents
+                        var communitySkinIds = otherCommunitySkins.filter(function(skin) {
+                            return !skin.isResponsive();
+                        }).map(function(skin) {
+                            return skin.getId();
+                        });
                         return skinLib.getLocalSkins().map(function(skin) {
                             return skin.getId();
-                        }).concat(skinLib.getCoreSkinIds());
+                        }).concat(skinLib.getCoreSkinIds()).concat(communitySkinIds);
                     }
                 }
             }
