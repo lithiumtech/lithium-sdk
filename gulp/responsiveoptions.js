@@ -26,7 +26,7 @@ module.exports = function (gulp, gutil) {
 
   function getSkinLib() {
     if (!skinLib) {
-      skinLib = require('../lib/skin')();
+      skinLib = require('../lib/skin')(gulp, gutil);
     }
 
     return skinLib;
