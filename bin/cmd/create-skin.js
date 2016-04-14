@@ -11,6 +11,6 @@ module.exports = {
         require('../../lib/version-check.js')(gulp, gutil).process(server, {
             debugMode: gutil.env['debug']
         }, cb);
-
-    }
+    },
+    help: 'Creates a new skin.'
 };

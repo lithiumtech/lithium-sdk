@@ -33,7 +33,7 @@ module.exports = function (gulp, gutil) {
         if (value === '') {
             throw Error("Bad input value");
         }
-        return value.replace(/ /g, '_').toLowerCase();
+        return value.trim().replace(/ /g, '_').toLowerCase();
     }
 
     /**
@@ -55,7 +55,7 @@ module.exports = function (gulp, gutil) {
         //Download core plugins
         pluginExport.exportPlugin(server, {
             pluginType: 'core',
-            doClear: false,
+            doClear: gutil.env['doClear'],
             verboseMode: gutil.env['verbose'],
             debugMode: gutil.env['debug'],
             coreOutputDir: server.coreOutputDir()
