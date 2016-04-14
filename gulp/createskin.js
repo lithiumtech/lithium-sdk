@@ -27,6 +27,16 @@ module.exports = function (gulp, gutil) {
     }
 
     /**
+     * Replace all spaces with underscores and converts the skin name to lowercase
+     */
+    function normalizeSkinId(value) {
+        if (value === '') {
+            throw Error("Bad input value");
+        }
+        return value.replace(/ /g, '_').toLowerCase();
+    }
+
+    /**
      * Exports core plugin skins for sdk if core plugins are not already downloaded.
      */
     function downloadCorePlugins() {
@@ -83,9 +93,9 @@ module.exports = function (gulp, gutil) {
             {
                 type: 'input',
                 name: 'name',
-                message: 'What is your skin ID?\nOnly lower case characters and numbers are allowed.',
+                message: 'What is the display name for your skin?',
                 validate: function (val) {
-                    return validate(val, /^[a-z0-9]+$/, 'Skin ID', 30);
+                    return validate(val, /^[a-zA-Z0-9 _\-]+$/, 'Skin display name', 100);
                 }
             },
             {
@@ -93,8 +103,9 @@ module.exports = function (gulp, gutil) {
                 name: 'continue',
                 message: 'Do you want to continue?',
                 when: function (repo) {
-                    if (fs.existsSync(path.join('./res/skins/', repo.name))) {
-                        console.log(gutil.colors.red('Skin ID ' + gutil.colors.bold(repo.name) + ' already exists' +
+                    var normalizedSkinId = normalizeSkinId(repo.name);
+                    if (fs.existsSync(path.join('./res/skins/', normalizedSkinId))) {
+                        console.log(gutil.colors.red('Skin ID ' + gutil.colors.bold(normalizedSkinId) + ' already exists' +
                             '\nChoose a different skin ID.'));
                         process.exit(1);
                     } else {
@@ -102,17 +113,6 @@ module.exports = function (gulp, gutil) {
                     }
                 },
                 default: true
-            },
-            {
-                type: 'input',
-                name: 'title',
-                message: 'What is the display name for your skin?',
-                validate: function (val) {
-                    return validate(val, /^[a-zA-Z0-9 _\-]+$/, 'Skin display name', 100);
-                },
-                default: function (repo) {
-                    return repo.name;
-                }
             },
             {
                 type: 'confirm',
@@ -153,11 +153,11 @@ module.exports = function (gulp, gutil) {
             }
         ], function (answers) {
 
-
-            putils.logInfoHighlighted(gutil, "Creating " + (answers.isResponsive? "responsive skin: ": "skin: ") + answers.name);
+            var normalizedSkinId = normalizeSkinId(answers.name);
+            putils.logInfoHighlighted(gutil, "Creating " + (answers.isResponsive? "responsive skin: ": "skin: ") + normalizedSkinId);
 
             // set up new skin info
-            options.skinInfo.name = answers.name;
+            options.skinInfo.name = normalizedSkinId;
             options.skinInfo.title = answers.title;
             options.skinInfo.isResponsive = answers.isResponsive;
             options.skinInfo.debugMode = gutil.env['debug'];
@@ -171,13 +171,13 @@ module.exports = function (gulp, gutil) {
             //Register a error call back to warn user of a failed skin creation process.
             options.skinInfo.errorCb = function(err) {
                 if (err) {
-                    putils.logError(gutil, "Error creating skin: "+answers.name+" Error: "+err.message);
+                    putils.logError(gutil, "Error creating skin: "+normalizedSkinId+" Error: "+err.message);
                     console.log(err, err.stack.split("\n"));
                     //Should we clear out the newly created skin dir? TODO
-                    if (fs.existsSync(path.join(skinLib.skinsBaseDir, answers.name))) {
+                    if (fs.existsSync(path.join(skinLib.skinsBaseDir, normalizedSkinId))) {
                         putils.logWarning(gutil, "Newly created skin directory has not been cleared.");
                     }
-                    putils.logWarning(gutil, "Please delete the directory "+answers.name+" under "+ skinLib.skinsBaseDir+" and try again.");
+                    putils.logWarning(gutil, "Please delete the directory "+normalizedSkinId+" under "+ skinLib.skinsBaseDir+" and try again.");
                 }
             };
 
@@ -185,7 +185,7 @@ module.exports = function (gulp, gutil) {
             
             //Success function when all skin creation process is completed successfully
             options.skinInfo.cb = function() {
-                putils.logSuccess(gutil, gutil.colors.green('Created new skin: ' + answers.name+" under "+skinLib.skinsBaseDir)+" dir.");
+                putils.logSuccess(gutil, gutil.colors.green('Created new skin: ' + normalizedSkinId +" under "+skinLib.skinsBaseDir)+" dir.");
                 return;
             };
             try {
