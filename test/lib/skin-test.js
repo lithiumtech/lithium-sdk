@@ -31,6 +31,9 @@ describe('test skin object creation', function() {
       },
       readdirSync: function(path) {
         return fs.readdirSync(fixResSkinsDir(path));
+      },
+      existsSync: function (path) {
+        return fs.existsSync(fixResSkinsDir(path));
       }
     };
     var pathMock = {
