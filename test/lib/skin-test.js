@@ -16,6 +16,8 @@ describe('test skin object creation', function() {
     var fixResSkinsDir = function(dir) {
       if (dir == 'res/skins') {
         dir = testRoot + '/lib/skins/' + dir;
+      } else if (dir == 'coreplugin') {
+        dir = testRoot + '/lib/' + dir;
       }
 
       return dir;
