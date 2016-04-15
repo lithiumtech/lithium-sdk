@@ -1,0 +1,50 @@
+// framework components which are more likely to be overridden later
+@import 'codebook/alerts';
+@import 'codebook/avatars';
+@import 'codebook/breadcrumbs';
+@import 'codebook/buttons';
+@import 'codebook/dropdowns';
+@import 'codebook/grid';
+@import 'codebook/interaction-icons';
+@import 'codebook/kudos';
+@import 'codebook/labels';
+@import 'codebook/menubars';
+@import 'codebook/modals';
+@import 'codebook/navs';
+@import 'codebook/pagination';
+@import 'codebook/panels';
+@import 'codebook/scaffolding';
+@import 'codebook/scroll-to';
+@import 'codebook/sections';
+@import 'codebook/tables';
+@import 'codebook/tabs';
+@import 'codebook/tags';
+@import 'codebook/type';
+@import 'codebook/user-name';
+@import 'codebook/utilities';
+
+@mixin peak\codebook\all {
+  @include peak\codebook\alerts;
+  @include peak\codebook\avatars;
+  @include peak\codebook\breadcrumbs;
+  @include peak\codebook\buttons;
+  @include peak\codebook\dropdowns;
+  @include peak\codebook\grid;
+  @include peak\codebook\interaction-icons;
+  @include peak\codebook\kudos;
+  @include peak\codebook\labels;
+  @include peak\codebook\menubars;
+  @include peak\codebook\modals;
+  @include peak\codebook\navs;
+  @include peak\codebook\pagination;
+  @include peak\codebook\panels;
+  @include peak\codebook\scaffolding;
+  @include peak\codebook\scroll-to;
+  @include peak\codebook\sections;
+  @include peak\codebook\tables;
+  @include peak\codebook\tabs;
+  @include peak\codebook\tags;
+  @include peak\codebook\type;
+  @include peak\codebook\user-name;
+  @include peak\codebook\utilities;
+}

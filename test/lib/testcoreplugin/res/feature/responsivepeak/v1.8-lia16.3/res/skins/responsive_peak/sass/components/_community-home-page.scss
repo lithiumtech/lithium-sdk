@@ -1,0 +1,150 @@
+@mixin peak\components\community-home-page {
+
+  // Hero area with incorporated header
+
+  // subquilt layout manipulation based on media query
+  /* @noflipstart */
+  .lia-quilt-column-hero-left,
+  .lia-quilt-column-hero-right {
+  /* @noflipend */
+    @include li-extend('.col-sm-12');
+    @include li-extend('.col-xs-12');
+  }
+
+  // moving the center column search and positioning it below the buttons for sm/xl
+  .lia-quilt-column-hero-center {
+    @include li-extend('.col-sm-24');
+    @include li-extend('.col-xs-24');
+
+    @include media(desktop) {
+      padding: 0;
+    }
+
+    @include media(tablet) {
+      border-top: 1px solid rgba($li-bg-secondary, .15);
+      bottom: 0;
+      left: 50%;
+      margin-left: -50%;
+      padding: {
+        bottom: $li-searchbox-padding / 2;
+        top: $li-searchbox-padding / 2;
+      }
+      position: absolute;
+    }
+  }
+
+  .lia-quilt-row-hero-controls {
+    // add padding to compensate for the position: absolute search and icon row
+    // icon row = $li-icon-size-sm + $line-height-computed + $padding-xs-horizontal * 2
+    // search row =  + $li-searchbox-padding * 2 + $li-hero-input-height;
+    padding-bottom: $li-searchbox-padding;
+
+    @include media(tablet) {
+      padding-bottom: $li-icon-size-sm + $line-height-computed + $padding-xs-horizontal * 2 + $li-searchbox-padding * 2 + $li-hero-input-height;
+    }
+  }
+
+  .CommunityPage {
+    .lia-quilt-row-search ,
+    .lia-quilt-row-sub-header {
+      display: none;
+    }
+
+    .lia-quilt-row-feedback {
+      background-color: $li-hero-community-bg;
+    }
+  }
+
+  // HERO COMPONENT
+  // Hero wrapper includes background image
+  .lia-component-quilt-community-hero {
+    background-blend-mode: overlay;
+    background-color: $li-hero-community-bg;
+    background-image: svg-url($li-svg-hero-community-bg, $li-bg-secondary);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: $li-hero-color;
+    margin-top: -1px; // assume empty header in quilt above (empty row leaves 1px min-height)
+    min-height: $li-hero-community-height;
+
+    @include media(tablet) {
+      background-position: center (-$li-search-input-height - $li-search-box-padding * 2 - 1);
+      min-height: $li-hero-community-sm-height;
+    }
+
+    @include media(phone) {
+      min-height: $li-hero-community-xs-height;
+    }
+
+    .lia-nodes-core-node-info {
+      background: none;
+    }
+    // hero button containers
+    .lia-component-common-widget-slide-out-user-menu {
+      @include hero-links-container(right);
+      position: relative;
+    }
+
+    .lia-slide-out-nav-menu {
+      @include hero-links-container;
+    }
+
+    .lia-slide-out-nav-menu-title {
+      @include hero-links;
+
+      &:before {
+        background-image: svg-url($li-svg-icon-community-nav, $li-hero-icon-color);
+      }
+    }
+
+    // hero button links and icons
+    .user-navigation-user-profile {
+      padding-right: 0;
+
+      .login-link {
+        @include hero-links(right, true);
+
+        &:before {
+          background-image: svg-url($li-svg-icon-anonymous-profile, $li-hero-icon-color);
+        }
+      }
+
+      .view-profile-link {
+        @include hero-links(right);
+        text-transform: initial;
+      }
+    }
+
+    .UserNavigation {
+      // logged in state treated a bit differently because it's an img vs bg
+      .lia-user-avatar {
+        img {
+          @extend %hero-icons;
+          opacity: 1;
+          right: 0;
+
+          @include media(tablet) {
+            margin: 0 auto;
+            width: $li-icon-size-sm;
+          }
+        }
+      }
+    }
+
+    // notificiation badge styling
+    // TODO: find a way to adjust for the hardcoded badge padding
+    .lia-notifications-messages-aggregate {
+      @include media(tablet) {
+        left: 95%;
+        top: 3px;
+      }
+    }
+  }
+
+  .lia-community-featured-content {
+    margin: 0;
+    padding: $li-community-welome-padding 0;
+    text-align: center;
+  }
+}

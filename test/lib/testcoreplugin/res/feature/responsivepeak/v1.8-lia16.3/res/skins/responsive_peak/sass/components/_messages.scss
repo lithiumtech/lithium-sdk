@@ -1,0 +1,252 @@
+// Messages
+//
+// styles for common components which appear in multiple interaction styles
+//
+
+@mixin peak\components\messages {
+
+  // much of the padding for the columns is controlled by grid.scss, provide
+  // space around each message (and siblings like blog article)
+  .lia-message-view {
+    @include media(tablet) {
+      margin-bottom: $grid-gutter-width / 2;
+
+      .lia-quilt-column-single & {
+  //      margin-left: $grid-gutter-width / 2;
+  //      margin-right: $grid-gutter-width / 2;
+      }
+    }
+  }
+
+  .lia-component-topic-message {
+    @include media(tablet) {
+      margin-top: $grid-gutter-width / 2;
+    }
+  }
+
+  .lia-panel-message {
+    @include media(tablet) {
+      margin-bottom: 0;
+    }
+  }
+
+  // user avatar, name and rank
+  .lia-message-author-avatar {
+    display: inline-block;
+    float: none;
+    padding-right: $padding-small-horizontal;
+
+    @include media(phone) {
+      float: left;
+    }
+
+    + .lia-component-author,
+    + .lia-message-author-username {
+      display: inline-block;
+      margin-right: $padding-small-horizontal;
+    }
+  }
+
+  .lia-component-author-rank-name {
+    display: inline-block;
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    @include media(phone) {
+      display: block;
+    }
+  }
+
+  .lia-panel-message-content {
+    border-top: 1px solid $li-border-color;
+    // remove global panel padding from $panel-body-padding
+    padding: 0;
+
+    // message options menu
+    // put the message options menu in the panel border with a little breathing room
+    .lia-menu-navigation-wrapper {
+      position: absolute;
+      right: -$li-message-padding + $padding-xs-horizontal;
+      top: -$li-message-padding + $padding-small-vertical;
+
+      @include media(phone) {
+        right: -$panel-body-padding + $padding-xs-horizontal;
+        top: -$panel-body-padding + $padding-small-vertical;
+      }
+    }
+
+    // subject styles
+    .lia-message-subject {
+      display: block;
+      margin-bottom: $li-message-padding / 2;
+
+      @include media(tablet) {
+        margin-top: 0;
+      }
+
+      // root message
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: $text-color;
+        display: inline;
+      }
+
+      h1 {
+        font-size: $font-size-h3;
+        font-weight: $headings-font-weight;
+      }
+
+      h2 {
+        font-size: $li-topic-reply-font-size;
+        font-weight: normal;
+      }
+    }
+
+    .lia-panel-feedback-banner-safe {
+      border-radius: $border-radius-base;
+      margin-top: $padding-xl-vertical;
+    }
+
+
+    // Date in header - Show in desktop
+    .lia-component-common-widget-date,
+    .lia-component-post-date-last-edited {
+      width: 100%;
+
+      // when widget-date is nested in post-date-last-edited
+      .lia-component-common-widget-date {
+        width: auto;
+      }
+    }
+
+    .lia-quilt-row-header {
+      .lia-component-common-widget-date,
+      .lia-component-post-date-last-edited,
+      .lia-message-edited-on,
+      .lia-message-posted-on {
+        color: $li-message-info-color;
+        display: inline-block;
+
+        @include media(tablet) {
+          display: none;
+        }
+      }
+    }
+
+    // Date in body - show in tablet & mobile
+    .lia-quilt-row-main {
+      .lia-component-common-widget-date,
+      .lia-component-post-date-last-edited,
+      .lia-message-edited-on,
+      .lia-message-posted-on {
+        display: none;
+        text-align: left;
+
+        @include media(tablet) {
+          display: inline-block;
+        }
+      }
+    }
+
+    // Sub components that pertain to the message
+    .lia-message-card-sub-component-header {
+      color: $li-message-info-color;
+      font-size: $font-size-h4;
+      margin-bottom: $padding-large-vertical;
+    }
+
+    .lia-message-labels {
+      margin-bottom: 0;
+
+      .LabelsForArticle {
+        margin-bottom: $li-message-padding;
+      }
+    }
+
+    .lia-message-tags {
+      margin-bottom: 0;
+
+      .AddMessageTags {
+        margin-bottom: $li-message-padding;
+      }
+    }
+
+    .Attachments {
+      margin-bottom: $li-message-padding;
+    }
+
+    // controls, interactive components
+    .lia-rating-link-summary {
+      font-size: $li-btn-font-size;
+      font-weight: bold;
+    }
+
+    // spacing between buttons
+    .lia-quilt-column-footer-right {
+      .lia-button {
+        margin-left: $padding-small-horizontal;
+      }
+    }
+
+    .lia-component-action-rating,
+    .lia-component-kudos,
+    .lia-rating-control-wrapper {
+      display: inline-block;
+      margin-right: $padding-small-horizontal;
+      margin-top: 0;
+      vertical-align: middle;
+    }
+
+    .lia-quilt-row-mod-controls {
+      background-color: $li-mod-controls-bg;
+
+      .lia-button-wrapper,
+      .lia-component-classifications,
+      .lia-component-modbar-toggle,
+      .lia-metadata-application-tool-toggle {
+        display: inline-block;
+        margin: {
+          bottom: $panel-body-padding;
+          left: $panel-body-padding;
+          right: 0;
+          top: $panel-body-padding;
+        }
+        vertical-align: middle;
+      }
+    }
+  }
+
+  // default footer and mod backgrounds
+  .lia-quilt-layout-one-column-message,
+  .lia-quilt-layout-two-column-message {
+    > .lia-quilt-row-footer {
+      background-color: $panel-footer-bg;
+    }
+
+    > .lia-quilt-row-mod-controls {
+      background-color: $li-mod-controls-bg;
+    }
+  }
+
+  // styles for the first message (root/topic)
+  .lia-panel-message-root {
+    .lia-quilt-row-footer {
+      background-color: transparent;
+
+      @include media(tablet) {
+        border-top: 1px solid $li-border-color;
+      }
+    }
+  }
+
+  .lia-component-solution-list {
+    .lia-panel-message-content {
+      border-top-color: $li-message-solution-color;
+    }
+  }
+}

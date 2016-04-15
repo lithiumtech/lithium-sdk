@@ -1,0 +1,107 @@
+@mixin peak\components\search-users {
+
+  // space for the avatar
+  .lia-quilt-column-user-search-result {
+    > .lia-quilt-column-alley-single {
+      padding-left: $li-icon-size + $padding-small-horizontal;
+    }
+  }
+
+  .lia-quilt-user-search-item {
+    background-color: $li-bg-secondary;
+    border: 1px solid $li-border-color;
+    margin-bottom: $panel-body-margin;
+    padding: $panel-body-padding;
+  }
+
+  // common class for all user stats
+  .lia-summary-view-statistic {
+    color: $li-text-color-secondary;
+    font-size: $font-size-small;
+  }
+
+  .lia-user-profile-info {
+    margin-bottom: $padding-small-vertical;
+
+    @include media(tablet-only) {
+      float: left;
+    }
+
+    .lia-user-avatar {
+      left: 0;
+      position: absolute;
+    }
+
+    .lia-user-name-link {
+      display: inline-block;
+      font-size: $font-size-large;
+      margin-bottom: $padding-xs-vertical;
+    }
+  }
+
+  .lia-user-secondary-stats,
+  .lia-user-stats {
+    @include media(tablet-only) {
+      float: right;
+      margin-right: $padding-small-horizontal;
+      padding-right: $padding-small-horizontal;
+      position: relative;
+      text-align: right;
+      width: 25%;
+
+      // flip all stat icons to the right
+      .lia-summary-view-statistic {
+        &:before {
+          line-height: $font-size-small * $line-height-base;
+          position: absolute;
+          right: -$padding-small-horizontal;
+        }
+      }
+    }
+  }
+
+  // gutters between users should be identical to page gutters and underneath
+  .lia-user-search-results-grid-container {
+    > .lia-quilt-row {
+      > .lia-quilt-column-inner {
+        padding-left: $panel-body-margin - $grid-gutter-width / 2;
+        padding-right: $panel-body-margin - $grid-gutter-width / 2;
+
+        @include media(tablet) {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+
+  .lia-user-search-results-list-container {
+    > .UserSearchItemContainer {
+      @include li-extend('.col-md-8');
+      @include li-extend('.col-sm-12');
+      @include li-extend('.col-xs-24');
+
+      padding-left: 0;
+      padding-right: 0;
+
+      @include media(desktop) {
+        &:nth-child(3n+1),
+        &:nth-child(3n+2) {
+          padding-right: $panel-body-margin;
+        }
+      }
+
+      @include media(tablet-only) {
+        &:nth-child(odd) {
+          padding-right: $panel-body-margin;
+        }
+      }
+    }
+  }
+
+  .user-search {
+    .lia-tabs-standard {
+      margin-bottom: 0;
+    }
+  }
+}

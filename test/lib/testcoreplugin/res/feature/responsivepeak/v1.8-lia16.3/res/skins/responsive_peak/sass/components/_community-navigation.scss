@@ -1,0 +1,41 @@
+@mixin peak\components\community-navigation {
+
+  .lia-community-nav-node {
+    .lia-nav-action {
+      padding: $li-community-nav-item-padding;
+    }
+
+    .lia-nav-back {
+      .lia-nav-icon {
+        margin-top: floor($li-icon-size / -2);
+      }
+    }
+
+    .lia-nav-empty-category {
+      display: none;
+    }
+
+    .lia-nav-icon-left {
+      height: $li-icon-size;
+      margin-top: floor($li-icon-size / -2);
+      top: 50%;
+      width: $li-icon-size;
+    }
+
+    .lia-nav-header {
+      min-height: $li-header-height;
+    }
+
+    .lia-nav-item-text {
+      padding-left: $li-icon-size + $padding-small-horizontal;
+    }
+
+    .lia-nav-menu-trigger {
+      background-image: svg-url($li-svg-icon-community-nav, $li-hero-icon-color);
+
+      &:before {
+        content: '';
+      }
+    }
+  }
+}

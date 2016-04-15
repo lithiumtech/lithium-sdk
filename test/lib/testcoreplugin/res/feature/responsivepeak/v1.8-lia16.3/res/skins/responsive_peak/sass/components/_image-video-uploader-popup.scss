@@ -1,0 +1,13 @@
+@mixin peak\components\image-video-uploader-popup {
+
+  .ImageUploaderPopupPage,
+  .VideoEmbedPopupPage {
+    background-color: $li-bg-secondary;
+    padding: $panel-body-padding;
+  }
+
+  .lia-image-upload-editor-preview {
+    padding-bottom: $padding-base-vertical;
+    padding-top: $padding-base-vertical;
+  }
+}

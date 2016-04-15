@@ -1,0 +1,69 @@
+// Authentication Page
+//
+// Style guide: peak.components.authentication-page
+
+@mixin peak\components\authentication-page {
+
+  // Modals:
+  // Sign in
+  // Registration
+  .lia-component-authentication-widget-login-dialog-content,
+  .lia-component-authentication-widget-registration-dialog-content {
+    .lia-quilt-column-left {
+      position: static;
+    }
+
+    // move title up
+    legend {
+      margin-bottom: auto;
+      padding: $padding-large-vertical $padding-large-horizontal;
+      position: absolute;
+      top: 0;
+      width: auto;
+    }
+
+    // Sign in using facebook
+    .SocialLoginForm {
+      padding-bottom: $padding-large-vertical;
+
+      legend {
+        padding: 0;
+        position: relative;
+      }
+    }
+  }
+
+  // Pages:
+  // Forgot Password
+  // Sign in
+  .ForgotPasswordPage,
+  .SwitchUserPage,
+  .UserLoginPage {
+    legend {
+      border-bottom: 1px solid $li-border-color;
+      margin-left: -$panel-body-padding;
+      margin-right: -$panel-body-padding;
+      padding: {
+        bottom: $padding-large-vertical;
+        left: $panel-body-padding;
+        right: $panel-body-padding;
+        top: 0;
+      }
+      width: calc(100% + #{$panel-body-padding * 2});
+    }
+  }
+
+  // Page: Registration
+  .UserRegistrationForm {
+    .lia-text-form {
+      background-color: $panel-instructive-bg;
+      margin-bottom: $form-padding;
+      padding: $padding-large-vertical;
+      text-align: center;
+    }
+
+    .lia-form-footer {
+      padding-bottom: $form-padding;
+    }
+  }
+}

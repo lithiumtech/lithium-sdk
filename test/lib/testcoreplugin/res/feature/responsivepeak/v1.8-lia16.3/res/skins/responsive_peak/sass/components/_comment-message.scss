@@ -1,0 +1,6 @@
+@mixin peak\components\comment-message {
+
+  .lia-quilt-comment-message {
+    @extend %message-quilt-all;
+  }
+}

@@ -1,0 +1,177 @@
+@mixin peak\codebook\labels {
+
+  %label-alt {
+    .label-link {
+      background-color: $li-label-inverse-bg;
+      border: 1px solid transparent;
+      color: $li-label-inverse-color;
+      display: inline-block;
+      text-align: left;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: $label-default-bg;
+        color: $label-default-color;
+        text-decoration: none;
+      }
+    }
+  }
+
+  %label-md {
+    .label-link {
+      border-radius: $border-radius-small;
+      padding: {
+        bottom: $padding-base-vertical;
+        left: $padding-base-horizontal;
+        right: $padding-base-horizontal;
+        top: $padding-base-vertical;
+      }
+    }
+  }
+
+  %label-sm {
+    .label-link {
+      border-radius: $border-radius-base;
+      font-size: $font-size-base;
+      line-height: $li-bs-line-height-base;
+      padding: {
+        bottom: $padding-small-vertical;
+        left: $padding-small-horizontal;
+        right: $padding-small-horizontal;
+        top: $padding-small-vertical;
+      }
+    }
+  }
+
+  %label-xs {
+    .label-link {
+      border-radius: $border-radius-base;
+      font-size: $font-size-small;
+      line-height: $line-height-small;
+      padding: {
+        bottom: $padding-xs-vertical;
+        left: $padding-xs-horizontal;
+        right: $padding-xs-horizontal;
+        top: $padding-xs-vertical;
+      }
+    }
+  }
+
+  // this requires a parent with a max or defined width for truncation to work
+  %label-with-truncation {
+    .label-link {
+      @include text-overflow;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  // alternate label styling with name and count in a contained pill
+  // assumes sm size
+  %label-with-truncation-and-counts {
+    @extend %label-with-truncation;
+    position: relative;
+
+    .label-link {
+      padding-right: $padding-small-horizontal * 3.5;
+    }
+
+    .label-count {
+      @include border-right-radius($border-radius-base - 1px);
+      background-color: $li-bg-secondary;
+      color: $li-text-color-secondary;
+      font-size: $font-size-small;
+      line-height: $font-size-base * $li-bs-line-height-base;
+      min-width: $padding-small-horizontal * 3;
+      padding: {
+        bottom: $padding-small-vertical;
+        left: $padding-small-horizontal;
+        right: $padding-small-horizontal;
+        top: $padding-small-vertical;
+      }
+      position: absolute;
+      right: 1px;
+      text-align: center;
+      top: 1px;
+    }
+  }
+
+  .article-labels-title {
+    display: none;
+  }
+
+  .LabelsForArticle {
+    // Taking out comma
+    .separator {
+      display: none;
+    }
+
+    // actual labels in articles
+    .label-link {
+      background-color: $li-label-inverse-bg;
+      color: $li-label-inverse-color;
+      padding: $padding-small-vertical $padding-small-horizontal;
+    }
+  }
+
+  .BlogArticlePage,
+  .ForumTopicPage {
+    .LabelsForArticle {
+      .label-link {
+        background-color: $label-default-bg;
+        border-radius: $border-radius-round;
+        color: $label-default-color;
+        margin-bottom: $padding-small-horizontal;
+        margin-right: $padding-small-horizontal;
+        padding: $padding-large-vertical $padding-large-horizontal;
+      }
+    }
+  }
+
+  .BlogArticlePage {
+    .lia-message-labels {
+      background-color: $li-header-bg;
+      border-bottom: 2px solid $li-border-color;
+      margin-top: -$grid-gutter-width * 2;
+      padding: {
+        bottom: $grid-gutter-width;
+        left: $padding-xl-horizontal;
+        right: $padding-xl-horizontal;
+        top: $grid-gutter-width;
+      }
+    }
+  }
+
+  // Hierarchical labels
+  .lia-labels-concepts-wrapper {
+    .lia-tooltip-trigger {
+      display: inline-block;
+    }
+  }
+
+  .ForumsFilteredByLabelPage {
+    .lia-component-labels-widget-labels-list {
+      .label {
+        overflow: hidden;
+      }
+
+      .label-link {
+        background-color: $li-label-inverse-bg;
+        border-radius: $border-radius-round;
+        color: $li-label-inverse-color;
+        display: inline-block;
+        margin-left: $padding-small-horizontal;
+        padding: $padding-small-vertical $padding-small-horizontal;
+      }
+
+      .label-count {
+        float: left;
+        font-size: $font-size-h2;
+        line-height: $font-size-h2 + ($padding-small-vertical * 2);
+      }
+    }
+  }
+}

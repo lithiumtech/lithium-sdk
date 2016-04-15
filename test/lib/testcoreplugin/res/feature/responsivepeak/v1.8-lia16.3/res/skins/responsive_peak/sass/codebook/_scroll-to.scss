@@ -1,0 +1,27 @@
+// Scroll To
+//
+// Styling for a component that is usually placed at the bottom of the page and scrolls the user to the top.
+//
+// Markup:
+// <div class="li-common-scroll-to-wrapper"
+//      style="margin-right: 5px; position:relative;">
+//   <a class="li-common-scroll-to-link"
+//      style="font: unset;">Go to top</a>
+// </div>
+//
+// Style guide: peak.codebook.scroll-to
+
+@mixin peak\codebook\scroll-to {
+
+  .li-common-scroll-to-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .li-common-scroll-to-link {
+      @include li-icon($fa-var-arrow-up, $color: inherit, $btn-respond: 'xs');
+
+      color: $li-navigation-link-color;
+    }
+  }
+}

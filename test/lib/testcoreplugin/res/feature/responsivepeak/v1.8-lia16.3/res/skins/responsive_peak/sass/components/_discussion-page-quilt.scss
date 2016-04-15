@@ -1,0 +1,135 @@
+// this is a general responsive message sub-quilt structure that should work
+// for most interaction styles. these are @extended for the one-column.message
+// and two-column.message quilts by default. this should be @extend-ed from
+// the main message sub-quilt (such as .lia-quilt-layout-blog-message,
+// .lia-quilt-layout-forum-message etc)
+//
+// these placeholders should not style content inside the interaction styles,
+// just the containers, using only paddings, margins and column manipulation.
+// * the two column interior border and mod sections break these guideliness
+// ** alignment here is questionable
+//
+
+@mixin peak\components\discussion-page-quilt {
+
+  // blogs and all interaction style comments use one-column.message.layout.xml
+  .lia-quilt-layout-one-column-message,
+  .lia-quilt-layout-two-column-message,
+  .lia-quilt-layout-blog-message,
+  .lia-quilt-layout-forum-message {
+    @extend %message-quilt-all;
+  }
+
+  // forums, q&a questions and answers use two-column.message.layout.xml
+  .lia-quilt-layout-two-column-message {
+    @extend %message-quilt-two-column-body;
+  }
+
+  %message-quilt-all {
+    @extend %message-quilt-reset;
+    @extend %message-quilt-header;
+    @extend %message-quilt-main;
+    @extend %message-quilt-footer;
+  }
+
+  %message-quilt-reset {
+    // although default padding is useful for component level blocks, its gets in
+    // the way more often than not when using subquilts.
+    // TODO: find a way around using as many subquilts or laying out the message
+    // using fewer columns
+    > .lia-quilt-row {
+      > .lia-quilt-column {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  %message-quilt-header {
+    // header
+    > .lia-quilt-row-header {
+      padding: $li-message-padding;
+
+      @include media(tablet) {
+        padding-bottom: $panel-body-padding;
+      }
+
+      @include media(phone) {
+        padding: $panel-body-padding;
+      }
+
+      .lia-quilt-column-header-left {
+        @include li-extend('.col-sm-12');
+        @include li-extend('.col-xs-22');
+      }
+
+      // header right -xs-2 to have the message dropdown menu be closer to it's position
+      .lia-quilt-column-header-right {
+        @include li-extend('.col-sm-12');
+        @include li-extend('.col-xs-2');
+
+        text-align: right;
+      }
+    }
+  }
+
+  %message-quilt-main {
+    // Message Body
+    > .lia-quilt-row-main {
+      padding-left: $li-message-padding;
+      padding-right: $li-message-padding;
+
+      @include media(phone) {
+        padding-left: $panel-body-padding;
+        padding-right: $panel-body-padding;
+      }
+    }
+  }
+
+  %message-quilt-two-column-body {
+    // Message Body
+    /* @noflipstart */
+    > .lia-quilt-row-main {
+      .lia-quilt-column-main-left {
+    /* @noflipend */
+        border-right: 1px solid $li-border-color;
+        margin-bottom: $li-message-padding;
+        padding-right: $li-message-padding;
+
+        @include media(tablet) {
+          border-right: 0;
+          margin-bottom: $panel-body-padding;
+          padding-right: 0;
+        }
+      }
+
+      .lia-quilt-column-main-right {
+        border-left: 1px solid $li-border-color;
+        margin-bottom: $li-message-padding;
+        margin-left: -1px; // collapse double border
+        padding-left: $padding-xl-horizontal;
+
+        @include media(tablet) {
+          border-left: 0;
+          margin-bottom: $panel-body-padding;
+          margin-left: 0;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+
+  %message-quilt-footer {
+    > .lia-quilt-row-footer {
+      padding: $panel-body-padding;
+
+      // keep 2 column footer for phones
+      /* @noflipstart */
+      > .lia-quilt-column-left,
+      > .lia-quilt-column-right {
+      /* @noflipend */
+        @include li-extend('.col-xs-12');
+      }
+    }
+  }
+}

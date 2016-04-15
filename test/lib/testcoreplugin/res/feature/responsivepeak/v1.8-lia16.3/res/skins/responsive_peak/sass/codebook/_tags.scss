@@ -1,0 +1,16 @@
+@mixin peak\codebook\tags {
+
+  .lia-component-tags {
+    margin-bottom: $grid-gutter-width;
+  }
+
+  .lia-tag-list-item {
+    color: $link-color;
+    margin-bottom: $grid-gutter-width / 2;
+    margin-right: $grid-gutter-width / 2;
+  }
+
+  .lia-component-tag-banner {
+    @extend .lia-panel-feedback-banner-note;
+  }
+}

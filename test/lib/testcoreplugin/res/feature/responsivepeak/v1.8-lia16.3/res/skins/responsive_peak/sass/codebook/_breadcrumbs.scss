@@ -1,0 +1,26 @@
+@mixin peak\codebook\breadcrumbs {
+
+  .lia-breadcrumb {
+    margin-bottom: 0;
+    margin-left: $padding-small-horizontal;
+
+    > .lia-list-standard-inline {
+      padding-left: 0;
+      padding-right: $panel-body-padding / 2;
+    }
+
+    // make breadcrumb touch targets large
+    .lia-link-navigation {
+      padding: {
+        bottom: $panel-body-padding;
+        left: $panel-body-padding / 2;
+        right: $panel-body-padding / 2;
+        top: $panel-body-padding;
+      }
+    }
+
+    .final-crumb {
+      font-weight: normal;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@mixin peak\components\kudos-user-page {
+  .KudosUserPage {
+
+    .SortingBar {
+      display: inline-block;
+    }
+
+    .UserListBlock {
+      .lia-user-avatar,
+      .lia-user-leaderboard-rank {
+        vertical-align: middle;
+      }
+
+      .UserProfileSummary {
+        padding: $padding-large-vertical;
+
+        .lia-user-kudos-count {
+          @include li-icon(icn-kudos, $pseudo: before);
+          color: $gray-light;
+        }
+
+        .lia-user-kudos-count,
+        .lia-user-kudos-weight, {
+          font-size: $font-size-small;
+        }
+
+        .lia-user-name {
+          font-size: $font-size-large;
+        }
+      }
+    }
+  }
+}

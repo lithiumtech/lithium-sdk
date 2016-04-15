@@ -1,0 +1,266 @@
+@mixin peak\codebook\kudos {
+
+  //START
+  //Inverse Kudos
+  %kudos-inversed {
+    .lia-button-image-kudos-horizontal {
+      div:nth-of-type(2) {
+        border: 0;
+        border-radius: $li-btn-border-radius;
+      }
+    }
+
+    .lia-button-image-kudos,
+    .lia-button-image-kudos-horizontal {
+      .kudos-link {
+        background-color: $btn-default-bg;
+        border: 0;
+        border-bottom-left-radius: $li-btn-border-radius;
+        border-bottom-right-radius: $li-btn-border-radius;
+        border-top-left-radius: $li-btn-border-radius;
+        border-top-right-radius: $li-btn-border-radius;
+
+        &:hover {
+          background-color: $btn-inverse-default-color;
+        }
+      }
+
+      .kudos-count-link {
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      .lia-link-disabled.kudos-link {
+        background-color: $btn-link-disabled-color;
+        border: 0;
+        color: $btn-inverse-default-color;
+
+        &:hover {
+          background-color: $btn-link-disabled-color;
+        }
+      }
+    }
+  }
+
+  //START
+  //Alternate Kudos UI primarily used in ideas and contests
+  %kudos-alt {
+
+    .kudos-link {
+      &:hover:before {
+        color: $label-default-color;
+      }
+    }
+
+    .kudos-link,
+    .kudos-count-link,
+    .lia-button-image-kudos-count {
+      line-height: $line-height-computed;
+      vertical-align: top;
+
+      @include media(tablet) {
+        line-height: floor($font-size-small * $line-height-base);
+      }
+    }
+
+    .lia-button-image-kudos-count {
+      border-left: 1px solid $li-text-color-secondary;
+      margin-bottom: $padding-base-vertical;
+      margin-top: $padding-base-vertical;
+      padding: 0;
+
+      .kudos-count-link {
+        padding: 0;
+      }
+
+      .lia-component-kudos-widget-message-kudos-count {
+        padding: {
+          bottom: 0;
+          left: $padding-base-horizontal;
+          right: $padding-base-horizontal;
+          top: 0;
+        }
+      }
+    }
+
+    &.lia-button-image-kudos-wrapper {
+      left: 0;
+      min-width: $li-kudos-horizontal-min-width;
+      position: absolute;
+      top: $padding-xl-vertical;
+
+      @include media(tablet) {
+        min-width: inherit;
+        position: relative;
+        top: 0;
+      }
+    }
+
+    .lia-button-image-kudos-horizontal {
+      background-color: $li-kudos-alt-bg;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+
+      @include media(tablet) {
+        //margin-bottom: -1px;
+        margin-left: -1px;
+      }
+    }
+
+    .lia-button-image-kudos-label {
+      display: none;
+    }
+
+    .lia-button-image-kudos-give {
+      margin-right: -1px;
+
+      &,
+      & > .lia-inline-ajax-feedback {
+        border: 0;
+        border-radius: 0;
+      }
+    }
+  }
+
+  //START
+  //Default kudos
+  .lia-button-image-kudos-horizontal {
+    > .lia-button-image-kudos-count,
+    > .lia-button-image-kudos-give {
+      float: right;
+    }
+
+    div:nth-of-type(2) {
+      border: 1px solid $btn-inverse-default-border;
+      border-radius: $li-btn-border-radius;
+    }
+  }
+
+  .lia-button-image-kudos-disabled {
+    div:nth-of-type(2) {
+      border-color: lighten($btn-inverse-default-border, 15%);
+    }
+  }
+
+  .lia-button-image-kudos {
+    .kudos-count-link {
+      background-color: transparent;
+      border: 0;
+
+      &.lia-link-disabled {
+        background-color: transparent;
+      }
+    }
+
+    &.lia-button-image-kudos-kudoed {
+      .kudos-count-link {
+        background-color: transparent;
+        border: 0;
+
+        &.lia-link-disabled {
+          background-color: transparent;
+        }
+      }
+
+      .kudos-link {
+        &.lia-link-disabled {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .lia-button-image-kudos {
+    .kudos-link {
+      background-color: transparent;
+      border: 0;
+
+      &:hover {
+        background-color: $btn-inverse-default-color;
+        border-color: $btn-inverse-default-border;
+      }
+    }
+
+    .kudos-count-link {
+      color: $link-color;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    //Disabled
+    .lia-link-disabled {
+      &.kudos-link {
+        background-color: $btn-link-disabled-color;
+        border: 0;
+        color: $btn-inverse-default-color;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: $btn-link-disabled-color;
+          border-color: $btn-link-disabled-color;
+        }
+      }
+
+      &.kudos-count-link {
+        background-color: transparent;
+        color: $link-color;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+
+    //Enabled
+    &.lia-button-image-kudos-enabled {
+      .kudos-link {
+        background-color: transparent;
+        border: 0;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: $btn-inverse-default-color;
+          border-color: $btn-inverse-default-border;
+        }
+      }
+
+      .lia-link-disabled.kudos-link {
+        background-color: transparent;
+        border: 0;
+        color: $btn-inverse-default-color;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: $btn-link-disabled-color;
+        }
+      }
+
+      &.kudos-count-link {
+        background-color: transparent;
+        color: $link-color;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  @include media(phone) {
+    .lia-message-kudos {
+      .lia-component-kudos-widget-kudos-count-label {
+        display: inline;
+      }
+    }
+  }
+}

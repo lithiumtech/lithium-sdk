@@ -1,0 +1,195 @@
+@mixin peak\components\search-filters {
+
+  .advancedSearchPanel {
+    padding: $panel-body-padding;
+
+    // column divider for advanced message panel only
+    .AdvancedThreadSearchForm {
+      .lia-input-edit-form-column {
+        &.lia-quilt-column-right {
+          border-left: 2px solid $li-search-filter-item-bg;
+        }
+      }
+    }
+
+    /* @noflipstart */
+    .lia-input-edit-form-column {
+      > .lia-quilt-column-alley-left {
+    /* @noflipend */
+        padding-right: $grid-gutter-width;
+      }
+
+      /* @noflipstart */
+      > .lia-quilt-column-alley-right {
+      /* @noflipend */
+        padding-left: $grid-gutter-width;
+      }
+    }
+
+    // positioning checkbox and label similar to a horizontal form
+    .lia-form-open-response-entry {
+      .lia-form-open-response-input {
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
+
+      .lia-form-label-wrapper {
+        left: $input-checkbox-width;
+        position: absolute;
+        top: 0;
+      }
+    }
+  }
+
+  .lia-search-advanced-instructions-body {
+    line-height: $li-line-height-message;
+  }
+
+  .lia-search-advanced-instructions-title {
+    font-size: $font-size-xlarge;
+    margin-bottom: $padding-large-vertical;
+  }
+
+  .lia-search-advanced-instructions-wrapper {
+    color: $li-text-color-secondary;
+    margin-bottom: $padding-xl-vertical;
+  }
+
+  .lia-advanced-search-link {
+    display: inline-block;
+  }
+
+  .lia-search-tab-bar,
+  .lia-advanced-search-link,
+  .lia-advanced-search-toggle {
+    height: floor($padding-large-vertical * 2 + $font-size-small * $line-height-base + 2px);
+    // compensate for -1px tab bottom border
+    line-height: floor($padding-large-vertical * 2 + $font-size-small * $line-height-base + 1px);
+  }
+
+  // right side of tabs search controls, overlays positioned tabs
+  .lia-advanced-search-toggle,
+  .lia-component-search-actions {
+    float: right;
+    margin-right: $panel-body-margin;
+    position: relative;
+    text-align: right;
+    z-index: 10;
+  }
+
+  .lia-advanced-search-toggle,
+  .lia-component-search-advanced {
+    @include media(tablet) {
+      display: none;
+    }
+  }
+
+  // search breadcrumb contains currently active filters for removal
+  .lia-component-search-breadcrumb {
+    margin-left: $panel-body-padding;
+    margin-right: $panel-body-padding;
+
+    .lia-list-standard-inline {
+      margin-left: 0;
+
+      > li {
+        vertical-align: top;
+      }
+    }
+
+    .lia-panel-feedback-inline-note {
+      background-color: transparent;
+      border: 0;
+      color: $text-color;
+      margin: 0;
+      padding: 0;
+      padding-top: $panel-body-padding;
+    }
+
+    .lia-subscribe-label-link {
+      color: $link-color;
+    }
+
+    .lia-filters-multiple-label-search,
+    .SubscribeToLabelName {
+      display: inline-block;
+      padding-top: $padding-base-vertical;
+    }
+  }
+
+  .lia-search-filter-bread-crumb-item {
+    margin: {
+      bottom: $padding-large-vertical;
+      right: $padding-xs-horizontal;
+    }
+    max-width: 100%;
+    position: relative;
+
+    .lia-list-standard-inline > & {
+      padding: {
+        left: 0;
+        right: 0;
+      }
+    }
+
+    .lia-filter-delete-icon {
+      color: $li-search-filter-item-icon-color;
+      cursor: pointer;
+      font-size: $line-height-computed;
+      position: absolute;
+      right: $li-search-filter-icon-padding;
+      top: $padding-base-vertical;
+    }
+
+    .lia-link-navigation {
+      text-decoration: none;
+    }
+
+    .lia-search-filter-bread-crumb-link {
+      background-color: $li-search-filter-item-bg;
+      border-radius: $border-radius-round;
+      color: $li-search-filter-item-color;
+      display: inline-block;
+      font-weight: bold;
+      line-height: $line-height-computed;
+      max-width: 100%;
+      overflow: hidden;
+      padding: {
+        bottom: $padding-base-vertical;
+        left: $panel-body-padding;
+        right: $panel-body-padding * 2 + $li-search-filter-icon-padding;
+        top: $padding-base-vertical;
+      }
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .lia-component-search-filter {
+    border-bottom: 1px solid $li-border-color;
+    min-height: $panel-body-padding * 2 + $padding-large-vertical * 2 + $line-height-computed + 2px;
+    padding-left: $panel-body-padding;
+    padding-right: $panel-body-padding;
+    padding-top: $panel-body-padding;
+
+    @include media(tablet) {
+      display: none;
+    }
+
+    .lia-form-fieldset-wrapper {
+      display: inline-block;
+      margin-bottom: $panel-heading-padding;
+      margin-right: $padding-xs-horizontal;
+      position: relative;
+    }
+  }
+
+  .lia-component-search-filter-header {
+    display: none;
+  }
+
+  .lia-component-quilt-search-page-thread-filters {
+    @include li-extend('.lia-component-search-filter');
+  }
+}

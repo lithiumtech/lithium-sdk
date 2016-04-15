@@ -1,0 +1,72 @@
+@mixin peak\components\discussion-page-header {
+
+  // article, root message or question title in header
+  .lia-discussion-page-header-subject,
+  .lia-qanda-question-page-subject,
+  .lia-thread-subject {
+    display: inline-block;
+    font-size: $font-size-h2;
+    font-weight: $headings-font-weight;
+
+    @include media(tablet) {
+      display: block;
+    }
+  }
+
+  .lia-discussion-page-header-row,
+  .lia-qanda-question-page-question-header,
+  .lia-quilt-layout-topic-header {
+    background-color: $li-header-bg;
+    border-bottom: 2px solid $li-border-color;
+    padding: {
+      bottom: $grid-gutter-width * 1.5;
+      left: $padding-xl-horizontal;
+      right: $padding-xl-horizontal;
+      top: $grid-gutter-width;
+    }
+
+    .lia-img-message-type-solved {
+      display: none;
+    }
+
+    .lia-component-quilt-header + & {
+      // search next to the topic header shouldn't have a divider between them
+      // take up large overlapping space
+      // TODO: better selector for combo headers to target instead of -margins
+      margin-top: -$padding-xl-vertical;
+    }
+  }
+
+  // inline solved or accepted solution icon and text
+  .lia-qanda-question-page-solution-link,
+  .lia-forum-page-thread-subject-first-page .lia-thread-solved {
+    @include li-icon($fa-var-check-square-o, $color: $brand-success,
+        $size: $font-size-h3, $line-height: $line-height-base);
+
+    color: $brand-success;
+    font-size: $font-size-h3;
+    margin-left: $padding-large-horizontal;
+
+    @include media(tablet) {
+      display: block;
+      margin-left: 0;
+    }
+
+    // there's a space in .lia-thread-solved, but not in the qanda solution
+    &.lia-thread-solved {
+      &:before {
+        margin-right: 0;
+      }
+    }
+  }
+
+  // go to solution link on right (not to be confused with the accepted solution
+  // link inline with the subject)
+  .lia-forum-topic-page-solution-link {
+    @include li-icon($fa-var-arrow-down, $color: inherit);
+
+    color: $li-navigation-link-color;
+    float: right;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,24 @@
+@mixin peak\components\hero {
+
+  .lia-content {
+    .lia-nodes-core-node-description {
+      color: $li-hero-sub-heading-color;
+      font-style: italic;
+    }
+  }
+
+  .CommunityPage {
+    .lia-nodes-core-node-title {
+      @include media(tablet) {
+        padding-top: $li-search-input-height * 2 + $padding-small-vertical;
+      }
+    }
+
+    // "Welcome to" text
+    .lia-welcome-text {
+      @include media(phone) {
+        display: none;
+      }
+    }
+  }
+}

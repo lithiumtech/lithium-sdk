@@ -1,0 +1,261 @@
+@mixin peak\components\profile-page {
+  .lia-list-statistics {
+    .lia-property-label,
+    .lia-property-value {
+      width: 50%;
+    }
+
+    .lia-property-value {
+      float: none;
+      text-align: left;
+
+      @include media(tablet) {
+        text-align: right;
+      }
+    }
+  }
+
+  .lia-list-statistics-small {
+    td + td:last-child {
+      text-align: right;
+    }
+  }
+
+  .MyTagsTaplet {
+    .lia-tag-list-item {
+      font-size: $font-size-large;
+      margin: {
+        bottom: 0;
+        left: $padding-small-horizontal;
+        right: $padding-small-horizontal;
+        top: 0;
+      }
+      padding: 0;
+    }
+  }
+
+  .viewprofilepagebanner {
+    .UserProfileSummary {
+      padding: $panel-body-padding;
+
+      .lia-user-avatar-profile {
+        border-radius: $border-radius-base;
+        height: auto;
+        width: auto;
+      }
+    }
+  }
+
+  //Drafts
+  .UnsavedDraftsTaplet {
+    .lia-autosave-discard {
+      @include li-icon(button-delete, $pseudo: after, $color: $state-danger-text);
+
+      line-height: $line-height-computed;
+
+      &:after {
+        margin-left: $padding-small-horizontal;
+      }
+    }
+
+    .lia-component-delete-draft-link {
+      display: inline-block;
+      margin-top: $padding-large-vertical;
+      padding-left: $padding-xl-horizontal;
+      position: relative;
+    }
+
+    .lia-inline-confirm {
+      background-color: $gray-lighter;
+      border-radius: $border-radius-round;
+      padding: $padding-small-vertical $padding-small-horizontal;
+      position: absolute;
+      right: -$padding-xs-horizontal;
+      top: 0;
+      white-space: nowrap;
+    }
+
+    .lia-panel-content {
+      padding: 0;
+    }
+  }
+
+  .ManageRolesTaplet {
+    .lia-panel-content {
+      padding: 0;
+    }
+
+    .lia-form-footer {
+      vertical-align: middle;
+    }
+
+    .lia-manage-roles-form,
+    .lia-row-even,
+    .lia-row-odd {
+      border-top: 1px solid $table-border-color;
+    }
+
+    .lia-manage-roles-form {
+      padding: $padding-large-horizontal;
+    }
+
+    .lia-form-add-role-entry,
+    .lia-form-footer {
+      margin-bottom: 0;
+    }
+
+    .remove-role-link {
+      @include li-icon(button-delete, $color: $state-danger-text);
+
+      padding: 0;
+
+      &,
+      &:active,
+      &:active:hover {
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+      }
+    }
+
+    .lia-form-footer,
+    .lia-input-edit-form-row {
+      margin-top: $padding-large-vertical;
+    }
+
+    .lia-input-edit-form-row {
+      margin-right: $padding-small-horizontal;
+    }
+
+    .lia-list-wide > tbody > tr > td {
+      padding: $padding-xl-horizontal;
+    }
+  }
+
+  .ModeratorControlsTaplet {
+    .admin-notes .admin {
+      padding-right: $padding-xl-horizontal;
+    }
+
+    .text .lia-message-body-content {
+      margin-bottom: 0;
+    }
+  }
+
+  .ViewProfilePage {
+    .lia-component-common-widget-page-feedback {
+      margin-top: $panel-body-margin;
+    }
+
+    .lia-quilt-column-search-content {
+      background-color: $body-bg;
+      border-top: 2px solid $li-border-color;
+      position: relative;
+      top: 1px;
+
+      .lia-component-common-widget-search-form {
+        padding-bottom: 0;
+      }
+    }
+
+    .lia-quilt-row-sub-header {
+      border: 0;
+    }
+  }
+
+  .ViewProfilePage { //My Videos Widget
+    .lia-list-tile-image {
+      height: $li-video-gallery-height;
+      overflow: hidden;
+      width: $li-video-gallery-width;
+
+      img {
+        max-width: none;
+        min-height: $li-video-gallery-height;
+        object-fit: cover;
+        object-position: center;
+        width: $li-video-gallery-width !important; // to override inline styles
+      }
+    }
+
+    .metadata {
+      background-color: rgba(0, 0, 0, 0.8);
+      bottom: $padding-small-vertical;
+      color: $li-profile-page-text-color;
+      padding: {
+        bottom: 0px;
+        left: $padding-xs-horizontal;
+        right: $padding-xs-horizontal;
+        top: 0px;
+      }
+      position: absolute;
+      right: $padding-xs-horizontal;
+    }
+
+    .UploadedVideoDisplay {
+      position: relative;
+    }
+
+    .VideoGalleryTaplet {
+      .lia-list-tile li.tiny {
+        display: inline-block;
+        float: none;
+        margin: {
+          bottom: $padding-small-vertical;
+          left: $padding-xs-horizontal;
+          right: $padding-xs-horizontal;
+          top: $padding-small-vertical;
+        }
+        text-align: center;
+        width: auto;
+      }
+    }
+
+    .video-status {
+      display: none;
+    }
+  }
+
+  .lia-user-viewing-other {
+    .lia-quilt-column-search-content > .lia-quilt-column-alley-single {
+      display: table;
+      width: 100%;
+
+      @include media(phone) {
+        display: block;
+      }
+    }
+
+    .lia-search-form-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+
+      @include media(phone) {
+        display: block;
+      }
+    }
+
+    .lia-component-send-message-button {
+      display: table-cell;
+      padding: {
+        bottom: 0;
+        left: 0;
+        right: $panel-body-padding;
+        top: $panel-body-padding;
+      }
+      vertical-align: middle;
+      white-space: nowrap;
+      width: 1%;
+
+      @include media(phone) {
+        display: block;
+        text-align: center;
+        width: auto;
+      }
+
+      .lia-send-private-message {
+        @include li-icon(button-send-pm, $color: $btn-primary-color);
+      }
+    }
+  }
+}

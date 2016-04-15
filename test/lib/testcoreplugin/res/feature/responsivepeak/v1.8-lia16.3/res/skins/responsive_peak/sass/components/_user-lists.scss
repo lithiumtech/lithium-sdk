@@ -1,0 +1,90 @@
+@mixin peak\components\user-lists {
+
+  // Inner List of Users
+  .UserList {
+    .lia-list-row {
+      border-top: 1px solid $table-border-color;
+      display: table-row;
+
+      &:first-child {
+        border-top: 0;
+      }
+    }
+
+    .lia-user-item {
+      .lia-user-leaderboard-rank {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .lia-user-avatar {
+        display: table-cell;
+        margin-right: $padding-small-horizontal;
+      }
+
+      .lia-user-attributes {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  // Users online
+  .UsersOnlineTaplet {
+    .lia-users-online-current {
+      margin-bottom: $padding-large-horizontal;
+    }
+
+    .lia-users-online-recent {
+      margin-bottom: $padding-large-horizontal;
+
+      .lia-list-standard-inline {
+        margin-left: $padding-large-horizontal;
+      }
+    }
+
+    .lia-users-new {
+      margin-bottom: 0;
+
+      .lia-text {
+        margin: $padding-small-vertical 0 0;
+      }
+
+      .lia-list-standard-inline {
+        line-height: $line-height-large;
+        margin-left: $padding-large-horizontal;
+      }
+    }
+  }
+
+  // Media
+  // Latest Photos Widget
+  // Top Image Contributors
+  .lia-media-top-image-contributors {
+    .li-image-contributor-header {
+      padding-top: $padding-small-vertical;
+    }
+
+    .lia-media-image-list.lia-media-image-list.lia-list-tile {
+      .lia-media-image-item.lia-media-placeholder {
+        margin-bottom: 0;
+      }
+    }
+
+    .lia-media-image-contributor-avatar-wrapper {
+      @include li-extend('.lia-user-avatar');
+      height: ceil($li-icon-size / 2);
+      width: ceil($li-icon-size / 2);
+
+      img {
+        left: -25%;
+      }
+    }
+  }
+
+  .UserOnline {
+    .offline,
+    .online {
+      display: none;
+    }
+  }
+}

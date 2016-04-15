@@ -1,0 +1,31 @@
+@mixin peak\components\my-settings-page {
+  .MyProfilePage {
+    thead#columns {
+      display: none;
+    }
+
+    .type.lia-data-cell-text {
+      @include media(tablet-and-larger) {
+        font-size: $font-size-small;
+        line-height: $font-size-h2;
+        padding-right: 0;
+        text-align: right;
+        text-transform: uppercase;
+        vertical-align: top;
+        width: 1%;
+      }
+    }
+
+    .newMessages.lia-data-cell-secondary {
+      @include li-icon-responsive-label(icon-thread-new);
+
+      @include media(tablet-and-larger) {
+        left: -($font-size-h2 + $grid-gutter-width);
+        padding-top: $font-size-h2 + $grid-gutter-width;
+        position: relative;
+        vertical-align: top;
+        width: 1%;
+      }
+    }
+  }
+}

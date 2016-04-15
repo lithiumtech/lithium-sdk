@@ -1,0 +1,75 @@
+@mixin peak\components\user-profile-statistics {
+
+  .lia-component-quilt-user-profile-statistics {
+    background-color: $li-bg-secondary;
+    padding: {
+      bottom: $padding-xl-vertical * 2;
+      left: 0;
+      right: 0;
+      top: $padding-xl-vertical;
+    }
+    text-align: center;
+    white-space: nowrap;
+
+    .UserSingleStatistic {
+      display: inline-block;
+      padding: 0 $li-single-statistic-padding;
+
+      .lia-statistic-icon,
+      .lia-statistic-text {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .lia-statistic-icon {
+        font-size: $li-icon-size-lg;
+        line-height: 0;
+      }
+
+      .lia-statistic-value {
+        font-size: $font-size-h2;
+      }
+
+      .lia-statistic-title {
+        font-size: $font-size-small;
+      }
+
+      .lia-statistic-text {
+        padding-left: $padding-small-horizontal;
+        text-align: left;
+      }
+
+      &.lia-statistic-net_overall_posts .lia-statistic-icon {
+          @include li-icon(icon-stat-posts);
+        }
+
+      &.lia-statistic-net_kudos_weight_received .lia-statistic-icon {
+          @include li-icon(icn-kudos);
+      }
+
+      &.lia-statistic-net_accepted_solutions .lia-statistic-icon {
+          @include li-icon(icon-accept-solution);
+      }
+
+
+
+      @include media(phone) {
+        display: inline-block;
+        max-width: calc( 100% / #{$li-user-profile-statistics-count} );
+        padding: 0 $padding-xl-horizontal;
+        vertical-align: top;
+
+        .lia-statistic-icon,
+        .lia-statistic-text {
+          display: block;
+          width: 100%;
+        }
+
+        .lia-statistic-text {
+          padding-left: $padding-small-vertical;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

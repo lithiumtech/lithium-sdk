@@ -1,0 +1,197 @@
+@mixin peak\components\idea-exchange-status-bar {
+
+  // idea status bar
+  .lia-component-ideas-widget-statuses {
+
+    // different borders and padding for the header variant
+    .lia-quilt-column-common-header & {
+      border-bottom: 2px solid $li-border-color;
+
+      &.lia-panel {
+        margin-bottom: 0;
+      }
+
+      .lia-panel-content {
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lia-panel-heading-bar {
+        display: none;
+      }
+
+      .lia-panel-heading-bar-wrapper {
+        border-top: $li-hero-community-divider-size solid $li-border-color;
+
+        @include media(phone) {
+          border-top: 0;
+        }
+      }
+    }
+  }
+
+  .lia-message-statuses-horizontal {
+    &.lia-message-statuses-overflow {
+      -webkit-overflow-scrolling: touch;
+      overflow-x: auto;
+    }
+
+    > .lia-list-standard {
+      display: table;
+      margin: 0 auto;
+      padding: {
+        bottom: $panel-body-padding;
+        left: $li-idea-status-fade-xs-width - $padding-small-horizontal;
+        right: $li-idea-status-fade-xs-width - $padding-small-horizontal;
+        top: $panel-body-padding;
+      }
+      width: 100%;
+
+      @include media(phone) {
+        padding-bottom: 0;
+        padding-top: 0;
+      }
+
+      &:after {
+        content: '';
+      }
+    }
+
+    .message-status {
+      display: table-cell;
+      position: relative;
+      vertical-align: top;
+
+      @include media(phone) {
+        text-align: center;
+
+        &:before {
+          display: none;
+        }
+      }
+
+      &:before {
+        font-size: $li-idea-status-size;
+        left: 0;
+        margin-top: $padding-base-vertical;
+        opacity: $li-idea-status-opacity;
+        position: absolute;
+        text-align: right;
+        top: 0;
+        width: $li-idea-status-size + $padding-small-horizontal;
+      }
+
+      &:active,
+      &:focus,
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
+
+      .count {
+        font-size: $font-size-h2;
+        left: $li-idea-status-size + $panel-body-padding;
+        position: absolute;
+        top: $padding-base-vertical;
+
+        @include media(phone) {
+          left: 0;
+          right: 0;
+          top: $padding-base-vertical;
+        }
+      }
+    }
+
+    .message-status-link {
+      display: inline-block;
+      font-size: $font-size-small;
+      line-height: $li-bs-line-height-base;
+      margin-left: $padding-small-horizontal;
+      margin-right: $padding-small-horizontal;
+      max-width: $li-idea-status-large-width;
+      padding: {
+        bottom: $padding-small-vertical;
+        left: $li-idea-status-size + $panel-body-padding;
+        right: $padding-small-horizontal;
+        top: $padding-small-vertical + $li-idea-status-size - floor($font-size-small * $line-height-base);
+      }
+      position: relative;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      @include media(phone) {
+        margin-left: $padding-xs-horizontal;
+        margin-right: $padding-xs-horizontal;
+        max-width: $li-idea-status-xs-width * 1.5;
+        min-width: $li-idea-status-xs-width;
+        padding: {
+          bottom: $padding-base-vertical + 2;
+          left: $padding-xs-horizontal;
+          right: $padding-xs-horizontal;
+          top: $padding-base-vertical * 2 + $font-size-h2;
+        }
+        position: relative;
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+
+    &.lia-message-statuses-overflow .lia-message-statuses-scroll {
+      display: inline;
+    }
+
+    .lia-message-statuses-scroll {
+      display: none;
+      bottom: $padding-large-vertical;
+      font-size: floor($li-idea-status-size * .75);
+      padding-top: $panel-body-padding + ceil($li-idea-status-size * .25);
+      position: absolute;
+      text-align: center;
+      top: 0;
+      width: $li-idea-status-fade-xs-width;
+      z-index: 10;
+      cursor: pointer;
+
+      &.lia-scroll-disabled {
+        cursor: $cursor-disabled;
+        color: $btn-link-disabled-color;
+      }
+
+      @include media(phone) {
+        &:before {
+          content: '';
+        }
+
+        /* @noflipstart */
+        &.lia-fa-chevron-left {
+        /* @noflipend */
+          background-image: svg-gradient-horizontal($li-bg-secondary, 1, 0, 1, 20%, .5, 50%, 0, 100%);
+          left: 0;
+        }
+
+        &.lia-fa-chevron-right {
+          background-image: svg-gradient-horizontal($li-bg-secondary, 0, 0, .5, 50%, 1, 80%);
+          right: 0;
+        }
+      }
+
+      @include media(tablet-and-larger) {
+        /* @noflipstart */
+        &.lia-fa-chevron-left {
+        /* @noflipend */
+          background-image: svg-gradient-horizontal($li-bg-secondary, 1, 90%, 0, 100%);
+          left: 0;
+        }
+
+        &.lia-fa-chevron-right {
+          background-image: svg-gradient-horizontal($li-bg-secondary, 0, 0, 1, 10%);
+          right: 0;
+        }
+      }
+    }
+  }
+}

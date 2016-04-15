@@ -1,0 +1,8 @@
+@import 'mixins';
+@import 'codebook';
+@import 'components';
+
+@mixin peak\all {
+  @include peak\codebook\all;
+  @include peak\components\all;
+}

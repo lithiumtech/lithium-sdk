@@ -1,0 +1,59 @@
+@mixin peak\components\media-gallery-page {
+  .MediaGalleryPage {
+
+    .lia-menu-bar-top {
+      margin-bottom: 0;
+
+      @include media(phone) {
+        .lia-paging-full-wrapper {
+          display: inline-block;
+          text-align: center;
+          width: 100%;
+        }
+
+        .lia-paging-full {
+          float: none;
+        }
+      }
+    }
+
+    .AllImagesDisplay {
+      .lia-media-image-kudos {
+        @include li-icon(icn-kudos);
+      }
+
+      .image-display-group {
+        padding-bottom: $padding-small-vertical;
+      }
+    }
+
+    .AlbumDisplay .ImageThumbnailDisplay,
+    .AlbumGalleryList .lia-media-list .lia-list-tile .AlbumThumbnailDisplay,
+    .AllImagesDisplay .ImageThumbnailDisplay,  {
+      border: none;
+      text-align: center;
+      width: $li-album-thumbnail-dimensions + (2 * $padding-small-vertical); // 2px to account for border
+    }
+
+    .lia-quilt-media-gallery-page {
+      .AllImagesDisplay,
+      .AlbumGalleryList,
+      .AlbumDisplay {
+        .lia-list-tile li {
+          margin: $padding-small-vertical $padding-large-horizontal;
+        }
+
+        @include media(phone) {
+          .lia-list-tile {
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .lia-all-images-display-user .UserName,
+    .local-time {
+      display: none;
+    }
+  }
+}

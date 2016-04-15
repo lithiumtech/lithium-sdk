@@ -1,0 +1,48 @@
+@mixin peak\components\private-messages {
+
+  .lia-note-view-display {
+    @include li-extend('.lia-message-view-display');
+
+    padding-bottom: $padding-large-vertical;
+
+    /* @noflipstart */
+    .lia-quilt-column-full-content,
+    .lia-quilt-column-left-content {
+    /* @noflipend */
+      > .lia-quilt-column-alley {
+        margin-left: $panel-body-margin + $li-message-view-padding;
+      }
+    }
+  }
+
+  .lia-note-subject {
+    @include li-extend('.lia-message-subject');
+  }
+
+  .lia-note-body {
+    @include li-extend('.lia-message-body-wrapper');
+    @include li-extend('.lia-message-body');
+    @include li-extend('.lia-message-body-content');
+  }
+
+  .lia-note-item-metadata {
+    @include li-extend('.lia-message-item-metadata');
+  }
+
+  .lia-note-item-metadata-side {
+    @include li-extend('.lia-message-item-metadata-side');
+  }
+
+  .lia-note-byline {
+    @include li-extend('.lia-message-byline');
+  }
+
+  .lia-note-item-metadata-main {
+    @include li-extend('.lia-message-item-metadata-main');
+  }
+
+  .lia-note-batch-checkbox {
+    left: $panel-body-margin;
+    position: absolute;
+  }
+}

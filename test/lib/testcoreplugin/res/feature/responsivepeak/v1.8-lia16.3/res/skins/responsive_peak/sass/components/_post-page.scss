@@ -1,0 +1,29 @@
+@mixin peak\components\post-page {
+
+  .PostPage,
+  .ReplyPage,
+  .EditPage {
+    margin-top: 0;
+
+    .lia-autosave-discard,
+    .lia-autosave-load {
+      color: $body-bg;
+    }
+
+    .lia-breadcrumb {
+      background-color: $li-bg-secondary;
+      margin-top: 0;
+      padding-left: $grid-gutter-width;
+
+      .lia-list-standard-inline {
+        padding-left: 0;
+      }
+    }
+
+    .lia-quilt-row-header {
+      .lia-quilt-column-common-header {
+        border-bottom: $li-divider-size solid $li-border-color;
+      }
+    }
+  }
+}

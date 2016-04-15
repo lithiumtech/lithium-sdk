@@ -1,0 +1,214 @@
+@mixin peak\components\kudos-leaderboard-page {
+  .KudosLeaderboardPage {
+    .lia-quilt-column-alley .lia-quilt-column-alley-single {
+      padding-bottom: 0;
+    }
+
+    .lia-tabs-sort {
+      li > a {
+        border-radius: 0;
+        color: $text-color;
+
+        &:hover {
+          border-radius: 0;
+        }
+      }
+
+      .lia-link-disabled,
+      .lia-link-disabled:hover {
+        background-color: $li-nav-link-bg;
+        border-radius: 0;
+        color: $gray-light;
+      }
+    }
+
+    .lia-link-ticket-post-action img {
+      display: none;
+    }
+
+    .lia-user-avatar-message:not(.lia-textavatar) {
+      border: 1px solid $li-avatar-border-color;
+    }
+
+    .TopMessagesLeaderBoard {
+      .t-data-grid {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: $panel-body-margin;
+      }
+
+      @include media(phone) {
+        .lia-list-wide .lia-list-row {
+          padding-left: $li-avatar-size-message + $padding-small-vertical;
+        }
+      }
+    }
+
+    .lia-panel-content .TopMessagesLeaderBoard img {
+      max-width: none;
+    }
+
+    .KudosUserTab {
+      .lia-panel {
+        margin-bottom: 0;
+      }
+
+      .lia-panel-content {
+        padding: 0;
+      }
+
+      .lia-menu-bar {
+        padding: 0 $panel-body-margin;
+      }
+    }
+
+    .TopUsersLeaderBoard {
+      margin: $panel-body-margin $padding-xs-horizontal;
+
+      @include media(phone-min) {
+        margin: $panel-body-margin 0 0 0;
+      }
+
+       .UserSearchItemContainer {
+        @include li-extend('.col-xs-12');
+        @include li-extend('.col-sm-12');
+        @include li-extend('.col-md-8');
+        @include li-extend('.col-lg-6');
+
+        @include media(phone-min) {
+          padding-left: 0;
+          padding-right: 0;
+          width: 100%;
+        }
+      }
+
+
+      .lia-quilt-kudos-leader-board-author-item,
+      .lia-quilt-kudos-leader-board-giver-item {
+        background-color: $li-bg-secondary;
+        border: 1px solid $li-border-color;
+        margin-bottom: $panel-body-margin;
+
+        @include media(phone-min) {
+          border-bottom: 1px solid transparent;
+          border-left: 1px solid transparent;
+          border-right: 1px solid transparent;
+          margin-bottom: 0;
+        }
+
+        .lia-quilt-column-user-search-result {
+          display: table;
+          width: 100%;
+
+          > .lia-quilt-column-alley {
+            display: table-row;
+          }
+
+          .lia-user-position,
+          .lia-user-avatar,
+          .lia-user-name-and-simple-rank,
+          .lia-user-kudos-received,
+          .lia-user-kudos-given {
+            display: table-cell;
+            position: relative;
+            vertical-align: middle;
+          }
+
+          .lia-user-avatar {
+            max-width: $li-icon-size;
+            min-width: $li-icon-size;
+            width: 1%;
+          }
+
+          .lia-user-name-and-simple-rank {
+            width: 100%;
+          }
+
+          .lia-user-position {
+            width: 1%;
+          }
+
+          .lia-user-kudos-given,
+          .lia-user-kudos-received {
+            padding-right: $panel-body-padding;
+            padding-top: $padding-small-vertical;
+            text-align: center;
+            width: 1%;
+          }
+        }
+      }
+
+      .lia-user-name-and-simple-rank-wrapper {
+        left: $padding-base-horizontal;
+        position: absolute;
+        right: $padding-base-horizontal;
+        top: $padding-large-vertical;
+      }
+
+      .lia-user-name,
+      .lia-user-rank-container {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .lia-user-rank-container {
+        color: $li-text-color-secondary;
+        margin-top: -($padding-small-vertical);
+      }
+
+      .lia-user-position {
+        color: $li-text-color-secondary;
+        font-size: $li-font-size-leaderboard-position;
+        padding-left: $padding-small-horizontal;
+        position: relative;
+
+        &:before {
+          color: $li-text-color-secondary;
+          content: '#';
+          display: inline-block;
+          font-size: $font-size-xlarge;
+          left: $padding-large-horizontal;
+          position: absolute;
+          top: $padding-large-vertical;
+          vertical-align: top;
+        }
+
+        .lia-user-position-wrapper {
+          padding: 0 $padding-large-horizontal;
+        }
+      }
+
+      .lia-user-name-link {
+        font-size: $font-size-large;
+      }
+
+      .lia-user-rank {
+        color: $li-text-color-secondary;
+        font-size: $font-size-xsmall;
+      }
+
+      .lia-user-kudos-given,
+      .lia-user-kudos-received {
+        .base-count-text {
+          @include li-icon(icn-kudos, $size: $font-size-h2, $color: $li-text-color-secondary);
+
+          display: inline-block;
+          min-width: $font-size-xlarge + $font-size-small;
+          text-align: right;
+        }
+
+        .base-count-number {
+          display: inline-block;
+          font-size: $font-size-small;
+          letter-spacing: .03em;
+          min-width: $font-size-xlarge + $font-size-small;
+          position: relative;
+          text-align: center;
+          top: -($padding-small-vertical);
+        }
+      }
+    }
+  }
+}

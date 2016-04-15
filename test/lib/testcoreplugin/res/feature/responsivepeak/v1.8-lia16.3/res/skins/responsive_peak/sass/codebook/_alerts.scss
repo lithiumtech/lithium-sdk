@@ -1,0 +1,46 @@
+@mixin peak\codebook\alerts {
+
+  .lia-panel-feedback-banner-alert,
+  .lia-panel-feedback-banner-note,
+  .lia-panel-feedback-banner-safe,
+  .lia-panel-feedback-inline-alert,
+  .lia-panel-feedback-inline-note,
+  .lia-panel-feedback-inline-safe,
+  .lia-panel-status-banner-note,
+  .no-blog-articles {
+
+    // Link colors in Peak feedback panels
+    // need to be light since the backgrounds
+    // are dark
+    .lia-link-navigation {
+      color: $li-text-color-inverse;
+      text-decoration: underline;
+    }
+  }
+
+  // make banner alerts full width
+  .lia-panel-feedback-banner-alert,
+  .lia-panel-feedback-banner-note,
+  .lia-panel-feedback-banner-safe,
+  .lia-panel-status-banner-note {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+
+    .lia-text {
+      padding-left: $padding-small-horizontal;
+      padding-right: $padding-small-horizontal;
+    }
+  }
+
+  .lia-quilt-column-feedback {
+    &.lia-quilt-column {
+      min-height: 0;
+    }
+
+    // for pages with no titles and a description, highlight the description
+    .lia-component-common-widget-page-information {
+      @extend .lia-panel-status-banner-note;
+    }
+  }
+}

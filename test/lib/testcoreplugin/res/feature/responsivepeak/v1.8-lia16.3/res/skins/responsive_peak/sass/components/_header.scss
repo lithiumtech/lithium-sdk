@@ -1,0 +1,12 @@
+@mixin peak\components\header {
+
+  .lia-quilt-row-main-header {
+    .lia-component-common-widget-slide-out-nav-menu {
+      padding-left: $padding-small-horizontal;
+    }
+
+    .lia-component-common-widget-slide-out-user-menu {
+      padding-right: $padding-small-horizontal;
+    }
+  }
+}

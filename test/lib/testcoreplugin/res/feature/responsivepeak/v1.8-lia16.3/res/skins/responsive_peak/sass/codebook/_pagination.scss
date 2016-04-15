@@ -1,0 +1,154 @@
+@mixin peak\codebook\pagination {
+
+  // Previous and Next Topic Control
+
+  // hide default pagination entities « »
+  .lia-paging-page-arrow {
+    display: none;
+  }
+
+  // use larger pagination padding to match height of button, -1px for border
+  .lia-paging-full,
+  .lia-paging-full-pages {
+    .lia-link-navigation {
+      padding: {
+        bottom: $padding-large-vertical - 1px;
+        left: $padding-large-horizontal;
+        right: $padding-large-horizontal;
+        top: $padding-large-vertical - 1px;
+      }
+    }
+  }
+
+  .lia-paging-page-next,
+  .lia-paging-page-previous {
+    // remove 'next' and 'previous' text for tablet & <
+    .lia-paging-page-link {
+      @include media(tablet) {
+        display: none;
+      }
+
+      // show for navigator "older article" "newer article"
+      .lia-discussion-page-discussion-navigator & {
+        display: inline-block;
+      }
+    }
+
+    > .lia-link-navigation {
+      &:after,
+      &:before {
+        vertical-align: baseline;
+      }
+
+      // remove background from next and previous pagination
+      &,
+      &.lia-link-disabled:hover {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    }
+  }
+
+  // replace » icon with font-awesome icon
+  .lia-count-pager-page-next,
+  .lia-paging-page-next {
+    > .lia-link-navigation {
+      @include li-icon($fa-var-angle-right, $pseudo: after, $color: inherit);
+    }
+  }
+
+    // replace » icon with font-awesome icon
+  .lia-count-pager-page-previous,
+  .lia-paging-page-previous {
+    > .lia-link-navigation {
+      @include li-icon($fa-var-angle-left, $color: inherit);
+    }
+  }
+
+  // for some reason, the page listing component has the previus page class on it
+  .lia-paging-page-listing.lia-paging-page-previous {
+    > .lia-link-navigation {
+      @include li-icon($fa-var-circle-o, $color: inherit);
+
+      &:before {
+        vertical-align: baseline;
+      }
+    }
+  }
+
+  .lia-paging-header-pagination-position {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .lia-paging-header-pagination {
+    margin-bottom: 0;
+    white-space: nowrap;
+
+    > li {
+      display: inline-block;
+      float: left;
+    }
+
+    .lia-count-pager-page-next {
+      .lia-link-navigation {
+        &:after {
+          margin-left: $padding-base-horizontal / 2;
+        }
+      }
+    }
+
+    .lia-count-pager-page-previous {
+      .lia-link-navigation {
+        border-left: 0;
+
+        &:before {
+          margin-right: $padding-base-horizontal / 2;
+        }
+
+        &:active,
+        &:focus,
+        &:hover {
+          border-left: 1px solid $li-border-color;
+        }
+
+        &.lia-link-disabled {
+          &:active,
+          &:focus,
+          &:hover {
+            border-left: 0;
+          }
+        }
+      }
+    }
+
+    .lia-link-navigation,
+    .lia-paging-page-count-text {
+      border-left: 1px solid $li-border-color;
+      color: $text-color;
+      display: inline-block;
+      padding: $padding-large-vertical $padding-base-horizontal;
+      text-decoration: none;
+
+      &.lia-link-navigation {
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: $li-pagination-header-hover-bg;
+        }
+      }
+
+      &.lia-link-disabled {
+        cursor: $cursor-disabled;
+        opacity: .65;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+// Board and Category lists
+//
+// General styling for the containing table can be found in _tables.scss
+//
+
+@mixin peak\components\node-lists {
+
+  // Join the Discussion
+  .BoardList {
+    tbody > tr > td {
+      // forced min height for node list
+      height: $li-node-list-height;
+
+      // remove forced min height for sm and under
+      @include media(tablet) {
+        height: auto;
+      }
+
+      // node lists have different left and right padding than normal tables
+      &:first-child {
+        padding-left: $table-cell-padding * 2;
+        padding-right: $table-cell-padding;
+
+        @include media(tablet) {
+          padding-left: $table-cell-padding;
+          padding-right: $table-cell-padding / 2;
+        }
+      }
+
+      &:last-child {
+        padding-right: $table-cell-padding * 2;
+
+        @include media(tablet) {
+          padding-right: $table-cell-padding + $li-triangletop-size;
+          text-align: right;
+        }
+      }
+    }
+
+    .lia-recent-message-count-label {
+      display: block;
+      min-width: 100px; // TODO: remove hardcoded arbitrary min-width value
+      padding-top: $padding-small-vertical;
+
+      @include media(phone) {
+        display: none;
+      }
+    }
+  }
+
+  .lia-floated-boards {
+    border-bottom: $li-divider-size solid $li-border-color;
+
+    .lia-list-row {
+      display: block;
+      position: relative;
+
+      td:last-child {
+        @include thread-status-icon($li-triangletop-thumb-tack-bg, $fa-var-thumb-tack);
+      }
+    }
+  }
+
+  .NodeListTaplet {
+    border-bottom: $li-divider-size solid $li-border-color;
+  }
+}

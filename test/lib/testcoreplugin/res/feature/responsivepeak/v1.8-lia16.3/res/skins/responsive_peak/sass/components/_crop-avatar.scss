@@ -1,0 +1,7 @@
+@mixin peak\components\crop-avatar {
+  .lia-image-cropper {
+    canvas {
+      border-radius: 50%;
+    }
+  }
+}

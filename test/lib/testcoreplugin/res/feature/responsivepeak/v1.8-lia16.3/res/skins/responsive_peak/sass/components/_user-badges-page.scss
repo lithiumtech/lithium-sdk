@@ -1,0 +1,48 @@
+@mixin peak\components\user-badges-page {
+
+  .UserBadgesPage {
+
+    @include media(phone) {
+      .lia-list-tile > li {
+        width: 100%;
+
+        .lia-user-badge-display-card {
+          margin: auto;
+          width: auto;
+        }
+      }
+    }
+
+    .lia-list-tile > li {
+      display: inline-block;
+      float: none;
+      vertical-align: top;
+    }
+
+    .lia-user-badge-display-card {
+      padding: (2 * $padding-large-vertical) $padding-large-vertical;
+      text-align: center;
+      width: $li-user-badges-page-badge-container-width + (2 * $padding-large-vertical);
+
+      .lia-link-navigation {
+        display: inline-block;
+        padding-bottom: $padding-small-vertical;
+      }
+
+      .lia-user-badge-name {
+        font-size: $font-size-large;
+      }
+
+      .lia-user-badge-date,
+      .lia-badge-participants-count {
+        color: $gray-light;
+        font-size: $font-size-small;
+      }
+    }
+
+    .lia-user-badge-display img {
+      max-height: $li-user-badges-badge-size;
+      max-width: $li-user-badges-badge-size;
+    }
+  }
+}

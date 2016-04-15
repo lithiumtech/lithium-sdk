@@ -1,0 +1,261 @@
+@mixin peak\components\search-form {
+
+  %lia-search-input {
+    border-bottom-right-radius: $border-radius-round;
+    border-radius: $border-radius-round;
+    border-top-right-radius: $border-radius-round;
+    height: $li-search-input-height;
+    padding-right: $li-search-box-padding-right;
+    position: relative;
+    width: 100%;
+
+    @include media(phone) {
+      padding-right: $li-icon-size + $padding-small-horizontal * 2;
+    }
+
+    &:active,
+    &:focus {
+      background-color: $li-search-input-color;
+    }
+  }
+
+  %lia-search-button {
+    background-color: transparent;
+    background-image: svg-url($li-svg-icon-magnifying-glass, $li-icon-color);
+    background-repeat: no-repeat;
+    border: 0;
+    height: $li-icon-size - $padding-small-horizontal;
+    margin-top: -($li-icon-size - $padding-small-horizontal) / 2;
+    outline: 0;
+    position: absolute;
+    right: $li-icon-size / 2;
+    text-indent: -9999px;
+    top: 50%;
+    width: $li-icon-size - $padding-small-horizontal;
+    z-index: 2;
+
+    // Taken almost verbatim from vender .btn
+    // Otherwise the active state was not fully clearing
+    // Likely issue is that there is another :focus after that
+    &,
+    &:active,
+    &.active {
+      background-color: transparent;
+      border: 0;
+      border-color: transparent;
+      box-shadow: none;
+
+      &:focus,
+      &.focus {
+        background-color: transparent;
+        border: 0;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .tkbSearchBarFormCssClass,
+  .SearchForm.lia-form-inline {
+    background-color: transparent;
+    position: relative;
+
+    // Modifying submit button.
+    .lia-button-Submit-action,
+    .lia-button-searchForm-action {
+      @include li-extend('%lia-search-button');
+    }
+
+    .lia-button-Submit-action {
+      margin-top: -($li-icon-size - $font-size-large - $padding-small-horizontal) / 2;
+    }
+  }
+
+  // Actual search input
+  .tkbSearchBarFormCssClass .lia-form-input-wrapper,
+  .lia-content .lia-search-input-wrapper {
+    vertical-align: middle;
+
+    .lia-form-search-query-input.lia-form-search-query-input,
+    > .search-input.lia-form-type-text {
+      @include li-extend('%lia-search-input');
+    }
+  }
+
+  .lia-quilt-row-search {
+    background-color: $li-bg-secondary;
+  }
+
+  .lia-component-common-widget-search-form {
+    padding: {
+      bottom: $li-searchbox-padding;
+      left: $panel-body-padding;
+      right: $panel-body-padding;
+      top: $panel-body-padding;
+    }
+
+    .CategoryPage & {
+      padding: {
+        bottom: $li-searchbox-padding;
+        left: $panel-body-padding;
+        right: $panel-body-padding;
+        top: $li-searchbox-padding;
+      }
+    }
+
+    .CommunityPage & {
+      // since the search form is larger than the buttons on the side, adjusting
+      // the input up rather than vertically aligning the sides
+      @include media(desktop) {
+        margin-top: floor(-($li-hero-input-height - $li-icon-size) / 2);
+        padding: 0;
+      }
+
+      @include media(tablet) {
+        padding-bottom: $panel-body-padding;
+        padding-top: $panel-body-padding;
+      }
+
+      .SearchForm.lia-form-inline {
+        // Modifying submit button.  Only a magnifying glass shows
+        .lia-button-searchForm-action {
+          background-image: svg-url($li-svg-icon-magnifying-glass, $li-hero-icon-color);
+        }
+
+        .lia-search-form-granularity {
+          color: $li-hero-icon-color;
+
+          @include media(desktop) {
+            height: $li-hero-input-height;
+          }
+
+          &:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 $li-hero-icon-color;
+          }
+
+        }
+
+        .search-input {
+          @include transition(border-color ease-in-out .15s, background-color ease-in-out .15s);
+
+          background-color: darken($li-hero-community-bg, 2%);
+          border-color: $li-hero-input-border-color;
+          border-width: 2px;
+          color: $li-hero-color;
+
+          @include media(desktop) {
+            height: $li-hero-input-height;
+          }
+
+          &:active,
+          &:focus {
+            background-color: $input-bg;
+            border-color: $input-border;
+            color: $input-color;
+          }
+
+          &:hover {
+            border-color: $li-hero-color;
+          }
+        }
+      }
+    }
+
+    .lia-search-form-granularity {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      color: $li-icon-color;
+      cursor: pointer;
+      height: $li-search-input-height;
+      padding-right: $padding-base-horizontal;
+      position: absolute;
+      right: $li-icon-size + $padding-large-horizontal + $li-search-granularity-caret;
+      z-index: 4;
+
+      &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 $li-icon-color;
+      }
+
+      @include media(phone) {
+        display: none;
+      }
+    }
+  }
+
+  // supress search form behavior for header inherited from bootstrap_base
+  .lia-component-quilt-header {
+    .SearchForm.lia-component-common-widget-search-form {
+
+      @include media(tablet) {
+        padding: {
+          bottom: $panel-body-padding;
+          top: $panel-body-padding;
+        }
+      }
+
+      @include media(phone) {
+        float: inherit;
+
+        .lia-form-inline.SearchForm {
+          display: table;
+        }
+      }
+
+      .lia-search-toggle {
+        @include li-extend('.hidden-xs');
+      }
+    }
+  }
+
+  .lia-button-wrapper-searchForm-action,
+  .lia-component-tkb-widget-search-bar .lia-button-wrapper-Submit-action {
+    .lia-search-form-granularity + &:before {
+      left: auto;
+      right: $li-icon-size + $padding-base-horizontal * 2;
+      z-index: 3;
+
+      // suppress granularity dropdown carat for phone
+      @include media(phone) {
+        display: none;
+      }
+    }
+  }
+
+  .SearchPage {
+    .lia-search-toggle-text {
+      display: none;
+    }
+  }
+
+  .lia-search-form-links-secondary {
+    bottom: -$li-searchbox-padding;
+    position: absolute;
+    right: $panel-body-padding;
+  }
+
+  .lia-component-search-widget-search-page-form {
+    padding: {
+      bottom: $panel-body-padding * 3;
+      left: $panel-body-margin;
+      right: $panel-body-margin;
+    }
+  }
+
+  // increasing specificity of the input and button to be consistent with
+  // other search forms
+  .SearchPageForm.SearchPageForm {
+    .lia-form-type-search {
+      @extend %lia-search-input;
+      padding-right: $li-icon-size + $padding-base-horizontal * 2;
+    }
+
+    .lia-button-SearchPageForm-action {
+      @extend %lia-search-button;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

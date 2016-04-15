@@ -1,0 +1,29 @@
+@mixin peak\components\tag-detail-page {
+
+  .TagDetailPage {
+
+    .lia-menu-bar {
+      margin-bottom: $padding-large-vertical;
+    }
+
+    .lia-menu-dropdown-items > li > .lia-link-disabled {
+      color: $btn-link-disabled-color;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    @include media(phone) {
+      .lia-paging-full-wrapper {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+      }
+
+      .lia-paging-full {
+        float: none;
+      }
+    }
+  }
+}

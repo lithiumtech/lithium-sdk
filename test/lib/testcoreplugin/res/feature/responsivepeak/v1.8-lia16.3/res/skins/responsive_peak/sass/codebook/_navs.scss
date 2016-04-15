@@ -1,0 +1,41 @@
+@mixin peak\codebook\navs {
+
+  .lia-content .SortingBar {
+    padding: $grid-gutter-width / 2;
+    width: 100%;
+  }
+
+  .lia-content .TimeRangeSelector {
+    width: 100%;
+
+    .lia-label-tabs-sort {
+      border-bottom: 1px solid $li-border-color;
+      padding: $grid-gutter-width / 2;
+    }
+  }
+
+
+  .lia-tabs-secondary:not(.lia-tabs-vertical) {
+    border-bottom: 1px solid $li-border-color;
+
+    > li + li {
+      margin-left: 0;
+    }
+
+    >li > span > a {
+      border-radius: 0;
+      color: $text-color;
+
+      &:hover {
+        border-radius: 0;
+      }
+    }
+
+    > .lia-tabs-active > span > a {
+      background-color: $li-nav-link-bg;
+      border-radius: 0;
+      color: $gray-light;
+    }
+
+  }
+}

@@ -1,0 +1,135 @@
+@mixin peak\components\faq-page {
+  .FaqPage .lia-top-quilt
+    > .lia-quilt-row-main
+    > .lia-quilt-column-single
+    > .lia-quilt-column-alley {
+    background-color: $body-bg;
+    padding: 0;
+  }
+
+  .FaqPage .lia-top-quilt > .lia-quilt-row-main > .lia-quilt-column {
+    padding-left: $panel-body-margin;
+    padding-right: $panel-body-margin;
+
+    @include media(phone) {
+      padding-left: $padding-xs-horizontal;
+      padding-right: $padding-xs-horizontal;
+    }
+  }
+
+  .lia-faq-heading.lia-faq-heading {
+    font-size: $font-size-h3;
+    font-weight: $headings-font-weight;
+    margin-bottom: $padding-large-vertical;
+    margin-left: $panel-body-margin;
+  }
+
+  .lia-component-faq-toggleable-contents.lia-component-faq-toggleable-contents {
+    background-color: #fff;
+    border: 1px solid $li-border-color;
+    border-radius: $border-radius-base;
+    padding: 0;
+  }
+
+  .lia-faq-section-title-level-1 > .lia-link-navigation {
+    color: $text-color;
+    display: inline-block;
+    font-size: $font-size-h4;
+    font-weight: bold;
+    padding: $padding-large-vertical $padding-large-horizontal;
+
+    &:before {
+      background-image: svg-url($li-svg-icon-expand, $link-color);
+      content: '';
+      display: inline-block;
+      height: $li-icon-size-xs;
+      margin-right: $padding-small-horizontal;
+      width: $li-icon-size-xs;
+    }
+
+    &.lia-open {
+      &:before {
+        background-image: svg-url($li-svg-icon-collapse, $link-color);
+      }
+    }
+  }
+
+  .lia-faq-section-title:not(.lia-link-navigation) {
+    border-top: 1px solid $li-border-color;
+  }
+
+  .lia-faq-section:first-child .lia-faq-section-title-level-1 {
+    border-top: 0;
+  }
+
+  .lia-faq-sections > .lia-faq-section {
+    margin-left: $padding-xl-horizontal;
+
+    .lia-faq-section-title-level-2 {
+      padding: $padding-large-vertical $padding-large-horizontal;
+
+      @include media(phone) {
+        padding-left: $padding-base-horizontal;
+        padding-right: $padding-base-horizontal;
+      }
+    }
+  }
+
+  .lia-faq-answer {
+    margin-left: $padding-large-horizontal;
+    margin-right: $padding-xl-horizontal;
+    padding-right: $padding-xl-horizontal;
+
+    @include media(phone) {
+      margin-left: $padding-base-horizontal;
+      margin-right: $padding-small-horizontal;
+      padding-right: $padding-small-horizontal;
+    }
+
+    ol {
+      margin-left: $padding-small-horizontal;
+      padding-left: $padding-small-horizontal;
+
+       @include media(phone) {
+        padding-left: $padding-xs-horizontal;
+       }
+
+      > li {
+        line-height: $li-line-height-ordered-list-item;
+
+        @include media(phone) {
+          margin-left: $padding-xs-horizontal;
+        }
+      }
+    }
+
+    ul {
+      list-style: disc;
+      margin: $padding-base-vertical 0;
+      padding-left: $padding-large-horizontal;
+
+      > li {
+        line-height: $line-height-base;
+        margin-bottom: $padding-small-vertical;
+      }
+    }
+
+    br {
+      content: '';
+      display: block;
+      line-height: $font-size-small;
+      margin: $font-size-small 0 0 0;
+    }
+  }
+
+  .lia-faq-description-close {
+    font-size: $font-size-small;
+    margin: $padding-large-vertical $padding-large-horizontal;
+    text-align: right;
+
+    .lia-faq-section-close {
+      @include li-icon(button-delete, $color: $link-color);
+      cursor: pointer;
+    }
+  }
+}

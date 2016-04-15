@@ -1,0 +1,10 @@
+@mixin peak\components\discussion-page-sub-section {
+
+  .lia-discussion-page-sub-section-header {
+    color: $li-topic-heading-color;
+    font-size: $font-size-h3;
+    font-weight: $headings-font-weight;
+    padding-left: $grid-gutter-width;
+    padding-top: $padding-base-vertical;
+  }
+}
