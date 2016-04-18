@@ -77,14 +77,6 @@ module.exports = function (gulp, gutil) {
         var skinLib = require('../lib/skin')(gulp, gutil);
         var putils = require('../lib/plugin-utils');
 
-        //Check if we are creating skin on a sdk project
-        if (!fs.existsSync('./server.conf.json')) {
-            console.log(gutil.colors.red('Please run create-skin under your Lithium SDK project directory.' +
-                '\n or create a new project with ' + gutil.colors.bold('li create-project') + ' before creating a new skin.'));
-            process.exit(1);
-            return true;
-        }
-
         var options = {
             skinInfo: {}
         };
