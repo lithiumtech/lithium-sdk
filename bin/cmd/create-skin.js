@@ -8,7 +8,7 @@ module.exports = {
     run: function () {
         //Success call back function
         var cb = require('../../gulp/createskin')(gulp, gutil).createNewSkin;
-        
+
         //Check if we are creating skin on a sdk project
         if (!fs.existsSync('./server.conf.json')) {
             console.log(gutil.colors.red('Please run create-skin under your Lithium SDK project directory.' +
@@ -21,5 +21,6 @@ module.exports = {
             debugMode: gutil.env['debug']
         }, cb);
     },
-    help: 'Creates a new skin.'
+    help: 'Creates a new skin.' + gutil.colors.bold('\nOptions:') +
+    '\n--clearFalse:   Downloads the core plugins from server even when directory is already present. Defaults to false'
 };
