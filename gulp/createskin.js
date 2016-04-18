@@ -5,6 +5,7 @@ var inquirer = require('inquirer');
 var fs = require('fs');
 var path = require('path');
 var through = lazyReq('through2');
+var putils = require('../lib/plugin-utils');
 
 module.exports = function (gulp, gutil) {
 
@@ -41,7 +42,6 @@ module.exports = function (gulp, gutil) {
      */
     function downloadCorePlugins() {
 
-        var putils = require('../lib/plugin-utils');
         var server = require('../lib/plugin-server.js')(gulp, gutil).getServer();
         if (fs.existsSync(server.coreOutputDir())) {
             if (gutil.env['debug']) {
@@ -177,7 +177,7 @@ module.exports = function (gulp, gutil) {
             
             //Success function when all skin creation process is completed successfully
             options.skinInfo.cb = function() {
-                putils.logSuccess(gutil, gutil.colors.green('Created new skin: ' + normalizedSkinId +" under "+skinLib.skinsBaseDir)+" dir.");
+                putils.logSuccess(gutil, gutil.colors.green('Created new skin: ' + normalizedSkinId +" under "+skinLib.skinsBaseDir+" dir."));
                 return;
             };
             try {
