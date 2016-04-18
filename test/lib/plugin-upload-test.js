@@ -154,8 +154,11 @@ describe('test uploading plugin', function() {
     var cb = defined(opts) && defined(opts.cb) ? opts.cb : function(result) {
       if (defined(expects.callResult)) {
         expect(result).to.equal(expects.callResult);
+        done();
       }
-      done();
+      else{
+        done();
+      }
     };
 
     var fsMock = {
