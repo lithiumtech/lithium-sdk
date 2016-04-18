@@ -1,0 +1,139 @@
+// Interaction Icons
+//
+// Icon set to represent our interaction styles. Used in board pages and navigation components.
+//
+// Markup:
+// <span class="lia-fa
+//              lia-fa-community
+//              lia-img-icon-community"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-category
+//              lia-img-icon-category"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-blog
+//              lia-img-icon-blog"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-idea
+//              lia-img-icon-idea"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-tkb
+//              lia-img-icon-tkb"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-contest
+//              lia-img-icon-contest"
+//       style="height: 20px; width: 20px;"></span>
+// <span class="lia-fa
+//              lia-fa-group
+//              lia-img-icon-group"
+//       style="height: 20px; width: 20px;"></span>
+//
+// Style guide: peak.codebook.interaction-icons
+
+@mixin peak\codebook\interaction-icons {
+
+  @mixin interaction-icon($size: $li-icon-size-lg) {
+    border-radius: 50%;
+    height: $size;
+    text-align: center;
+    width: $size;
+
+    &:before {
+      color: $li-icon-inverse-color;
+      font-size: floor($size / 2);
+      line-height: $size;
+    }
+
+    @if ($size == $li-icon-size-lg) {
+      @include media(tablet) {
+        height: $li-icon-size;
+        width: $li-icon-size;
+
+        // actual icon image
+        &:before {
+          font-size: floor($li-icon-size / 2);
+          line-height: $li-icon-size;
+        }
+      }
+    }
+  }
+
+  // Entire icon + border + background
+
+  // category and board lists get large icons
+  .lia-message-discussion-style-icon,
+  .boardIconColumn .board-icon {
+    > .lia-fa-icon {
+      @include interaction-icon;
+
+      .lia-message-view-display & {
+        @include interaction-icon($li-icon-size);
+      }
+    }
+  }
+
+  // community slide nav icons
+  .lia-nav-item-container {
+    .lia-nav-icon-left {
+      @include interaction-icon($li-icon-size);
+    }
+  }
+
+  .boardIconColumn,
+  .lia-message-discussion-style-icon,
+  .lia-nav-item-container,
+  .lia-notification-feed-icon {
+
+    .lia-fa-community {
+      background-color: $li-icon-community-bg;
+    }
+
+    // Forum icon bg
+    .lia-fa-forum {
+      background-color: $li-icon-forum-bg;
+    }
+
+    // QA icon bg
+    .lia-fa-qanda {
+      background-color: $li-icon-qanda-bg;
+    }
+
+    // Blog icon bg
+    .lia-fa-blog {
+      background-color: $li-icon-blog-bg;
+    }
+
+    // Idea icon bg
+    .lia-fa-idea {
+      background-color: $li-icon-idea-bg;
+    }
+
+    // TKB icon bg
+    .lia-fa-tkb {
+      background-color: $li-icon-tkb-bg;
+    }
+
+    // Contest icon bg
+    .lia-fa-contest {
+      background-color: $li-icon-contest-bg;
+    }
+
+    // Groups icon bg
+    .lia-fa-group {
+      background-color: $li-icon-group-bg;
+    }
+
+    // Category icon bg
+    .lia-fa-category {
+      background-color: $li-icon-category-bg;
+    }
+  }
+
+  .lia-notification-feed-icon .lia-fa-icon {
+    @include interaction-icon($li-icon-size);
+  }
+}

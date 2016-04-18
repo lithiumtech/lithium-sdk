@@ -1,0 +1,203 @@
+@mixin peak\components\blog-messages {
+
+  .lia-quilt-blog-article {
+    @extend %message-quilt-all;
+  }
+
+  .BlogPage {
+    .lia-message-posted-on {
+      white-space: nowrap;
+
+      // additional dot separator padding
+      &:before {
+        margin-right: $padding-large-horizontal;
+      }
+    }
+  }
+
+  // list of blog articles teaser / preview
+  .lia-quilt-blog-message {
+    @extend %message-quilt-reset;
+
+
+    > .lia-quilt-row-header {
+      border-bottom: 1px solid $li-border-color;
+      padding: $padding-xl-vertical $padding-xl-horizontal;
+
+      @include media(phone) {
+        padding: $panel-body-padding;
+      }
+
+      /* @noflipstart */
+      > .lia-quilt-column-header-left,
+      > .lia-quilt-column-header-right {
+      /* @noflipend */
+        @include li-extend('.col-sm-12');
+
+        @include media(phone) {
+          float: right;
+          padding-right: 0;
+          width: calc(100% - (#{$li-icon-size} + #{$padding-small-horizontal}));
+        }
+      }
+
+      .lia-quilt-column-header-left {
+        // Date in teaser header, remove width 100%
+        .lia-component-common-widget-date,
+        .lia-component-post-date-last-edited,
+        .lia-message-edited-on,
+        .lia-message-posted-on {
+          display: inline-block;
+          width: auto;
+        }
+      }
+
+      .lia-quilt-column-alley-right {
+        margin-bottom: -2px; // suppress extra line-height for the stats
+        text-align: right;
+
+        @include media(phone) {
+          text-align: left;
+        }
+      }
+    }
+
+    @include media(phone) {
+      .lia-message-author-avatar {
+        left: - ($li-icon-size + $padding-small-horizontal);
+        position: absolute;
+      }
+    }
+
+    > .lia-quilt-row-main {
+      padding: $padding-xl-horizontal;
+
+      @include media(phone) {
+        padding: $panel-body-padding;
+      }
+    }
+
+    > .lia-quilt-row-footer {
+      border-top: 1px solid $li-border-color;
+      padding: $padding-xl-vertical $padding-xl-horizontal;
+
+      @include media(phone) {
+        border-top: 0 none;
+        padding: $panel-body-padding;
+      }
+
+      /* @noflipstart */
+      > .lia-quilt-column-footer-left,
+      > .lia-quilt-column-footer-right {
+      /* @noflipend */
+        @include li-extend('.col-sm-12');
+        @include li-extend('.col-xs-12');
+      }
+
+      // hide share button for phone
+      .lia-js-add-this-widget {
+        display: none;
+      }
+    }
+
+    .lia-component-messages-stat-thread-replies-count {
+      @extend %lia-dot-separator;
+
+      // additional styling for the dot separator
+      // extra specificity
+      &.lia-component-messages-stat-thread-replies-count {
+        &:before {
+          display: none;
+
+          @include media(phone) {
+            display: inline-block;
+            margin-left: $padding-xs-horizontal;
+            margin-right: $padding-xs-horizontal;
+          }
+        }
+      }
+    }
+  }
+
+  .lia-component-blogs-widget-blogroll-list {
+    .blog-link {
+      line-height: $input-height-base;
+    }
+  }
+
+  // styles for both the blog page and the blog articles page
+  .lia-message-blog {
+    .blog-article-link {
+      font-size: $font-size-h2;
+      font-weight: $headings-font-weight;
+    }
+  }
+
+  .BlogArticlePage {
+    // adds permanent border on footer
+    .lia-panel-message-root {
+      .lia-quilt-row-footer {
+        border-top: 1px solid $li-border-color;
+      }
+    }
+
+    // removes comment text at mobile widths in blog article page
+    .lia-component-blogs-action-comment-on-this {
+      .lia-message-comment-post {
+        span {
+          @include media(phone) {
+            display: none;
+          }
+        }
+
+        &:before {
+          @include media(phone) {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // view and comment count styling
+  .lia-component-messages-stat-topic-views-count,
+  .lia-component-messages-stat-thread-replies-count,
+  .lia-component-blog-article-options {
+    display: inline-block;
+    margin-left: $padding-xl-horizontal;
+    text-align: center;
+
+    @include media(phone) {
+      display: inline;
+      margin-left: 0;
+    }
+  }
+
+  .lia-component-blog-article-options {
+    .lia-menu-dropdown-items {
+      z-index: 1001;
+    }
+  }
+
+  .lia-message-stats-count {
+    font-size: $font-size-xlarge;
+    font-weight: bold;
+    line-height: 1;
+
+    @include media(phone) {
+      display: inline;
+      font-size: $font-size-xsmall;
+      font-weight: bold;
+    }
+  }
+
+  .lia-message-stats-label {
+    display: block;
+    line-height: 1;
+    margin-top: $padding-small-vertical;
+
+    @include media(phone) {
+      display: inline;
+    }
+  }
+}

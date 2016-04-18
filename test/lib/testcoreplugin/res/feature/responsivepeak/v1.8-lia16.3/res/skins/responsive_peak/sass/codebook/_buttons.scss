@@ -1,0 +1,40 @@
+@mixin peak\codebook\buttons {
+
+  // Buttons
+  .lia-button {
+    border-radius: $li-btn-border-radius;
+
+    .lia-menu-bar & {
+      // subtract the border from the padding
+      padding-bottom: $padding-large-vertical - 1px;
+      padding-top: $padding-large-vertical - 1px;
+    }
+  }
+
+  .lia-button-primary {
+    padding-left: $padding-xl-horizontal;
+    padding-right: $padding-xl-horizontal;
+
+    @include media(phone) {
+      padding-left: $padding-base-horizontal;
+      padding-right: $padding-base-horizontal;
+    }
+  }
+
+  .lia-panel-message {
+    .lia-button-primary,
+    .lia-action-reply.reply-action-link {
+      @include lia-button-primary-inversed;
+    }
+
+    .lia-button-secondary {
+      @include lia-button-secondary-inversed;
+    }
+  }
+
+  .lia-panel-message-root {
+    .lia-action-reply.reply-action-link.reply-action-link {
+      @include lia-button-primary;
+    }
+  }
+}

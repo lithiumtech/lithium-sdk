@@ -1,0 +1,54 @@
+@mixin peak\codebook\tabs {
+
+  .lia-tabs-standard {
+    border-color: $li-border-color;
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    width: 100%;
+
+    li > span > a,
+    .lia-tab-overflow .default-menu-option,
+    .lia-tabs-active > span > a,
+    > .lia-tabs-active .default-menu-option {
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      color: $text-color;
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: transparent;
+        border: 0;
+        border-bottom: 2px solid $li-navigation-link-color;
+      }
+    }
+
+    .default-menu-option {
+      &:before {
+        line-height: $font-size-small * $line-height-base;
+      }
+    }
+
+    .lia-tabs {
+      float: left;
+
+      .default-menu-option {
+        overflow: initial;
+      }
+    }
+
+    .lia-tab-overflow {
+      float: right;
+
+      .default-menu-option {
+        display: inline-block;
+        line-height: 1;
+      }
+    }
+
+    .lia-tabs-active > span > a {
+      border-color: $li-navigation-link-color;
+    }
+  }
+}

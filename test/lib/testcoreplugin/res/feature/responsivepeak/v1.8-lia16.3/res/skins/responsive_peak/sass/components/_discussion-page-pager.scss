@@ -1,0 +1,40 @@
+@mixin peak\components\discussion-page-pager {
+
+  .lia-discussion-page-message-pager {
+    text-align: center;
+
+    .lia-paging-full {
+      float: none;
+    }
+  }
+
+  .lia-component-message-pager {
+    text-align: center;
+
+    .lia-paging-full {
+      float: none;
+    }
+  }
+
+  .lia-discussion-page-discussion-navigator,
+  .lia-component-thread-pager {
+    float: right;
+    margin-right: $panel-body-margin;
+
+    @include media(phone) {
+      float: none;
+      margin-right: 0;
+      text-align: center;
+
+      .lia-paging-full {
+        float: none;
+      }
+    }
+  }
+
+  .lia-component-comment-list,
+  .lia-component-reply-list,
+  .lia-component-solution-list {
+    clear: both;
+  }
+}

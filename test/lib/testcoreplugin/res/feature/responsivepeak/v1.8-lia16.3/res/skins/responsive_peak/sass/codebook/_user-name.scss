@@ -1,0 +1,22 @@
+// User Name
+//
+// Styling for username and rank.
+//
+// Markup:
+// <div class="lia-component-author"> User Foo </div>
+// <div class="lia-user-rank"> Super User </div>
+//
+// Style guide: peak.codebook.user-name
+
+@mixin peak\codebook\user-name {
+
+  .lia-component-author {
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .lia-user-rank {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+  }
+}

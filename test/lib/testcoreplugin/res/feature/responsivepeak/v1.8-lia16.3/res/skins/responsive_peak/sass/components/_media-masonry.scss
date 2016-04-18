@@ -1,0 +1,86 @@
+@mixin peak\components\media-masonry {
+
+  .lia-media-masonry-grid {
+    line-height: $li-line-height-message;
+
+    .lia-messages-message-card {
+      padding: 0;
+    }
+
+    .lia-messages-message-masonry-card {
+      padding: 0;
+
+      &.lia-message-float-type-global,
+      &.lia-message-float-type-user {
+        border-top: 0;
+
+        .lia-messages-message-masonry-body {
+          @include thread-status-icon($li-triangletop-thumb-tack-bg, $fa-var-thumb-tack);
+          @include media(phone) {
+            position: relative;
+          }
+        }
+
+        .lia-messages-message-subject {
+          padding-right: $li-triangletop-size / 2;
+        }
+      }
+
+      &.lia-message-solved-topic {
+        .lia-messages-message-masonry-body {
+          @include thread-status-icon($li-triangletop-check-bg, $fa-var-check);
+        }
+
+        .lia-messages-message-subject {
+          padding-right: $li-triangletop-size / 2;
+        }
+      }
+    }
+
+    .lia-messages-message-masonry-body {
+      padding: $padding-large-vertical $padding-base-horizontal;
+    }
+
+    .lia-messages-message-subject {
+      display: inline-block;
+      margin-bottom: $padding-large-vertical;
+    }
+
+    .lia-message-stats {
+      padding-right: $padding-large-horizontal;
+    }
+
+    .lia-messages-message-author-name {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .lia-message-stats-wrapper {
+      &:after {
+        background-color: $li-border-color;
+        content: '';
+        display: block;
+        height: 1px;
+        margin: {
+          bottom: 0;
+          left: -$thumbnail-caption-padding;
+          right: -$thumbnail-caption-padding;
+          top: $padding-large-vertical;
+        }
+      }
+    }
+
+    .lia-messages-topic-solved-status {
+      display: none;
+    }
+
+    .lia-messages-message-topic-update-time {
+      margin-top: $padding-large-vertical;
+    }
+
+    .lia-messages-message-topic-latest-text,
+    .lia-messages-message-topic-user-text {
+      display: block;
+    }
+  }
+}

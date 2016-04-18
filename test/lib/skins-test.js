@@ -34,7 +34,7 @@ describe('test skin compile', function() {
     skinsLib.__set__({
       path: pathMock
     });
-    var serverConfPath = path.join('lib', 'server.conf.json');
+    var serverConfPath = path.join('lib', 'test.server.conf.json');
     gutil.env.serverConfig = path.join('test', serverConfPath);
     skinsLib = skinsLib(gulp, gutil);
   });

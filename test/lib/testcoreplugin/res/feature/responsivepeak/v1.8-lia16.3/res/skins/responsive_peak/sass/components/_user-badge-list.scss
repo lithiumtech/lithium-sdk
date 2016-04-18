@@ -1,0 +1,47 @@
+@mixin peak\components\user-badge-list {
+
+  .lia-user-badge-list {
+    background-color: $li-bg-secondary;
+    text-align: center;
+
+    .lia-badge-list {
+      display: inline-block;
+      padding: $padding-large-vertical;
+      height: $li-user-badges-list-height + (2 * $padding-large-vertical);
+      max-width: 90%;
+      overflow: hidden;
+      vertical-align: middle;
+      white-space: nowrap;
+
+      .lia-user-badge-display {
+        display: inline-block;
+        float: left;
+        line-height: $li-user-badges-badge-size;
+        padding: $padding-large-vertical;
+
+        img {
+          max-height: $li-user-badges-badge-size;
+          max-width: $li-user-badges-badge-size;
+        }
+      }
+    }
+
+    .lia-view-all {
+      background-color: transparent;
+      border-color: transparent;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+      border-top: 0;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      vertical-align: middle;
+
+      .lia-link-navigation {
+        @include li-icon(icon-link-view-all, $color: $btn-default-color,
+        $size: $font-size-h1, $line-height: 1, $hide-text: true);
+      }
+    }
+  }
+}

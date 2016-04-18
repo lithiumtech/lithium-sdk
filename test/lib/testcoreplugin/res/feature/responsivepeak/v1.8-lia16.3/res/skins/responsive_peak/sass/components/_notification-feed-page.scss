@@ -1,0 +1,192 @@
+@mixin peak\components\notification-feed-page {
+  .lia-quilt-notification-feed-page
+    > .lia-quilt-row-main
+    > .lia-quilt-column-single
+    > .lia-quilt-column-alley {
+    background-color: $body-bg;
+    padding: 0;
+  }
+
+  .lia-quilt-notification-feed-page.lia-top-quilt > .lia-quilt-row-main > .lia-quilt-column {
+    padding-left: $panel-body-margin;
+    padding-right: $panel-body-margin;
+
+    @include media(phone) {
+      padding-left: $padding-xs-horizontal;
+      padding-right: $padding-xs-horizontal;
+    }
+  }
+
+  .lia-top-quilt > .lia-quilt-row-main > .lia-quilt-column > .lia-quilt-column-alley {
+    @include media(phone) {
+      margin-bottom: $padding-small-vertical;
+      margin-top: $padding-small-vertical;
+    }
+  }
+
+  .lia-notification-feed-item {
+    background-color: #fff;
+    border-radius: $border-radius-base;
+    border: 1px solid $li-border-color;
+    line-height: $font-size-h3; //why is this mock 20px lineheight when eerything is so much larger?
+    margin: $padding-large-vertical auto;
+    max-width: $screen-lg;
+    position: relative;
+
+    .lia-quilt-notification-feed-item {
+      padding: $padding-large-vertical 0;
+      min-height: $li-icon-size + ($padding-large-vertical * 2);
+    }
+
+    br {
+      @include media(phone-min) {
+        display: none;
+      }
+    }
+
+    @include media(phone) {
+      margin: $padding-small-vertical auto;
+    }
+
+    .lia-quilt-row {
+      width: 100%;
+
+      .lia-quilt-column-01 {
+        bottom: 0;
+        left: 0;
+        min-width: $li-icon-size;
+        padding: 0 $padding-base-horizontal;
+        position: absolute;
+        top: 0;
+
+        .lia-quilt-column-alley {
+          display: table;
+          height: 100%;
+        }
+      }
+
+      .lia-quilt-column-23 {
+        padding-left: $li-icon-size + ($padding-base-horizontal * 2);
+        padding-right: $padding-base-horizontal;
+        width: 100%;
+      }
+    }
+
+    .lia-notification-feed-icon {
+      display: table-cell;
+      max-height: $li-icon-size;
+      max-width: $li-icon-size;
+      min-height: $li-icon-size;
+      min-width: $li-icon-size;
+      text-align: center;
+      vertical-align: middle;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .lia-user-login {
+      color: $li-text-highlight-color;
+    }
+
+    .lia-link-navigation {
+      font-weight: bold;
+    }
+  }
+
+  .lia-notification-feed-timestamp {
+    float: right;
+    font-size: $font-size-small;
+    margin-left: $padding-xs-horizontal;
+  }
+
+  .lia-notification-unread {
+    .lia-quilt-notification-feed-item {
+      border-left: $padding-base-vertical solid $link-color;
+    }
+
+    .lia-quilt-row {
+      .lia-quilt-column-23 {
+        padding-left: ($li-icon-size + ($padding-large-horizontal * 2)) - $padding-base-vertical;
+        width: 100%;
+      }
+    }
+  }
+
+  .lia-notification-feed-icon .lia-fa-icon {
+    background-color: transparent;
+
+    &:before {
+      color: $link-color;
+      font-size: $li-icon-size;
+    }
+  }
+
+  .lia-notification-label .lia-notification-feed-icon,
+  .lia-notification-hilabel .lia-notification-feed-icon {
+     &:before {
+      background-image: svg-url($li-svg-icon-label, $link-color);
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+      display: inline-block;
+      height: $li-icon-size;
+      width: $li-icon-size;
+    }
+  }
+
+  .lia-notification-kudos .lia-notification-feed-icon {
+    @include li-icon(icon-kudos, $size: $li-icon-size, $color: $link-color);
+  }
+
+  .lia-notification-mentions .lia-notification-feed-icon {
+     &:before {
+      background-image: svg-url($li-svg-icon-at-symbol, $link-color);
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+      display: inline-block;
+      height: $li-icon-size;
+      width: $li-icon-size;
+    }
+  }
+
+  .lia-notification-rank .lia-notification-feed-icon {
+    @include li-icon($fa-var-rocket, $size: $li-icon-size, $color: $link-color);
+  }
+
+  .lia-notification-solutions .lia-notification-feed-icon {
+    @include li-icon(icon-accept-solution, $size: $li-icon-size, $color: $brand-success);
+  }
+
+  .view-more-footer {
+    text-align: center;
+    width: 100%;
+  }
+
+  .view-more-icon {
+    display: inline-block;
+    margin: $padding-large-vertical 0;
+    padding-left: $padding-xl-horizontal;
+    padding-right: $padding-xl-horizontal;
+  }
+
+  .lia-link-scroll-to {
+    bottom: -50px;
+    font-size: $font-size-small;
+    left: 20px;
+    position: absolute;
+    z-index: 10;
+
+    &:before {
+      background-image: svg-url($li-svg-icon-up-arrow, $link-color);
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+      display: inline-block;
+      height: $li-icon-size-xs;
+      width: $li-icon-size-xs;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@mixin peak\components\media-video-gallery-page {
+  .lia-component-info-message {
+    background: $brand-info;
+    color: $li-profile-page-text-color;
+    margin: $panel-body-margin;
+    padding: $panel-body-padding;
+
+    .lia-text {
+      padding: {
+        bottom: 0px;
+        left: $padding-small-horizontal;
+        right: $padding-small-horizontal;
+        top: 0px;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  .VideoGallery {
+    .lia-list-tile li {
+      display: inline-block;
+      float: none;
+      margin: {
+        bottom: $padding-small-vertical;
+        left: $padding-xs-horizontal;
+        right: $padding-xs-horizontal;
+        top: $padding-small-vertical;
+      }
+      text-align: center;
+      width: auto;
+    }
+
+    .lia-list-tile-image {
+      height: $li-video-gallery-height;
+      margin: $padding-small-vertical;
+      overflow: hidden;
+      width: $li-video-gallery-width;
+
+      img {
+        max-width: none;
+        min-height: $li-video-gallery-height;
+        object-fit: cover;
+        object-position: center;
+        width: $li-video-gallery-width !important; // to override inline styles
+      }
+    }
+
+    .lia-menu-bar.top-block {
+      margin-bottom: 0;
+    }
+
+    @include media(phone) {
+      .lia-paging-full-wrapper {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+      }
+
+      .lia-paging-full {
+        float: none;
+      }
+
+      .lia-list-tile {
+        text-align: center;
+      }
+    }
+
+    .metadata,
+    .video-display-group,
+    .video-title-wrapper {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%
+    }
+
+    .UploadedVideoDisplay {
+      position: relative;
+      width: $li-video-gallery-width + $padding-large-vertical;
+    }
+
+    .video-batch-processing {
+      left: $padding-small-horizontal;
+      position: absolute;
+      top: $padding-large-vertical * 2.5;
+      width: auto;
+    }
+
+    .video-status {
+      display: none;
+    }
+  }
+}

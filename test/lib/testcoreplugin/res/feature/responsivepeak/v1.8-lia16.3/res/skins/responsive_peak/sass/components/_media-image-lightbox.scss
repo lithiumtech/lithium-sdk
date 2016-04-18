@@ -1,0 +1,24 @@
+@mixin peak\components\media-image-lightbox {
+
+  // Media Lightbox: Responsive Peak customizations
+  .lia-button-container {
+    .lia-lightbox-button {
+      border-radius: $li-btn-border-radius;
+    }
+  }
+
+  .lia-filmstrip {
+    .lia-image-selected {
+      border-bottom: $padding-xs-vertical * 2 solid $li-media-lightbox-selected;
+      border-top: $padding-xs-vertical * 2 solid $li-media-lightbox-selected;
+    }
+  }
+
+  .lia-lightbox-info .lia-lightbox-context {
+    width: calc(100% - (220px + (2 * #{$padding-large-horizontal})));
+
+    @include media(phone) {
+      width: 50%;
+    }
+  }
+}

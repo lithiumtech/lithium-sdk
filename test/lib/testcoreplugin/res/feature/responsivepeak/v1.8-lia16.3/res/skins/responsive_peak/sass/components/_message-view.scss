@@ -1,0 +1,295 @@
+@mixin peak\components\message-view {
+
+  // using local vars for convenience, these are not good canidates to be global vars
+  // due to the construction, the component values should be modified instead
+  $message-view-margin-left: $li-icon-size + $panel-body-margin + $li-message-view-padding;
+  $message-view-margin-right: $panel-body-margin + $li-message-view-padding;
+
+  // nearly every component in the message view content has a bottom margin
+  // or padding of $padding-large-vertical
+  $message-view-margin-bottom: $li-message-view-padding - $padding-large-vertical;
+
+  .lia-user-messages,
+  .lia-recent-posts {
+    clear: both;
+    margin: {
+      bottom: $panel-body-margin;
+      top: $panel-body-margin;
+    }
+  }
+
+  .lia-message-view-display {
+    clear: both;
+    padding: {
+      bottom: $message-view-margin-bottom;
+      left: 0;
+      right: 0;
+      top: $li-message-view-padding;
+    }
+
+    &.lia-message-view-auto-saved-draft {
+      border: {
+        left: 0;
+        right: 0;
+        top: 0;
+      }
+      border-radius: 0;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+
+    &.lia-message-view-user-message,
+    &.lia-message-view-recent-posts-item {
+      border-radius: 0;
+      margin-bottom: -1px;
+
+      &:first-child {
+        border-top-left-radius: $panel-border-radius;
+        border-top-right-radius: $panel-border-radius;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: $panel-border-radius;
+        border-bottom-right-radius: $panel-border-radius;
+      }
+    }
+
+    // status ribbons
+    &.lia-list-row-thread-escalated {
+      @include thread-status-icon($li-triangletop-bullhorn-bg, $fa-var-bullhorn);
+    }
+
+    &.lia-list-row-thread-readonly {
+      @include thread-status-icon($li-triangletop-lock-bg, $fa-var-lock);
+    }
+
+    &.lia-list-row-thread-solved {
+      @include thread-status-icon($li-triangletop-check-bg, $fa-var-check);
+    }
+
+    &.lia-list-row-thread-escalated,
+    &.lia-list-row-thread-readonly,
+    &.lia-list-row-thread-solved {
+      @include media(phone) {
+        position: relative;
+      }
+    }
+
+    /* @noflipstart */
+    .lia-quilt-column-full-content,
+    .lia-quilt-column-left-content {
+      > .lia-quilt-column-alley {
+    /* @noflipend */
+        margin-left: $message-view-margin-left;
+        margin-right: $message-view-margin-right;
+      }
+    }
+
+    .lia-message-view-nested-replies-container {
+      margin: {
+        left: -$message-view-margin-left;
+        right: -$message-view-margin-right;
+      }
+    }
+
+    // main column content
+    /* @noflipstart */
+    .lia-quilt-column-left-content {
+    /* @noflipend */
+      @include li-extend('.col-sm-18');
+
+      /* @noflipstart */
+      .lia-message-item-metadata-main {
+      /* @noflipend */
+        display: none;
+        margin-top: $panel-body-padding;
+
+        @include media(phone) {
+          display: inline-block;
+        }
+
+        .lia-message-post-date {
+          @include li-icon(icn-time, $color: $li-text-color-secondary);
+        }
+
+        .lia-component-kudos-count {
+          @include li-icon(icn-kudos, $color: $li-text-color-secondary);
+        }
+
+        .lia-component-reply-count {
+          @include li-icon(icon-stat-replies, $color: $li-text-color-secondary);
+        }
+      }
+
+      .lia-component-kudos-count,
+      .lia-component-reply-count {
+        padding-top: $padding-small-vertical;
+      }
+    }
+
+    .lia-quilt-column-right-content {
+      @include li-extend('.col-sm-6');
+    }
+
+    .lia-message-item-metadata-side {
+      margin-right: $li-message-view-padding + $panel-body-padding;
+      margin-top: $padding-xs-vertical;
+      text-align: right;
+
+      @include media(phone) {
+        display: none;
+      }
+
+      .lia-message-post-date {
+        @include li-icon(icn-time, $pseudo: after, $color: $li-text-color-secondary, $fixed-width: true);
+      }
+
+      .lia-component-kudos-count {
+        @include li-icon(icn-kudos, $pseudo: after, $color: $li-text-color-secondary, $fixed-width: true);
+      }
+
+      .lia-component-reply-count {
+        @include li-icon(icon-stat-replies, $pseudo: after, $color: $li-text-color-secondary, $fixed-width: true);
+      }
+    }
+
+    .lia-message-discussion-style-icon {
+      left: $li-message-view-padding;
+      position: absolute;
+      top: $padding-xs-vertical;
+    }
+
+    .lia-message-byline {
+      color: $li-text-color-secondary;
+      display: block;
+      font-size: $font-size-small;
+//      margin-bottom: $padding-large-vertical;
+    }
+
+    .lia-message-item-metadata {
+      color: $li-text-color-secondary;
+      font-size: $font-size-small;
+    }
+
+    .lia-message-subject {
+      line-height: $li-line-height-subject;
+      margin-bottom: $padding-base-vertical;
+
+      .lia-link-navigation {
+        color: $text-color;
+        font-size: $font-size-large;
+        font-weight: $headings-font-weight;
+
+        &.lia-message-read {
+          font-weight: normal;
+        }
+
+        &.lia-message-unread {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .lia-component-kudos-count,
+    .lia-component-reply-count,
+    .lia-message-post-date {
+      white-space: nowrap;
+    }
+
+    .lia-message-body-wrapper,
+    .lia-message-attachments,
+    .lia-component-labels,
+    .lia-component-tags {
+      margin-bottom: $padding-large-vertical;
+      margin-top: $padding-large-vertical;
+    }
+
+    .lia-message-body-wrapper {
+      @include media(phone) {
+        margin-top: $panel-body-padding;
+      }
+    }
+
+    .lia-tag-list-item {
+      display: inline-block;
+      font-weight: normal;
+      margin-bottom: 0;
+    }
+
+    .lia-message-body-content {
+      font-size: $font-size-base;
+      line-height: $li-line-height-message;
+
+      > .lia-body-strip-html-br {
+        display: none;
+      }
+    }
+
+    .lia-component-batch-processing-checkbox {
+      float: left;
+      margin-right: $padding-xs-horizontal;
+    }
+  }
+
+  .lia-replies-toggle-link {
+    @include li-icon($fa-var-angle-right, $pseudo: after, $icon-margin: $padding-small-horizontal);
+
+    display: block;
+    margin-left: $message-view-margin-left;
+    padding: {
+      bottom: $message-view-margin-bottom;
+      top: $padding-base-vertical;
+    }
+
+    &.lia-open:after {
+      content: $fa-var-angle-down;
+    }
+  }
+
+  // reply & solution block
+  .lia-message-item {
+    position: relative;
+
+    > .lia-link-navigation {
+      display: inline-block;
+      margin: {
+        left: $message-view-margin-left;
+        right: $message-view-margin-right;
+      }
+      padding: {
+        bottom: $li-message-view-padding - $padding-large-vertical;
+        top: $li-message-view-padding;
+      }
+    }
+
+    .lia-img-message-type-solution,
+    .lia-img-icon-stat-replies {
+      left: $li-message-view-padding + $li-icon-size / 2;
+      line-height: $li-line-height-message;
+      position: absolute;
+      top: $li-message-view-padding;
+    }
+
+    &.lia-message-item-solution {
+      background-color: lighten($state-success-bg, 5%);
+      border-top: 1px solid $state-success-border;
+    }
+
+    &.lia-message-item-reply {
+      background-color: $li-search-item-replies-bg;
+      border-top: 1px solid $li-border-color;
+    }
+  }
+
+  .lia-message-view-nested-replies {
+    margin-bottom: -$message-view-margin-bottom;
+  }
+
+  .lia-search-match-lithium {
+    background-color: lighten($brand-primary, 55%);
+
+    &.lia-search-attachment-icon {
+      background-color: inherit;
+    }
+  }
+}

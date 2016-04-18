@@ -1,0 +1,20 @@
+@mixin peak\components\discussion-page-navigator {
+
+  .lia-discussion-page-discussion-navigator {
+    float: right;
+
+    @include media(phone) {
+      float: none;
+      text-align: center;
+
+      .lia-paging-full {
+        float: none;
+      }
+    }
+
+    &.lia-menu-bar {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+  }
+}

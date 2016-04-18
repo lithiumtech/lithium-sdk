@@ -1,0 +1,127 @@
+@mixin peak\components\group-lists {
+  .lia-my-groups-list {
+    .lia-panel & {
+      margin: {
+        bottom: -$panel-body-padding;
+        left: -$panel-body-padding;
+        right: -$panel-body-padding;
+        top: -$padding-large-vertical - 1;
+      }
+    }
+
+    .lia-group-view {
+      border-top: 1px solid $table-border-color;
+      padding: {
+        top: $table-cell-padding;
+        bottom: $table-cell-padding;
+        right: $table-cell-padding;
+        left: $table-cell-padding + $li-avatar-size-message + $padding-xs-horizontal;
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
+    }
+
+    .lia-quilt-my-groups-list-taplet-item {
+      .lia-group-image {
+        position: absolute;
+        left: - $li-avatar-size-message - $padding-xs-horizontal;
+      }    
+    }
+  }
+
+  .GroupList {
+    background-color: $li-header-bg;
+    clear: both;
+    margin-top: $panel-body-margin;
+
+    .lia-group-description {
+      display: block;
+      float: none;
+    }
+
+    .lia-data-cell-icon {
+      width: 1%;
+    }
+
+    .lia-data-cell-secondary{
+      &.lia-data-cell-date {
+        width: 15%;
+      }
+
+      &.lia-data-cell-text {
+        width: 1%;
+      }
+
+      &.lia-data-cell-integer {
+        font-weight: 700;
+
+        .lia-group-stat-label {
+          font-weight: normal;
+        }
+      }
+    }
+
+    @include media(phone) {
+      .lia-list-row {
+        padding-left: $li-avatar-size-message + 2 * $panel-body-margin;
+      }
+
+      .lia-group-stat-label {
+        display: none;
+      }
+
+      .actions {
+        &.lia-data-cell-text {
+          position: absolute;
+          top: $panel-body-margin;
+          right: $panel-body-margin;
+          width: auto;
+        }
+      }
+
+      .lia-list-wide {
+        .lia-list-row > td:first-child.lia-data-cell-icon {
+          top: 18px;
+          left: $panel-body-padding;
+        }
+
+        .lia-data-cell-secondary.lia-data-cell-integer {
+          float: left;
+        }
+      }
+      .lia-data-cell-secondary {
+        &.groupCreationDate,
+        &.messageCount,
+        &.newMessageCount {
+          display: none;
+        }
+
+        &.lia-data-cell-integer.groupMembers {
+          padding-left: 0;
+          font-weight: normal;
+        }
+      }
+
+      .lia-group-description {
+        display: none;
+      }
+    }
+  }
+
+  .lia-group-creation-date,
+  .groupCreationDate .DateTime {
+    .local-time {
+      display: none;
+    }
+  }
+
+  .lia-group-member-count {
+    @include li-icon(icon-group-users, $fixed-width: true);
+    .lia-group-stat-label {
+      display: none;
+    }
+  }
+
+}

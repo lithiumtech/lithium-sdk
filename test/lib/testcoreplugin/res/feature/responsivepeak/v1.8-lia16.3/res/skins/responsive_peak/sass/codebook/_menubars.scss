@@ -1,0 +1,46 @@
+@mixin peak\codebook\menubars {
+
+  .lia-menu-bar {
+    // negative margins to try to suppress any space this element creates when empty
+    margin-bottom: -$panel-body-margin;
+    margin-top: $panel-body-margin;
+
+    @include media(tablet) {
+      // single column pages with messages (like the blog article page) needs to
+      //   restore the margin that normal single column pages collapse
+      .lia-quilt-column-alley-single > & {
+        margin-left: $grid-gutter-width / 2;
+        margin-right: $grid-gutter-width / 2;
+      }
+    }
+
+    .lia-menu-bar-buttons {
+      display: inline;
+      float: none;
+    }
+
+    .lia-paging-full-wrapper {
+      float: right;
+    }
+
+    .lia-button-wrapper,
+    .lia-menu-navigation-wrapper {
+      display: inline-block;
+    }
+
+    // add margins to the elements instead of the menubar itself so that it
+    // collapses properly when there's no content
+    .lia-button-wrapper,
+    .lia-menu-navigation-wrapper,
+    .lia-paging-full-wrapper {
+      margin-bottom: $panel-body-margin;
+  //    margin-top: $panel-body-margin;
+    }
+  }
+
+  .ForumPage .lia-menu-bar {
+    .lia-decoration-border-menu-bar {
+      margin-bottom: $panel-body-margin;
+    }
+  }
+}

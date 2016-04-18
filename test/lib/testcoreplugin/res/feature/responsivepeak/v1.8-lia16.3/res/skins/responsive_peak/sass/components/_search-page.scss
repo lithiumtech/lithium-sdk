@@ -1,0 +1,134 @@
+@mixin peak\components\search-page {
+
+  // position tabs to allow for right side controls
+  .lia-search-tab-bar {
+    position: relative;
+
+    .lia-component-search-tabs {
+      bottom: 0;
+      position: absolute;
+      width: 100%;
+
+      // advanced link and options menu could overlay tabs
+      .lia-tabs {
+        z-index: 10;
+      }
+    }
+  }
+
+  // any of these components could follow the positioned tabs
+  .lia-component-search-advanced,
+  .lia-component-search-breadcrumb,
+  .lia-component-search-filter,
+  .lia-component-search-filter-header {
+    clear: both;
+  }
+
+  .lia-component-search-widget-search-menu-bar {
+    margin-bottom: $padding-large-vertical;
+
+    .search-result-sort-by-label {
+      @include media(phone) {
+        display: none;
+      }
+    }
+  }
+
+  // undo some of the generic quilt manipuluation in _grid.scss
+  .lia-quilt-search-page {
+    .lia-component-quilt-header {
+      border-bottom: 0;
+    }
+
+    > .lia-quilt-row-main {
+      background-color: $li-bg-secondary;
+
+      > .lia-quilt-column-main-content {
+        background-color: inherit;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+
+        > .lia-quilt-column-alley-single {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .lia-message-search-container,
+  .lia-search-container {
+    .lia-quilt-column-common-header {
+      border-bottom: $li-divider-size solid $li-border-color;
+
+      .lia-component-search-widget-user-search & {
+        border-bottom: 0;
+      }
+
+      > .lia-quilt-column-alley-single {
+        background-color: $li-bg-secondary;
+      }
+    }
+
+    > .lia-quilt {
+      > .lia-quilt-row-header {
+        background-color: $li-bg-secondary;
+      }
+
+      > .lia-quilt-row-main {
+        background-color: $body-bg;
+
+        > .lia-quilt-column-main-content {
+          &:first-child {
+            padding-left: $panel-body-margin;
+          }
+
+          &:last-child {
+            padding-right: $panel-body-margin;
+          }
+        }
+      }
+    }
+
+    .lia-paging-full-wrapper {
+      clear: both;
+      margin-bottom: $panel-body-margin;
+    }
+  }
+
+  .lia-search-spellchecked .lia-search-spellcheck {
+    padding: {
+      bottom: $panel-body-padding;
+      left: $panel-body-margin + $padding-base-horizontal;
+      right: $panel-body-margin;
+    }
+  }
+
+  .lia-search-title.lia-search-title {
+    font-size: $font-size-h1;
+    margin-bottom: $padding-xl-vertical;
+    margin-top: $padding-large-vertical;
+    text-align: center;
+  }
+
+  .search-instead-for-link,
+  .do-you-mean-link {
+    font-style: italic;
+  }
+
+  .SearchPage {
+    .lia-tabs-standard-wrapper {
+      > .lia-tabs-standard {
+        background-color: $li-bg-secondary;
+        margin-bottom: 0;
+        padding-left: $panel-body-padding;
+        padding-right: $panel-body-padding;
+      }
+    }
+  }
+}

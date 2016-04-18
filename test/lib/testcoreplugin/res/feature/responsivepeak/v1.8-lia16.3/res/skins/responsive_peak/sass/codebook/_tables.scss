@@ -1,0 +1,116 @@
+@mixin peak\codebook\tables {
+
+  // no column headings on these lists
+  .BoardList,
+  .lia-component-users-widget-user-list,
+  .RecentPostsPage .single-message-list,
+  .TagViewPage .single-message-list,
+  .TagDetailPage .single-message-list,
+  .ForumsFilteredByLabelPage .single-message-list,
+  .ForumPage .thread-list {
+    thead {
+      display: none;
+    }
+  }
+
+  .lia-list-slim,
+  .lia-list-wide {
+    > thead > tr > th {
+      border-bottom: 0;
+      color: $li-table-heading-color;
+      font-size: $font-size-xsmall;
+      padding: {
+        bottom: $table-condensed-cell-padding;
+        top: $table-condensed-cell-padding;
+      }
+      text-transform: uppercase;
+    }
+
+    > thead > tr > th,
+    > tbody > tr > td {
+      padding-left: $table-cell-padding / 2;
+      padding-right: $table-cell-padding / 2;
+
+      &:first-child {
+        padding-left: $table-cell-padding;
+      }
+
+      &:last-child {
+        padding-right: $table-cell-padding;
+      }
+    }
+
+    // first body row, equivalent to > tbody > tr:first-child
+    .t-first {
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+
+  .lia-list-slim {
+    > tbody > tr > td {
+      padding: {
+        bottom: $table-cell-padding;
+        top: $table-cell-padding;
+      }
+
+      // add icons for the count for some slim lists
+      &.kudosCountColumn {
+        @include li-icon-responsive-label(button-kudos-v2-h-enabled);
+      }
+
+      &.tagsCountColumn {
+        @include li-icon-responsive-label($fa-var-tags);
+      }
+
+      + td:last-child {
+        @include media(phone) {
+          padding-right: $table-cell-padding;
+        }
+      }
+    }
+  }
+
+  // slim list of messages
+  .lia-list-standard {
+    .lia-list-slim {
+      padding-bottom: $table-cell-padding;
+      padding-top: $table-cell-padding;
+    }
+  }
+
+  // read by moderator coloumn override
+  .readByModeratorColumn img {
+    max-width: none;
+  }
+
+  // t-data-grid wraps all lia-list-wide and lia-list-slim tables
+  .t-data-grid {
+    @include media(phone) {
+      margin-left: -$grid-gutter-width / 2;
+      margin-right: -$grid-gutter-width / 2;
+    }
+
+    .lia-quilt-column-single & {
+      @include media(phone) {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    .lia-panel & {
+      margin: {
+        bottom: -$panel-body-padding;
+        left: -$panel-body-padding;
+        right: -$panel-body-padding;
+        top: -$padding-large-vertical - 1;
+      }
+    }
+
+    .lia-tabs-standard-wrapper & {
+      margin-left: -$panel-body-padding;
+      margin-right: -$panel-body-padding;
+    }
+  }
+}

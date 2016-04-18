@@ -1,0 +1,70 @@
+@mixin peak\components\engagement {
+
+  // homepage components, stacked for phone, side by side for other sizes
+  .lia-quilt-column-engagement-content {
+    > .lia-quilt-column-alley-single {
+      @extend %li-flexbox;
+
+      margin: $panel-body-margin / 2;
+      width: calc(100% - #{$panel-body-margin});
+
+      > .lia-component-images-widget-community-gallery,
+      > .lia-component-images-widget-gallery,
+      > .lia-panel {
+        margin: $panel-body-margin / 2;
+        width: calc(50% - #{$panel-body-margin});
+
+        @include media(phone) {
+          width: calc(100% - #{$panel-body-margin});
+        }
+      }
+    }
+  }
+
+  // side components are in a skinny column in desktop, side by side for tablet
+  // back full width phone
+  .lia-quilt-column-side-content > .lia-quilt-column-alley-right {
+    @extend %li-flexbox;
+
+    > .lia-component-images-widget-community-gallery,
+    > .lia-component-images-widget-gallery,
+    > .lia-panel {
+      width: 100%;
+
+      @include media(tablet) {
+        justify-content: space-between;
+        width: calc(50% - #{$grid-gutter-width / 4});
+      }
+
+      @include media(phone) {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .PollsTaplet {
+    .lia-input-edit-form-column {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  // Discussion Stats
+  .lia-component-common-widget-discussion-stats {
+    .lia-message-usersavatars {
+      .lia-user-avatar {
+        height: ceil($li-icon-size / 2);
+        width: ceil($li-icon-size / 2);
+      }
+
+      .UserAvatar > img {
+        height: auto;
+      }
+
+      .lia-user-avatar-favicon {
+        left: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,640 @@
+// scss-lint:disable ColorVariable
+//
+// Variables - Peak skin
+// --------------------------------------------------
+
+
+//== Colors
+$brand-primary:     #0691c1 !default;
+$brand-success:     #5c9165 !default;
+$brand-info:        #5596ab !default;
+$brand-warning:     #bb8a46 !default;
+$brand-danger:      #9a5e5e !default;
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+$body-bg:               #e4e8ea !default;
+//** Global text color on `<body>`.
+$text-color:            #65696b !default;
+
+//** Global textual link color.
+$link-color:            $brand-primary !default;
+$li-alt-link-color:     $text-color !default;
+//** Link hover color set via `darken()` function.
+$link-hover-color:      darken($link-color, 15%) !default;
+//** Link hover decoration.
+$link-hover-decoration: underline !default;
+
+$li-text-highlight-color: #3a3b3c !default;
+
+
+$li-bg-secondary:           #fff !default;
+$li-border-color:           #cbd3d5 !default;
+
+// default height of section divider lines
+$li-divider-size:            3px !default;
+
+$li-navigation-link-color:  $brand-primary !default;
+$li-text-color-inverse:     #fff !default;
+$li-text-color-secondary:   #808587 !default;
+
+
+//== Icons
+
+// max-width variable for userlist contraints
+$li-avatar-size-small:          none !default;
+$li-avatar-size-profile:        150px !default;
+$li-avatar-size-profile-mobile: 70px !default;
+
+$li-avatar-border-color:  #979797 !default;
+$li-avatar-border-width:  2px !default;
+
+$li-icon-size:            38px !default;
+$li-icon-size-lg:         50px !default;
+$li-icon-size-sm:         floor($li-icon-size * .85) !default;
+$li-icon-size-xs:         9px !default;
+
+$li-icon-color:           #5c6a6e !default;
+$li-icon-inverse-color:   rgba(#e4e8ea, .85) !default;
+$li-icon-community-bg:    #6c797d !default; // mix(#5c6a6e, $li-bg-secondary, 90%)
+$li-icon-category-bg:     #8f9ca1 !default; //mix(#839196, $li-bg-secondary, 90%)
+$li-icon-forum-bg:        #728f9c !default; //desaturate(mix(#4e8aa5, $li-bg-secondary, 90%), 15%)
+$li-icon-qanda-bg:        #cea387 !default; //desaturate(mix(#d7956b, $li-bg-secondary, 90%), 15%)
+$li-icon-blog-bg:         #8cb299 !default; //desaturate(mix(#70b989, $li-bg-secondary, 90%), 15%)
+$li-icon-idea-bg:         #c48282 !default; //desaturate(mix(#cd6565, $li-bg-secondary, 90%), 15%)
+$li-icon-contest-bg:      #d091af !default; //desaturate(mix(#d877a6, $li-bg-secondary, 90%), 15%)
+$li-icon-tkb-bg:          #a89aac !default; //desaturate(mix(#a77fb2, $li-bg-secondary, 90%), 15%)
+$li-icon-group-bg:        #cdbd81 !default; //desaturate(mix(#d6bf65, $li-bg-secondary, 90%), 15%)
+
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif:    'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+$font-family-base:          $font-family-sans-serif !default;
+
+$font-size-xsmall:          10px !default;
+$font-size-small:           12px !default;
+$font-size-base:            14px !default;
+$font-size-large:           16px !default;
+$font-size-xlarge:          18px !default;
+
+$font-size-h1:              28px !default;
+$font-size-h2:              24px !default;
+$font-size-h3:              20px !default;
+$font-size-h4:              $font-size-large !default;
+$font-size-h5:              $font-size-base !default;
+$font-size-h6:              $font-size-small !default;
+
+$headings-font-weight:      700 !default;
+
+$line-height-base:          1.7142857143 !default; //24/14 or ~24px
+$li-bs-line-height-base:    1.4285714286 !default; //20/14
+
+$li-font-size-message:      $font-size-base !default;
+$li-font-size-subject:      ceil(($li-font-size-message * 1.25)) !default;
+$li-line-height-message:    $line-height-base !default;
+$li-line-height-subject:    1.2 !default;
+
+$li-line-height-ordered-list-item:    2 !default;
+
+$li-font-size-leaderboard-position:   $li-icon-size;
+
+
+
+
+//== Components
+//
+
+$border-radius-base:        4px !default;
+$border-radius-large:       6px !default;
+$border-radius-small:       2px !default;
+$border-radius-round:       200px !default;
+
+
+//** Global background color for active items (e.g., navs or dropdowns).
+$component-active-bg:       rgba($li-bg-secondary, .85) !default;
+
+
+//== Grid system
+//
+//## Custom grid for Responsive Peak
+
+//** Padding between columns. Gets divided in half for the left and right.
+$grid-gutter-width:            20px !default;
+
+
+//== List group
+//
+//##
+
+//** Background color on `.list-group-item`
+$list-group-bg:                 transparent !default;
+
+
+//== Panels
+//
+
+$panel-heading-padding:       15px !default;
+$panel-body-padding:          15px !default;
+$panel-body-margin:           15px !default;
+
+//## The Responsive Peak skin adds the concept of secondary panels
+
+//Secondary panels
+//the li-panel-secondary-bg* colors should be identical in default peak assuming
+//the default $body-bg value #e4e8ea and a .75 opacity against white
+$li-panel-secondary-bg:       rgba($li-bg-secondary, .75) !default;
+$li-panel-secondary-bg-hex:   #f4f6f7 !default;
+
+//** Border color for elements within panels
+$panel-inner-border:          $li-border-color !default;
+
+$panel-default-text:          $text-color !default;
+$panel-default-border:        $li-border-color !default;
+$panel-default-heading-bg:    $li-bg-secondary !default;
+
+$panel-border-radius:         $border-radius-base !default;
+
+$panel-footer-bg:             #f9fafb !default; //barely-slate with 50% opacity over #fff
+$panel-instructive-bg:        #f9fafb !default; //barely-slate with 50% opacity over #fff
+
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+//** Border color for table and cell borders.
+$table-border-color:            $li-border-color !default;
+$table-bg:                      transparent !default;
+$table-cell-padding:            15px !default;
+
+$li-table-heading-color:        #cbd3d5 !default;
+
+//== Buttons
+//
+
+$li-btn-border-radius:              $border-radius-base !default;
+$li-btn-font-size:                  14px !default;
+
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-font-weight:                bold !default;
+
+$btn-default-color:              #808587 !default;
+$btn-default-bg:                 #e4e8ea !default;
+$btn-default-border:             #e4e8ea !default;
+
+$btn-primary-color:              $li-text-color-inverse !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border:             $brand-primary !default;
+
+$btn-inverse-default-color:      #5c6a6e !default;
+$btn-inverse-default-bg:         transparent !default;
+$btn-inverse-default-border:     #b9c1c4 !default;
+
+$btn-link-disabled-color:        #e4e8ea !default;
+
+
+//== Forms
+//
+//##
+
+//** `<input disabled>` background color
+$input-bg-disabled:              #f4f6f7 !default;
+
+//** Text color for `<input>`s
+$input-color:                    $text-color !default;
+//** `<input>` border color
+$input-border:                   $li-border-color !default;
+
+//** Border color for inputs on focus
+$input-border-focus:             $brand-primary !default;
+
+//** Placeholder text color
+$input-color-placeholder:        #808587 !default;
+
+$legend-color:                   $text-color !default;
+$legend-border-color:            $li-border-color !default;
+
+//** Background color for textual input addons
+$input-group-addon-bg:           $li-panel-secondary-bg !default;
+
+$input-checkbox-width:            20px !default;
+$form-padding:                    30px !default;
+
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+
+//** Dropdown menu `border-color`.
+$dropdown-border:                rgba(#839196, .5) !default;
+
+//** Dropdown menu `border-color` **for IE8**.
+$dropdown-fallback-border:       #b9c1c4 !default;
+
+//** Divider color for between dropdown items.
+$dropdown-divider-bg:            $li-border-color !default;
+
+//** Dropdown link text color.
+$dropdown-link-color:            $text-color !default;
+
+//** Active dropdown menu item background color.
+$dropdown-link-active-bg:        #f4f6f7 !default;
+
+//** Disabled dropdown menu item background color.
+$dropdown-link-disabled-color:   lighten($dropdown-link-color, 40%) !default;
+
+//** Text color for headers within dropdown menus.
+$dropdown-header-color:          $li-text-color-secondary !default;
+
+//** Deprecated `$dropdown-caret-color` as of v3.1.0
+$dropdown-caret-color:           #839196 !default;
+
+$li-dropdown-paging-min-width: 200px !default;
+
+
+
+
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+$nav-link-hover-bg:                         #f4f6f7 !default;
+
+//== Tabs
+$nav-tabs-border-color:                     $li-border-color !default;
+
+$nav-tabs-link-hover-border-color:          $li-border-color !default;
+
+$nav-tabs-active-link-hover-color:          $text-color !default;
+$nav-tabs-active-link-hover-border-color:   $li-border-color !default;
+
+$nav-tabs-justified-link-border-color:            $li-border-color !default;
+$nav-tabs-justified-active-link-border-color:     $li-border-color !default;
+
+$nav-pills-border-radius:                   $border-radius-base !default;
+$nav-pills-active-link-hover-bg:            $brand-primary !default;
+
+$li-nav-link-bg:                            #f4f6f7 !default;
+
+
+
+//== Lithium Slide Out Nav
+//
+//##
+
+// Slide Menu
+$li-slide-menu-bg:                        #3a3b3d !default;
+
+$li-community-nav-item-padding:           15px !default;
+
+//== Hero
+//
+//##
+
+$li-hero-board-height:          135px !default;
+$li-hero-board-bg:              #40494c !default;
+
+$li-hero-category-bg:           #48473f !default;
+$li-hero-category-height:       225px !default;
+
+$li-hero-profile-height:        225px !default;
+$li-hero-profile-bg:            #40494c !default;
+$li-hero-profile-padding:       30px !default;
+
+$li-hero-color:                 #cbd3d5 !default;
+
+$li-hero-community-bg:          #3f3143 !default;
+$li-hero-community-height:      500px !default;
+$li-hero-community-sm-height:   440px !default;
+$li-hero-community-xs-height:   375px !default;
+$li-hero-community-divider-size: 5px !default;
+
+$li-hero-font-weight:           200 !default;
+
+$li-hero-icon-color:            #cbd3d5 !default;
+$li-hero-icon-size:             40px !default;
+
+$li-hero-input-border-color:    rgba($li-bg-secondary, .15) !default;
+$li-hero-input-height:          55px !default;
+
+$li-hero-node-font-size:        36px !default;
+
+$li-hero-opacity:               .7 !default;
+
+$li-hero-sub-heading-color:     #b9c1c4 !default;
+
+$li-hero-title-color:           #fff !default;
+$li-hero-title-font-size:       43px !default;
+$li-hero-title-font-weight:     400 !default;
+
+//== Sub Header
+//The sub header lives on interaction style board and topic pages
+//It icludes breadcrumbs and the search box
+$li-category-searchbox-bg:      #e4e8ea !default;
+$li-sub-header-bg:              #fff !default;
+$li-searchbox-padding:          30px !default;
+
+//== Community Welcome
+$li-community-welome-padding:    30px !default;
+
+//== Vitality
+$li-vitality-icon-color:               #9aa1a3 !default;
+$li-vitality-icon-height:              55px !default;
+$li-vitality-icon-width:               72px !default;
+$li-vitality-padding-base-horizontal:  32px !default;
+$li-vitality-padding-base-vertical:    40px !default;
+$li-vitality-padding-small-horizontal: 16px !default;
+$li-vitality-padding-small-vertical:   20px !default;
+
+//== Messages
+$li-topic-heading-color:        #839196 !default;
+$li-topic-reply-font-size:      13px !default;
+$li-topic-label-min-height:     105px !default;
+
+$li-message-link-color:         $link-color !default;
+$li-message-quote-opacity:      .8 !default;
+
+$li-message-padding:            40px !default;
+$li-message-info-color:         #808587 !default;
+$li-message-info-font-size:     $font-size-small !default;
+
+$li-message-solution-color:     $brand-success !default;
+
+$li-message-view-padding:       20px !default;
+
+
+//== Popovers
+//
+//##
+
+
+$popover-bg:                          #fff !default;
+
+//** Popover border color
+$popover-border-color:                rgba(#839196, .5) !default;
+//** Popover fallback border color
+$popover-fallback-border-color:       #b9c1c4 !default;
+
+//** Popover title background color
+$popover-title-bg:                    darken($popover-bg, 3%) !default;
+
+
+//== Labels
+//
+//##
+
+//** Default label background color
+$label-default-bg:            #839196 !default;
+$label-default-color:         #fff !default;
+
+//** labels and search breadcrumb pills
+$li-label-inverse-bg:         #e4e8ea !default;
+$li-label-inverse-color:      #839196 !default;
+
+
+//== Modals
+//
+//##
+
+//** Modal content border color
+$modal-content-border-color:                   rgba(#839196, .5) !default;
+//** Modal content border color **for IE8**
+$modal-content-fallback-border-color:          #b9c1c4 !default;
+
+//** Modal header border color
+$modal-header-border-color:   $li-border-color !default;
+//** Modal footer border color
+$modal-footer-border-color:   $modal-header-border-color !default;
+
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+$alert-success-bg:            $brand-success !default;
+$alert-success-text:          $li-text-color-inverse !default;
+$alert-success-border:        $brand-success !default;
+
+$alert-info-bg:               $brand-info !default;
+$alert-info-text:             $li-text-color-inverse !default;
+$alert-info-border:           $brand-info !default;
+
+$alert-warning-bg:            $brand-warning !default;
+$alert-warning-text:          $li-text-color-inverse !default;
+$alert-warning-border:        $brand-warning !default;
+
+$alert-danger-bg:             $brand-danger !default;
+$alert-danger-text:           $li-text-color-inverse !default;
+$alert-danger-border:         $brand-danger !default;
+
+
+//== Progress bars
+//
+//##
+
+//** Background color of the whole progress component
+$progress-bg:                 #f4f6f7 !default;
+
+
+//== List group
+//
+//##
+
+//** `.list-group-item` border color
+$list-group-border:             $li-border-color !default;
+//** List group border radius
+$list-group-border-radius:      $border-radius-base !default;
+
+//** Background color of single list items on hover
+$list-group-hover-bg:           #f4f6f7 !default;
+
+
+//== Pagination
+//
+//##
+
+$pagination-color:                     $text-color !default;
+$pagination-bg:                        $li-panel-secondary-bg !default;
+$pagination-border:                    $li-border-color !default;
+
+$pagination-hover-color:               #2c2d2e !default;
+$pagination-hover-bg:                  #eef1f2 !default; //lighten(#e4e8ea, 3.5%)
+$pagination-hover-border:              $li-border-color !default;
+
+$pagination-active-color:              #2c2d2e !default;
+$pagination-active-bg:                 #eef1f2 !default; //lighten(#e4e8ea, 3.5%)
+$pagination-active-border:             $li-border-color !default;
+
+$pagination-disabled-color:            #cbd3d5 !default;
+$pagination-disabled-bg:               $li-panel-secondary-bg !default;
+$pagination-disabled-border:           $li-border-color !default;
+
+$li-pagination-header-hover-bg:        #e4e8ea !default;
+
+//== Thumbnails
+//
+$li-image-contest-thumbnail-dimensions: 125px !default;
+//##
+
+//** Thumbnail border color
+$thumbnail-border:            $li-border-color !default;
+//** Thumbnail border radius
+$thumbnail-border-radius:     $border-radius-base !default;
+
+
+//== Wells
+//
+//##
+
+$well-bg:                     $li-panel-secondary-bg !default;
+
+
+//== Badges
+//
+//##
+
+$badge-bg:                    $brand-danger !default;
+$li-badge-border:             #fff !default;
+
+//** Badge text color in active nav link
+$badge-active-color:          $link-color !default;
+//** Badge background color in active nav link
+$badge-active-bg:             $brand-danger !default;
+
+
+//== User Badges List
+//
+//##
+// Badge display size + image padding top and bottom -- 72px + (2 * 10px)
+$li-user-badges-list-height:     92px !default;
+$li-user-badges-badge-size:      72px !default;
+
+
+//== User Badges Page
+//
+//##
+// Badge display size + additional space for text on each side -- 190px + (2 * 20px)
+$li-user-badges-page-badge-container-width: 230px !default;
+
+
+//== Breadcrumbs
+//
+//##
+
+$breadcrumb-padding-vertical:   15px !default;
+$breadcrumb-padding-horizontal: 15px !default;
+
+//** Breadcrumb background color
+$breadcrumb-bg:                 transparent !default;
+//** Breadcrumb text color
+$breadcrumb-color:              $link-color !default;
+//** Text color of current page in the breadcrumb
+$breadcrumb-active-color:       $text-color !default;
+//** Textual separator for between breadcrumb elements
+$breadcrumb-separator:          '/' !default;
+
+
+//== Container sizes
+//
+//## Define the maximum width of `.container` for different screen sizes.
+
+$li-container-fluid:            true !default;
+
+
+//= Search
+//
+//##
+
+$li-search-filter-item-bg:              #e4e8ea !default;
+$li-search-filter-item-color:           #5c6a6e !default;
+$li-search-filter-item-icon-color:      #839196 !default;
+$li-search-filter-icon-padding: 8px !default;
+
+$li-search-input-height:        46px !default;
+$li-search-input-color:         #fff !default;
+$li-search-box-padding:         30px !default;
+$li-search-box-padding-right:   200px !default;
+$li-search-input-color:         #fff !default;
+$li-search-granularity-caret:   9px !default;
+
+$li-search-item-replies-bg:     #f4f6f7 !default;
+
+
+//== Triangle top
+$li-triangletop-size:           45px !default;
+$li-triangletop-font-size:      18px !default;
+$li-triangletop-thumb-tack-bg:  #a77fb2 !default;
+$li-triangletop-check-bg:       #70b989 !default;
+$li-triangletop-lock-bg:        #4e8aa5 !default;
+$li-triangletop-bullhorn-bg:    #d877a6 !default;
+
+$li-header-bg:                  $li-bg-secondary !default;
+
+
+// max-width variable for userlist contraints
+$li-mod-controls-bg:            #e4e8ea !default;
+
+$li-reviews-primary-color:      $brand-primary !default;
+$li-reviews-stars-disabled-bg:  #e4e8ea !default;
+
+
+//== Tokens
+$li-token-bg:                   #e4e8ea !default;
+$li-token-close-color:          #cbd3d5 !default;
+
+
+//== Board List
+$li-floated-boards-border-width:  5px !default;
+// height of rows on .BoardList
+$li-node-list-height:             115px !default;
+
+
+//== Media Masonry
+$li-masonry-bg:                   #fff !default;
+$li-masonry-user-name-link-color: #1da8d8 !default;
+
+
+//== Media Lightbox
+$li-media-lightbox-selected:    #1da8d8 !default;
+
+
+//== User Profile Card
+$li-user-profile-card-padding:  50px !default;
+$li-user-profile-inner-padding: 40px !default;
+
+//== User Statistics
+$li-single-statistic-padding:          50px !default;
+$li-user-profile-statistics-count:     3 !default;
+
+//== Hover Card
+$li-hovercard-bg:                         #f4f6f7 !default;
+$li-hovercard-border-radius:              $border-radius-small !default;
+
+//== Profile Page
+$li-profile-page-text-color:                   #fff !default;
+
+//== Video Gallery
+$li-video-gallery-height:       90px !default;
+$li-video-gallery-width:       120px !default;
+
+//== Ideas
+$li-idea-status-size:           55px !default;
+$li-idea-status-large-width:    200px !default;
+$li-idea-status-xs-width:       100px !default;
+$li-idea-status-opacity:        .7 !default;
+$li-idea-status-color:          $li-icon-color !default;
+$li-idea-status-fade-xs-width:  50px;
+
+
+//== Kudos Alternate for Ideas
+$li-kudos-alt-bg:                   $li-panel-secondary-bg-hex !default;
+$li-kudos-horizontal-min-width:     80px !default;
+$li-kudos-horizontal-padding-small: 9px !default;

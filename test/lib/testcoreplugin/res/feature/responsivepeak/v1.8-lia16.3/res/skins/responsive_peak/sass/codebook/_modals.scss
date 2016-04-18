@@ -1,0 +1,36 @@
+@mixin peak\codebook\modals {
+
+  // Sign in and Registration Modals
+  .lia-body .mce-window,
+  .lia-panel-dialog,
+  .ui-dialog {
+    border-radius: $border-radius-base;
+
+    .ui-dialog-titlebar-close:before {
+      color: $text-color;
+    }
+  }
+
+  .lia-body .mce-abs-layout.mce-container-body,
+  .lia-body .ui-dialog-buttonpane,
+  .lia-body .ui-dialog-content {
+    position: static;
+  }
+
+  .lia-dialog-titleless .ui-dialog-titlebar,
+  .lia-panel-dialog .ui-dialog-titlebar-close,
+  .ui-dialog .ui-dialog-titlebar-close {
+    padding: $padding-large-vertical $padding-large-horizontal;
+  }
+
+  .lia-panel-dialog .ui-dialog-titlebar-close,
+  .ui-dialog .ui-dialog-titlebar-close {
+    margin: -$padding-large-vertical;
+  }
+
+  .lia-dialog-titleless .ui-dialog-titlebar {
+    border-bottom: 3px solid $li-border-color;
+    border-top: 3px solid $li-message-info-color;
+    line-height: $line-height-computed;
+  }
+}

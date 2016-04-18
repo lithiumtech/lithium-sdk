@@ -1,0 +1,35 @@
+@mixin peak\components\user-image-list {
+  .ViewProfilePage {
+
+    @include media(phone) {
+      .lia-component-ng-li-media-user-images.lia-component-ng-li-media-user-images {
+        width: calc(100% - (2 * #{$padding-xs-horizontal}));
+      }
+    }
+
+    .lia-component-ng-li-media-user-images {
+      display: inline-block;
+      margin: $padding-xs-horizontal;
+      width: calc(50% - (2 * #{$padding-xs-horizontal}));
+
+      .lia-media-image-list-panel .lia-panel {
+        margin-bottom: 0;
+      }
+    }
+
+    .lia-media-image-list.lia-media-image-list.lia-list-tile {
+      .lia-media-image-item {
+        float: left;
+        margin: $padding-xs-horizontal;
+        max-width: 100%;
+        min-width: 0;
+        padding-top: 0;
+        width: calc(25% - (2 * #{$padding-xs-horizontal}));
+
+        &.lia-media-placeholder {
+          display: none;
+        }
+      }
+    }
+  }
+}

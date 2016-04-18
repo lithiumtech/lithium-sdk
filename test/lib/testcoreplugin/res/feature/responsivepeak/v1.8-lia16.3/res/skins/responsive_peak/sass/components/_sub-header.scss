@@ -1,0 +1,46 @@
+@mixin peak\components\sub-header {
+
+  .lia-quilt-row-sub-header {
+    background-color: $li-sub-header-bg;
+    border-top: 1px solid $li-border-color;
+    padding: {
+      bottom: 0;
+      left: $grid-gutter-width / 2;
+      right: $grid-gutter-width / 2;
+      top: 0;
+    }
+  }
+
+  .lia-quilt-column-sub-header-left {
+    @include li-extend('.col-sm-20');
+    @include li-extend('.col-xs-20');
+  }
+
+  .lia-quilt-column-sub-header-right {
+    @include li-extend('.col-sm-4');
+    @include li-extend('.col-xs-4');
+    text-align: right;
+
+    .lia-menu-navigation-wrapper {
+    // when the options menu is in the header next to the breadcrumb
+      margin-right: $panel-body-margin;
+      margin-top: $padding-large-vertical;
+    }
+  }
+
+  .lia-component-quilt-header {
+    border-bottom: $li-divider-size solid $li-border-color;
+
+    .CommunityPage & {
+      border-bottom: $li-hero-community-divider-size solid $li-border-color;
+    }
+
+    .ForumPage & {
+      border-bottom: 2px solid $li-border-color;
+    }
+
+    .ViewProfilePage & {
+      border-bottom: 0 none;
+    }
+  }
+}

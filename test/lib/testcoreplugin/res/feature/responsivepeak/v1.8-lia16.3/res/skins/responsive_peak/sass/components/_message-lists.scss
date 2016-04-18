@@ -1,0 +1,121 @@
+@mixin peak\components\message-lists {
+
+  .cThreadInfoColumn {
+    color: $li-message-info-color;
+    font-size: $font-size-small;
+  }
+
+  .lia-component-messages-column-thread-info {
+    width: 100%;
+  }
+
+  .lia-component-forums-widget-message-list {
+    clear: both
+  }
+
+  .lia-data-cell-secondary {
+    .lia-component-messages-column-thread-replies-count,
+    .lia-component-messages-column-topic-views-count {
+      font-size: $font-size-xsmall;
+      min-width: 65px; // TODO: remove hardcoded arbitrary min-width value
+      text-transform: uppercase;
+    }
+
+    .lia-message-stats-count {
+      display: block;
+      font-size: $font-size-large;
+      font-weight: bold;
+      padding-bottom: $padding-small-vertical;
+    }
+  }
+
+  // dropdown filter for q&a my questions / answers
+  // needs additional padding as the message list tries to eat up the $panel-body-padding
+  // on all sides
+  .lia-filter-select {
+    margin-bottom: $panel-body-padding * 2;
+  }
+
+  .lia-message-subject .blog-article-link,
+  .message-subject .lia-link-navigation {
+    color: $li-alt-link-color;
+  }
+
+  .lia-list-slim {
+    .message-subject {
+      font-size: $li-font-size-message;
+    }
+  }
+
+  // the version of node lists with the .lia-stats-area duplicate the
+  // posts and views column as columns and in the primary cell
+  .lia-stats-area {
+    @include media(tablet-and-larger) {
+      display: none;
+    }
+
+    @include media(phone) {
+      clear: both;
+      padding-top: $padding-small-vertical / 2;
+    }
+  }
+
+  // the version of message lists with the .c<something> columns duplicate the
+  // replies and views column as columns and in the primary cell
+  @include media(phone) {
+    .MessageList {
+      .cRepliesCountColumn,
+      .cViewsCountColumn {
+        display: none;
+      }
+    }
+  }
+
+  .MessageListTaplet {
+    .lia-panel-content {
+      > .lia-list-standard {
+        margin: -$panel-body-padding;
+        margin-top: -$padding-large-vertical;
+
+        > li {
+          border-top: 1px solid $table-border-color;
+          padding-left: $table-cell-padding;
+          padding-right: $table-cell-padding;
+
+          &:first-child {
+            border-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .MessageSubjectCell {
+    padding-bottom: $padding-small-vertical;
+  }
+
+  // corner status icons for message lists
+  .lia-list-row-float {
+    .triangletop {
+      @include thread-status-icon($li-triangletop-thumb-tack-bg, $fa-var-thumb-tack);
+    }
+  }
+
+  .lia-list-row-thread-escalated {
+    .triangletop {
+      @include thread-status-icon($li-triangletop-bullhorn-bg, $fa-var-bullhorn);
+    }
+  }
+
+  .lia-list-row-thread-readonly {
+    .triangletop {
+      @include thread-status-icon($li-triangletop-lock-bg, $fa-var-lock);
+    }
+  }
+
+  .lia-list-row-thread-solved {
+    .triangletop {
+      @include thread-status-icon($li-triangletop-check-bg, $fa-var-check);
+    }
+  }
+}

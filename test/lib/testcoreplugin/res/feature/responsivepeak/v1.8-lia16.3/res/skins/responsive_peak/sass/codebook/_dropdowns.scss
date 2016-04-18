@@ -1,0 +1,137 @@
+@mixin peak\codebook\dropdowns {
+
+  .default-menu-option {
+    .lia-message-options & {
+      background-color: transparent;
+
+      &:before {
+        font-size: $font-size-xlarge;
+        line-height: $line-height-computed;
+        padding: 0;
+      }
+    }
+
+    // places to use the dots menu instead of text + carat
+    .lia-component-search-actions &,
+    .lia-quilt-column-sub-header-right &,
+    .lia-tab-overflow & {
+      @include li-icon(icon-menu-options, $size: $font-size-xlarge, $line-height: $line-height-computed, $hide-text: true);
+      background-color: transparent;
+      border-color: transparent;
+
+      // suppress caret
+      &:after {
+        display: none;
+      }
+    }
+
+    // special handling for the search actions menu as it's located in a unique
+    // position to the right of tabs, but not part of the tab group like the
+    // overflow menu
+    .lia-component-search-actions & {
+      // compensate for the dropdown not being as tall as the tab in desktop
+      margin-top: 2px;
+
+      @include media(phone) {
+        margin-top: 0;
+        padding: {
+          bottom: 0;
+          top: 0;
+        }
+
+        &:before {
+          line-height: $padding-small-vertical * 2 + $font-size-small * $line-height-base;
+        }
+      }
+    }
+  }
+
+  .lia-menu-dropdown-items,
+  .lia-common-dropdown-menu {
+    margin-top: $padding-xs-vertical;
+
+    // search filter dropdowns: filters in dropdown specific styles are here
+    // additional styling that is applied to dropdown and fieldset filters can be
+    // found in _search-page.scss
+    .SearchToggleFieldFilter,
+    .type-filter-alternative {
+      @extend %dropdown-item;
+
+      // using dropdown .disabled > a
+      &.disabled,
+      .disabled {
+        @extend %dropdown-disabled-item;
+
+        label {
+          cursor: $cursor-disabled;
+        }
+      }
+    }
+
+    .lia-labels-concepts-wrapper {
+      .SearchToggleFieldFilter {
+        padding: 3px;
+      }
+    }
+
+    .lia-component-search-widget-author-filter & {
+      padding: $padding-base-vertical;
+    }
+
+    .lia-paging-full-wrapper {
+      min-width: $li-dropdown-paging-min-width;
+      padding-right: $padding-base-horizontal;
+    }
+
+    // location tree in a dropdown
+    .lia-labels-concepts-wrapper,
+    .LocationFilter {
+      padding: $padding-base-vertical $padding-large-horizontal;
+      white-space: nowrap;
+
+      // hack: shouldn't use a js class, shouldn't assume id 1 = community
+      .lia-js-data-treeNodeId-1.lia-js-data-treeNodeDepth-0 {
+        display: none;
+      }
+    }
+
+    .search-toggle-element {
+      margin-right: $padding-xs-horizontal;
+    }
+  }
+
+  .lia-component-search-filter {
+
+    // restyled search filters dropdown triggers
+    .default-menu-option,
+    .lia-common-dropdown-toggle {
+      background-color: transparent;
+      border: 1px solid $li-border-color;
+      font-weight: normal;
+      padding: $padding-large-vertical $padding-large-horizontal;
+
+      &:after {
+        color: $link-color;
+        content: li-icon-content(icon-toggle-open);
+        font-size: $font-size-xlarge;
+        line-height: $font-size-xlarge;
+        margin-left: $padding-base-horizontal;
+        vertical-align: bottom;
+      }
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .dropdownHover .default-menu-option {
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

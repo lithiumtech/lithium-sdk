@@ -1,0 +1,110 @@
+@mixin peak\components\idea-page {
+  .IdeaPage {
+
+
+    @include media(tablet) {
+      .lia-quilt-column-main-left-content {
+        position: relative;
+        padding-top: 0;
+      }
+    }
+
+    .MessageStatusForm {
+      background: $li-bg-secondary;
+      border: 1px solid $li-border-color;
+      border-radius: $border-radius-base;
+      padding: $panel-body-padding;
+      margin: $panel-body-margin;
+
+      .lia-form-use-comment-entry {
+        display: none;
+      }
+    }
+
+    .CommentList,
+    .lia-component-comment-editor,
+    .lia-component-idea-navigator,
+    .lia-message-view-idea-message {
+      margin: 0px $panel-body-margin;
+    }
+
+    .lia-idea-page-comment-count {
+      padding-top: $padding-large-vertical;
+    }
+
+    .lia-component-idea-navigator {
+      float: right;
+      padding-top: $padding-large-vertical;
+    }
+
+    .lia-message-view-idea-message {
+      margin-top: $panel-body-margin;
+    }
+
+    .lia-message-view-display .lia-message-byline-author-date {
+      display: inline-block;
+    }
+
+    .CommentList {
+      .lia-panel-message {
+        margin-bottom: 0;
+      }
+
+      @include media(tablet) {
+        .lia-message-view {
+          margin-bottom: 0;
+        }
+      }
+
+      .lia-quilt-row-footer {
+        display: none;
+      }
+    }
+
+    .MessageSubjectIcons {
+      .lia-fa {
+        display: none;
+      }
+    }
+
+    .LabelsForArticle {
+      .label {
+        width: auto;
+
+        .label-link {
+          padding: $padding-small-vertical;
+        }
+      }
+    }
+
+    .LabelsForArticle .article-labels-title,
+    .TagList .lia-list-standard-inline li:first-child {
+      color: $li-topic-heading-color;
+      display: block;
+      font-size: $font-size-large;
+      padding-bottom: $padding-large-vertical;
+    }
+
+    @include media(tablet) {
+      .LabelsForArticle,
+      .TagList {
+        margin: $panel-body-margin;
+      }
+
+      .LabelsList {
+        text-align: left;
+      }
+    }
+
+    .message-subject .lia-link-navigation,
+    .article-comments .lia-section-header .lia-section-header-title {
+      font-size: $font-size-h3;
+      font-weight: $headings-font-weight;
+    }
+
+    .CommentEditorForm {
+      border-top: 4px solid $brand-primary;
+      border-radius: 0;
+    }
+  }
+}

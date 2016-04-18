@@ -1,0 +1,12 @@
+@mixin peak\components\category-page {
+
+  .CategoryPage {
+    .lia-quilt-row-sub-header {
+      display: none;
+    }
+
+    .lia-quilt-row-search {
+      background-color: $li-category-searchbox-bg;
+    }
+  }
+}

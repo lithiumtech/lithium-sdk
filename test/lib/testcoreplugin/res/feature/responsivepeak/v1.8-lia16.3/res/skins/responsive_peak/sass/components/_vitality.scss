@@ -1,0 +1,89 @@
+@mixin peak\components\vitality {
+
+  .lia-quilt-vitality {
+    background-color: $li-bg-secondary;
+    border-bottom: 3px solid $li-border-color;
+
+    .lia-quilt-column-main-content {
+      float: none;
+      text-align: center;
+    }
+  }
+
+  .lia-vitality-component {
+    display: inline-block;
+  }
+
+  .lia-vitality-display {
+    display: inline-block;
+    margin: $li-vitality-padding-base-vertical $li-vitality-padding-base-horizontal;
+    vertical-align: middle;
+
+    &:before {
+      background-position: center;
+      background-repeat: no-repeat;
+      content: '';
+      display: inline-block;
+      height: $li-vitality-icon-height;
+      margin-right: $padding-small-horizontal;
+      vertical-align: middle;
+      width: $li-vitality-icon-width;
+    }
+
+    // different declaration order for the &:before specifity
+    // scss-lint:disable DeclarationOrder
+    @include media(phone) {
+      margin: $li-vitality-padding-small-vertical $li-vitality-padding-small-horizontal;
+
+      &:before {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .lia-vitality-metrics-display-completed-registrations {
+    &:before {
+      background-image: svg-url($li-svg-vitality-members, $li-vitality-icon-color);
+    }
+  }
+
+  .lia-vitality-metrics-display-net-overall-posts {
+    &:before {
+      background-image: svg-url($li-svg-vitality-posts, $li-vitality-icon-color);
+    }
+  }
+
+  .lia-vitality-users-online {
+    &:before {
+      background-image: svg-url($li-svg-vitality-users, $li-vitality-icon-color);
+      width: $li-vitality-icon-width - ($padding-base-horizontal * 2);
+    }
+  }
+
+  .lia-vitality-stats {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .lia-vitality-value {
+    display: block;
+    font-size: $font-size-h2;
+    text-align: left;
+
+    @include media(phone) {
+      text-align: center;
+    }
+  }
+
+  .lia-vitality-key {
+    display: block;
+    font-size: $font-size-h6;
+    text-align: left;
+    text-transform: uppercase;
+
+    @include media(phone) {
+      text-align: center;
+    }
+  }
+}

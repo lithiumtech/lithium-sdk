@@ -1,0 +1,386 @@
+@mixin peak\components\idea-exchange-page {
+
+  // icons for the default statuses
+  .lia-message-statuses-horizontal,
+  .lia-message-view-idea-message-item {
+
+    .lia-component-message-status,
+    .message-status {
+      &:before {
+        @include fa-icon;
+
+        color: $li-idea-status-color;
+        opacity: .7;
+      }
+    }
+
+    .lia-status-idea-new {
+      &:before {
+        content: li-icon-content($fa-var-certificate);
+      }
+    }
+
+    .lia-status-idea-needs_info {
+      &:before {
+        content: li-icon-content($fa-var-question-circle);
+      }
+    }
+
+    .lia-status-idea-investigating {
+      &:before {
+        content: li-icon-content($fa-var-cogs);
+      }
+    }
+
+    .lia-status-idea-accepted {
+      &:before {
+        content: li-icon-content($fa-var-gavel);
+      }
+    }
+
+    .lia-status-idea-declined {
+      &:before {
+        content: li-icon-content($fa-var-moon-o);
+      }
+    }
+
+    .lia-status-idea-delivered {
+      &:before {
+        content: li-icon-content($fa-var-gift);
+      }
+    }
+  }
+
+  .lia-quilt-idea-exchange-components {
+    background-color: $li-bg-secondary;
+
+    @include media(tablet) {
+      display: none;
+    }
+
+    > .lia-quilt-row {
+      padding-left: $panel-body-margin;
+      padding-right: $panel-body-margin;
+      padding-top: $padding-xl-vertical;
+    }
+
+    .lia-component-ideas-widget-labels,
+    .lia-component-ideas-widget-labels-sortable {
+      .label {
+        @extend %label-alt;
+        @extend %label-sm;
+        @extend %label-with-truncation-and-counts;
+
+        float: left;
+        margin-right: $panel-body-padding;
+        padding: 0;
+        // assumes 4 columns, make configurable?
+        width: calc(25% - #{$panel-body-padding});
+      }
+
+      .default-menu-option {
+        background-color: transparent;
+        border-color: transparent;
+        border-radius: 0;
+        border-top-left-radius: $panel-border-radius;
+        margin: -1px;
+        padding: {
+          bottom: $padding-large-vertical;
+          left: $panel-body-padding;
+          right: $panel-body-padding;
+          top: $padding-large-vertical;
+        }
+      }
+
+      .lia-panel-content {
+        padding: {
+          bottom: $padding-large-vertical;
+          right: 0;
+          top: $panel-body-padding;
+        }
+      }
+
+      .lia-panel-heading-bar {
+        padding: 0;
+      }
+    }
+
+    .lia-panel {
+      background-color: $li-panel-secondary-bg-hex;
+      border: 1px solid $li-border-color;
+    }
+
+    .lia-panel-heading-bar {
+      padding: {
+        bottom: $padding-large-vertical;
+        left: $panel-body-padding;
+        right: $panel-body-padding;
+        top: $padding-large-vertical;
+      }
+    }
+
+    .lia-panel-heading-bar-title {
+      line-height: 1;
+    }
+
+    .lia-view-all {
+      .lia-link-navigation {
+        padding-bottom: $padding-large-vertical;
+        padding-top: $padding-large-vertical;
+      }
+    }
+  }
+
+  .lia-quilt-ideas-search {
+    background-color: $li-panel-secondary-bg-hex;
+    border-bottom: 1px solid $li-border-color;
+    border-top: 1px solid $li-border-color;
+
+    .lia-component-common-widget-search-form {
+      padding-bottom: $padding-xl-vertical;
+      padding-top: $padding-xl-vertical;
+
+      @include media(phone) {
+        padding: {
+          bottom: $panel-body-padding;
+          top: $panel-body-padding;
+        }
+      }
+    }
+
+    .lia-idea-submit-standalone {
+      padding: {
+        bottom: $padding-xl-vertical + ($li-search-input-height - $input-height-base) / 2;
+        top: $padding-xl-vertical + ($li-search-input-height - $input-height-base) / 2;
+      }
+      text-align: center;
+
+      @include media(phone) {
+        padding: {
+          bottom: $panel-body-padding;
+          top: $panel-body-padding;
+        }
+      }
+    }
+
+    /* @noflipstart */
+    .lia-quilt-column-left-content {
+    /* @noflipend */
+      @include make-sm-column(18);
+
+      border-right: 1px solid $li-border-color;
+      padding-right: $panel-body-padding * 2;
+
+      @include media(phone) {
+        border-bottom: 1px solid $li-border-color;
+        border-right: 0;
+        padding-right: inherit;
+      }
+    }
+
+    .lia-quilt-column-right-content {
+      @include make-sm-column(6);
+    }
+  }
+
+  .IdeaPage,
+  .IdeaExchangePage {
+    .KudosButton {
+      @extend %kudos-alt;
+    }
+
+    .lia-component-ideas-widget-completed-ideas {
+      .kudos-link {
+        padding-left: $li-kudos-horizontal-padding-small;
+        padding-right: $li-kudos-horizontal-padding-small;
+      }
+
+      .kudos-link,
+      .kudos-count-link,
+      .lia-button-image-kudos-count {
+        line-height: $font-size-small * $line-height-base;
+      }
+
+      .lia-button-image-kudos-count {
+        .lia-component-kudos-widget-message-kudos-count {
+          font-size: $font-size-small;
+          padding-left: $li-kudos-horizontal-padding-small;
+        }
+      }
+
+      .lia-button-image-kudos-horizontal {
+        background-color: $li-label-inverse-bg;
+      }
+
+      .lia-list-slim {
+        padding-bottom: $padding-large-vertical;
+        position: relative;
+      }
+
+      .lia-message-content {
+        margin-left: $li-kudos-horizontal-min-width;
+        min-height: ($padding-large-vertical * 2) + $line-height-computed;
+      }
+
+      .lia-message-status-info {
+        display: none;
+      }
+
+      .lia-panel-content {
+        .lia-list-standard {
+          > li {
+            border-top: 0;
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .IdeaPage,
+  .lia-message-view-idea-message-item.MessageView {
+    margin-bottom: 3px;
+    padding-top: 0;
+    position: relative;
+
+    @include media(tablet) {
+      padding-bottom: 0;
+    }
+
+    .LabelsList {
+      @include media(tablet) {
+        text-align: right;
+        white-space: nowrap;
+      }
+    }
+
+    .lia-button-image-kudos-wrapper {
+      left: -1px;
+    }
+
+    .lia-quilt-column-main-center-content {
+      padding-right: $li-message-view-padding;
+      padding-top: $li-message-view-padding;
+
+      @include media(tablet) {
+        padding: {
+          left: $panel-body-padding;
+          right: $panel-body-padding;
+          top: $panel-body-padding;
+        }
+      }
+    }
+
+    .lia-quilt-column-main-left-content {
+      padding-left: 0;
+      padding-top: $li-message-view-padding;
+
+      @include media(tablet) {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        z-index: 10;
+      }
+    }
+
+    // scss-lint:disable PropertySortOrder
+    .lia-quilt-column-main-right-content {
+
+      .IdeaExchangePage & {
+        background-color: $li-panel-secondary-bg-hex;
+        padding: {
+          left: $padding-small-horizontal;
+          right: $padding-small-horizontal;
+          top: $padding-base-vertical;
+        }
+
+        margin-bottom: -100%;
+        padding-bottom: 100%;
+        overflow: hidden;
+
+        @include media(tablet) {
+          margin-bottom: 0;
+          min-height: ($padding-base-vertical * 2) + floor($font-size-small * $line-height-base) - 1;
+          padding-bottom: 0;
+          padding-left: 25%;
+        }
+      }
+    }
+    // scss-lint:enable PropertySortOrder
+
+    .lia-message-subject {
+      margin-bottom: 0;
+    }
+
+    .lia-message-byline {
+      display: inline;
+
+      @include media(phone) {
+        display: none;
+      }
+    }
+
+    .lia-component-message-status,
+    .lia-message-byline {
+      &:after {
+        content: '\2022';
+        padding-left: $padding-xs-horizontal;
+        padding-right: $padding-xs-horizontal;
+      }
+    }
+
+    .lia-component-message-status {
+      color: $li-text-color-secondary;
+      font-size: $font-size-small;
+      margin-bottom: 0;
+      margin-top: 0;
+
+      .message-status-link {
+        background-color: transparent;
+        color: $link-color;
+        display: inline;
+        font-size: $font-size-small;
+        font-weight: normal;
+        padding: 0;
+      }
+    }
+
+    .lia-message-body-wrapper {
+      margin-top: $padding-base-vertical;
+    }
+
+    .lia-component-labels {
+      margin-bottom: 1px;
+      margin-top: 0;
+    }
+
+    .label {
+      @extend %label-alt;
+      @extend %label-xs;
+      @extend %label-with-truncation;
+
+      padding-bottom: $padding-small-vertical;
+      vertical-align: top;
+      width: 100%;
+
+      @include media(tablet) {
+        width: auto;
+      }
+
+      .label-link {
+        float: left;
+      }
+    }
+
+    .lia-message-comment-action {
+      font-size: $font-size-small;
+
+      .lia-message-comment-post {
+        &:before {
+          content: '';
+          margin: 0;
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ var path = require('path');
 var gutil = require('gulp-util');
 var fs = require('fs');
 var testRoot = path.resolve(__dirname) + '/..';
+var gulp = require('gulp');
 
 describe('test skin object creation', function() {
   var skinLib;
@@ -15,6 +16,8 @@ describe('test skin object creation', function() {
     var fixResSkinsDir = function(dir) {
       if (dir == 'res/skins') {
         dir = testRoot + '/lib/skins/' + dir;
+      } else if (dir == 'coreplugin') {
+        dir = testRoot + '/lib/' + dir;
       }
 
       return dir;
@@ -28,6 +31,9 @@ describe('test skin object creation', function() {
       },
       readdirSync: function(path) {
         return fs.readdirSync(fixResSkinsDir(path));
+      },
+      existsSync: function (path) {
+        return fs.existsSync(fixResSkinsDir(path));
       }
     };
     var pathMock = {
@@ -41,44 +47,37 @@ describe('test skin object creation', function() {
       fs: fsMock,
       path: pathMock
     });
-    skinLib = skinLib();
+    var serverConfPath = path.join('lib', 'test.server.conf.json');
+    gutil.env.serverConfig = path.join('test', serverConfPath);
+    skinLib = skinLib(gulp, gutil);
   });
 
   it('should not allow you to create a skin with invalid constructor values', function(done) {
-    var baseResponsiveSkins = ['responsive_base', 'responsive_peak'];
     var skinId = 'my_responsive_skin';
     var skinDir = testRoot + '/lib/skins/res/skins/' + skinId;
     var errMsg = '';
 
     try {
-      new skinLib.Skin(null, skinDir, baseResponsiveSkins);
+      new skinLib.Skin(null, skinDir);
     } catch (err) {
       errMsg = err.message;
     }
     expect(errMsg).to.equal('id must be a string!');
 
     try {
-      new skinLib.Skin(skinId, null, baseResponsiveSkins);
+      new skinLib.Skin(skinId, null);
     } catch (err) {
       errMsg = err.message;
     }
     expect(errMsg).to.equal('dir must be a string!');
 
-    try {
-      new skinLib.Skin(skinId, skinDir);
-    } catch (err) {
-      errMsg = err.message;
-    }
-    expect(errMsg).to.equal('baseResponsiveSkins must be an array!');
-
     done();
   });
 
   it('should create a new local responsive skin object', function(done) {
-    var baseResponsiveSkins = ['responsive_base', 'responsive_peak'];
     var skinId = 'my_responsive_skin';
     var skinDir = testRoot + '/lib/skins/res/skins/' + skinId;
-    var skin = new skinLib.Skin(skinId, skinDir, baseResponsiveSkins);
+    var skin = new skinLib.Skin(skinId, skinDir);
 
     expect(skin.getId()).to.equal(skinId);
     expect(skin.getDir()).to.equal(skinDir);

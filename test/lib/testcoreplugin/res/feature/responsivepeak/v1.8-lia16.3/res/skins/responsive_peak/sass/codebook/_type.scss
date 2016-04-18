@@ -1,0 +1,63 @@
+@mixin peak\codebook\type {
+
+  %section-header-font,
+  %sub-section-header-font {
+    font-size: $font-size-h4;
+  }
+
+  %secondary-text {
+    color: $li-message-info-color;
+    font-size: $li-message-info-font-size;
+  }
+
+  %small-label {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+  }
+
+  %xsmall-label {
+    font-size: $font-size-xsmall;
+    text-transform: uppercase;
+  }
+
+  .lia-message-stats-label {
+    @extend %xsmall-label;
+  }
+
+  .lia-recent-message-count-label {
+    @extend %small-label;
+
+    @include media(phone) {
+      display: none;
+    }
+  }
+
+  .board-description {
+    color: $li-message-info-color;
+  }
+
+  // Category and Board title colors
+  .lia-browser-category-heading .category-title,
+  .board-title .lia-link-navigation {
+    color: $text-color;
+    font-size: $font-size-h3;
+    font-weight: $headings-font-weight;
+    padding-bottom: $padding-small-vertical;
+  }
+
+  .lia-button {
+    font-size: $li-btn-font-size;
+  }
+
+  .lia-recent-message-count {
+    font-weight: $headings-font-weight;
+  }
+
+  .lia-content .xsmall-text {
+    color: $li-message-info-color;
+  }
+
+  .lia-panel .lia-panel-heading-bar-title {
+    font-weight: 200;
+  }
+}

@@ -1,0 +1,64 @@
+@mixin peak\components\user-slide-menu {
+
+  .lia-users-current-user-profile-card {
+    font-family: $font-family-sans-serif;
+    padding-top: $li-user-profile-card-padding;
+    text-align: center;
+
+    .UserAvatarProfile {
+      margin-bottom: $li-user-profile-inner-padding;
+    }
+
+    .lia-users-profile-card-avatar {
+      display: block;
+      margin: auto;
+    }
+
+    .lia-users-profile-card-login {
+      color: $brand-primary;
+      font-size: $font-size-h3;
+      padding: 0 $padding-small-vertical;
+      text-decoration: none;
+    }
+
+    .lia-users-profile-card-rank {
+      color: $text-color;
+      font-size: $font-size-large;
+      font-weight: 200;
+      padding-bottom: $li-user-profile-inner-padding;
+      text-transform: uppercase;
+    }
+
+  }
+
+  .lia-quilt-row-profile-stats {
+    border-bottom: 1px solid $gray-lighter;
+    font-family: $font-family-sans-serif;
+    padding-bottom: $li-user-profile-inner-padding / 2;
+    text-align: center;
+
+
+    .lia-users-stat-wrapper {
+      display: inline-block;
+      padding: 0 $padding-base-horizontal;
+    }
+
+    .lia-users-stat {
+      color: $li-icon-color;
+      font-size: $font-size-h2;
+      text-decoration: none;
+
+      &.lia-users-unread-notification-stat {
+        @include li-icon($fa-var-bell-o, $size: $font-size-h2, $icon-margin: $padding-base-vertical);
+      }
+
+      &.lia-users-private-messages-stat {
+        @include li-icon($fa-var-envelope-o, $size: $font-size-h2, $icon-margin: $padding-base-vertical);
+      }
+
+      &.lia-users-posts-count-stat {
+        @include li-icon($fa-var-comment-o, $size: $font-size-h2, $icon-margin: $padding-base-vertical);
+      }
+    }
+  }
+}

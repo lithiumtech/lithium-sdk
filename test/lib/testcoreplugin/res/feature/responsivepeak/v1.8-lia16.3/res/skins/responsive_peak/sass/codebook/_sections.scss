@@ -1,0 +1,22 @@
+@mixin peak\codebook\sections {
+
+  .lia-sections-browser .lia-quilt-column-alley > div {
+    margin: {
+      bottom: $grid-gutter-width;
+      top: $grid-gutter-width;
+    }
+
+    .lia-section-link-wrapper {
+      margin-bottom: $padding-large-vertical;
+    }
+
+    .lia-section-title {
+      font-size: $font-size-h4;
+      font-weight: bold;
+    }
+
+    .lia-section-message-list li {
+      margin-bottom: $padding-base-vertical;
+    }
+  }
+}

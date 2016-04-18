@@ -1,0 +1,88 @@
+// placeholders
+%hero-icons {
+  @include translate(0, -50%);
+
+  display: inline-block;
+  height: $li-icon-size;
+  opacity: $li-hero-opacity;
+  position: absolute;
+  top: 50%;
+  vertical-align: middle;
+  width: $li-icon-size;
+
+  @include media(tablet) {
+    @include translate(0, 0);
+
+    height: $li-icon-size-sm;
+    left: 0;
+    right: 0;
+    top: -$li-icon-size-sm;
+    width: 100%;
+  }
+}
+
+// using a mixin as the css is identical except for direction
+// use-bg for background image icons (currently browse and sign-in), false for avatar
+@mixin hero-links-container($side: left) {
+  $other-side: right;
+
+  @if ($side == right) {
+    $other-side: left;
+    float: right;
+  }
+
+  margin-#{$side}: floor($padding-base-horizontal * 2.5);
+  margin-top: floor(($li-icon-size - $line-height-computed) / 2);
+
+  @include media(tablet) {
+    #{$other-side}: 20%;
+    position: absolute;
+  }
+}
+
+// using a mixin as the css is identical except for direction
+@mixin hero-links($side: left, $is-bg: true) {
+  $other-side: right;
+
+  @if ($side == right) {
+    $other-side: left;
+
+    text-align: right;
+  }
+
+  @include transition(opacity ease-in-out .1s);
+
+  color: $li-hero-color;
+  display: inline-block;
+  opacity: $li-hero-opacity;
+  padding-#{$side}: $li-icon-size + $padding-small-horizontal;
+  position: relative;
+  text-transform: uppercase;
+
+  @include media(tablet) {
+    font-size: $font-size-base - 1;
+    padding: $padding-xs-horizontal;
+    padding-#{$side}: $padding-xs-horizontal;
+    text-align: center;
+  }
+
+  &:active,
+  &:focus,
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  @if ($is-bg) {
+    &:before {
+      @extend %hero-icons;
+
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      content: '';
+
+      #{$side}: 0;
+    }
+  }
+}

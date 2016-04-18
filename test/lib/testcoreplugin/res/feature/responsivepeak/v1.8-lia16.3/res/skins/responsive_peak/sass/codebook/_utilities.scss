@@ -1,0 +1,26 @@
+// Utilities
+//
+// Generic peak utilities. For now, only includes `lia-dot-separator`, as seen below.
+//
+// Markup:
+// <span class="lia-dot-separator"></span>
+// <span> foo </span>
+// <span class="lia-dot-separator"></span>
+// <span> bar </span>
+// <span class="lia-dot-separator"></span>
+//
+// Style guide: peak.codebook.utilities
+
+@mixin peak\codebook\utilities {
+
+  %lia-dot-separator,
+  .lia-dot-separator {
+    @include li-icon($fa-var-circle, $size: 30%);
+
+    &:before {
+      margin-left: $padding-xs-horizontal;
+      margin-right: $padding-xs-horizontal;
+      vertical-align: middle;
+    }
+  }
+}

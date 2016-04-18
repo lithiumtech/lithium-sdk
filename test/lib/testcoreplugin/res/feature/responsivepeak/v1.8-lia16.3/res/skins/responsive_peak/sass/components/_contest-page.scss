@@ -1,0 +1,181 @@
+@mixin peak\components\contest-page {
+
+  @include media(tablet) {
+    .lia-quilt-layout-contest-message .lia-component-author {
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    .lia-quilt-layout-contest-entries .lia-quilt-column.lia-quilt-column-06.lia-quilt-column-right.lia-quilt-column-side-content {
+      padding-left: 0;
+    }
+  }
+
+  .ContestPage {
+    .lia-component-menu-bar {
+      padding-left: $padding-small-horizontal;
+      width: 100%;
+
+      .lia-menu-bar-buttons {
+        float: none;
+      }
+
+      .lia-menu-navigation-wrapper {
+        float: right;
+      }
+    }
+
+    .lia-message-read.lia-component-subject,
+    .lia-message-unread.lia-component-subject {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contest-article-link {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  }
+
+  .ContestSubmissionPage {
+    .lia-link-navigation.kudos-link {
+      width: 100%;
+    }
+  }
+
+  .lia-quilt-contest-entries-tab {
+    padding: 0 $padding-small-horizontal;
+  }
+
+  .lia-contest.PostPage {
+    .ui-dialog .lia-panel-dialog-content iframe {
+      border: 0;
+      height: 500px;
+      width: 100%;
+    }
+
+
+    .MessageEditorForm {
+      legend {
+        display: block;
+      }
+
+      .lia-form-attachments-fieldset-toggle {
+        margin-top: $padding-large-vertical;
+        padding-top: $padding-large-vertical;
+        width: 100%;
+      }
+    }
+  }
+
+  .lia-story-contest.lia-component-submissions {
+    margin-top: $padding-large-vertical;
+
+    .lia-message-kudos.lia-component-kudos {
+      position: absolute;
+      right: $padding-small-horizontal * 2;
+
+      .lia-link-navigation.kudos-link {
+        width: 100%;
+      }
+    }
+
+    .lia-message-author-avatar {
+      margin-bottom: $padding-large-vertical;
+    }
+
+    .BatchProcessing {
+      margin: 0;
+      position: absolute;
+      right: 1px;
+      top: 1px;
+    }
+  }
+
+  .lia-component-entrytabs {
+    margin-left: $padding-small-horizontal;
+    margin-top: $padding-large-vertical;
+  }
+
+  .lia-image-contest.lia-component-submissions {
+    margin-top: $padding-large-vertical;
+
+    .contest-batch-processing {
+      position: absolute;
+      right: $padding-small-horizontal;
+      z-index: 1; // for some reason they're behind the images without this..
+    }
+
+    .lia-list-tile {
+      text-align: left;
+    }
+
+    .contest-gallery-card {
+      background-color: $li-bg-secondary;
+      border-bottom: 1px solid $li-border-color;
+      border-left: 1px solid $li-border-color;
+      border-radius: $border-radius-base * 2;
+      border-right: 1px solid $li-border-color;
+      border-top: 3px solid $li-border-color;
+      margin: $padding-large-vertical $padding-small-horizontal;
+      padding: $padding-large-vertical;
+      position: relative;
+      white-space: nowrap;
+      width: $li-image-contest-thumbnail-dimensions + (2 * $padding-small-horizontal) + 2px;
+
+      .lia-quilt-row-footer {
+        background-color: transparent;
+        border-top: 0;
+      }
+
+      .MessageReadByModeratorCell {
+        position: absolute;
+        top: $li-image-contest-thumbnail-dimensions + $padding-small-vertical;
+      }
+    }
+
+    .lia-quilt-contest-gallery-content .lia-quilt-column-alley.lia-quilt-column-alley-single,
+    .contest-gallery-content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: normal; // IE 10 hack
+    }
+
+
+    .lia-button-image-kudos-horizontal > .lia-button-image-kudos-count,
+    .lia-button-image-kudos-horizontal > .lia-button-image-kudos-give {
+      border: 0;
+      float: none;
+    }
+
+    .UploadedImageDisplay {
+      padding-bottom: $padding-small-vertical;
+    }
+
+    .lia-quilt-uploaded-contest-image-display {
+      .lia-quilt-column-alley.lia-quilt-column-alley-single {
+        border: 0;
+        padding: 0;
+      }
+    }
+
+    .lia-list-tile-image {
+      height: $li-image-contest-thumbnail-dimensions;
+      overflow: hidden;
+      position: relative;
+      width: $li-image-contest-thumbnail-dimensions;
+
+      img {
+        @include translate(-50%, -50%);
+
+        left: 50%;
+        max-width: none;
+        min-height: $li-image-contest-thumbnail-dimensions;
+        position: absolute;
+        top: 50%;
+      }
+    }
+  }
+}

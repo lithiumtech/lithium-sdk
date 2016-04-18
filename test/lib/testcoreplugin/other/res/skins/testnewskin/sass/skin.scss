@@ -1,0 +1,20 @@
+// Contents copied from: responsive_peak/sass/skin.scss
+// Skins
+//
+// skin.scss contains all the files that comprise the CSS for your skin. To get
+// started with skins, create or change variables in `_variables.scss` to
+// configure the underlying CSS. Add additional CSS/Sass to `_style.scss` which
+// is appended to the base CSS to complete the skin.
+//
+
+@import 'variables';
+@import 'responsive_peak/sass/codebook/variables-peak';
+@import 'bootstrap_base/sass/codebook/variables-base';
+@import 'bootstrap_base/sass/vendor';
+
+@import 'bootstrap_base/sass/base-all';
+@import 'responsive_peak/sass/peak-all';
+
+@include base\all;
+@include peak\all;
+@import 'style';
