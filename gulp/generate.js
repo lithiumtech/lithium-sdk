@@ -34,4 +34,7 @@ module.exports = function (gulp, gutil) {
     generate()(gulp, gutil).bootstrapBaseChild(cb);
   });
 
+  gulp.task('merge-base-and-peak', function (cb) {
+    generate()(gulp, gutil).mergeBaseAndPeak(cb);
+  });
 };
