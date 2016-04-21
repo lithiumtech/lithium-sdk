@@ -2,26 +2,30 @@
 
 [![Build Status][travis-image]][travis-url]
 
-### Lithium Developer Community Area
+[Lithium SDK documentation] (https://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=sdk)
 
-[Lithium-Klout SDK docs] (http://sdk-docs.lithium.com/learn/overview)
+### Lithium Developer Resources
 
-[Lithium Community API v1] (http://community.lithium.com/t5/Community-API/bd-p/developers-rest-api)
+[Lithium Developer Documentation Portal] (http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=docportalhome)
 
-[Lithium Community API v2] (http://community.lithium.com/t5/Community-API-v2/tkb-p/communityapiv2)
+[Lithium Community API v1] (http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=commv1)
 
-[Lithium Social Web APIs] (http://community.lithium.com/t5/LSW-API/tkb-p/lswapi)
+[Lithium Community API v2] (http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=commv2)
+
+[Lithium Social Web (LSW) APIs] (http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=lsw)
+
+[Lithium FreeMarker context objects] (https://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=freemarker)
+
+[Developers Knowledge Base] (http://community.lithium.com/t5/Developers-Knowledge-Base/tkb-p/studio%40tkb)
+
+[Developers Discussion forum] (http://community.lithium.com/t5/Developers-Discussion/bd-p/studio)
 
 [Klout Developer Portal] (https://klout.com/s/developers/home)
 
-[Developer tutorials and knowledge base] (http://community.lithium.com/t5/Developers-Knowledge-Base/tkb-p/studio%40tkb)
-
-[Lithium FreeMarker objects] (https://community.lithium.com/t5/Developers-Knowledge-Base/FreeMarker-context-objects-and-directives/ta-p/9217)
-
-[Developer Discussion forum] (http://community.lithium.com/t5/Developers-Discussion/bd-p/studio)
-
 ### Other useful resources
 [FreeMarker documentation] (http://freemarker.org/docs/index.html)
+
+[Sass documentation] (http://sass-lang.com/documentation/file.SASS_REFERENCE.html)
 
 [node.js NodeSchool Tutorials] (https://nodejs.org/documentation/tutorials/)
 
