@@ -8,8 +8,8 @@ var extensions = {
   ],
   'lithium-sdk-kss-doctools': [
     'kss',
-    'kss-build',
-    'kss-server'
+    'kss-sass',
+    'kss-exec'
   ]
 };
 
