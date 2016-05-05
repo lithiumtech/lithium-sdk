@@ -43,7 +43,8 @@ module.exports = function (gulp, gutil) {
     function downloadCorePlugins() {
 
         var server = require('../lib/plugin-server.js')(gulp, gutil).getServer();
-        if (fs.existsSync(server.coreOutputDir())) {
+        var doClear = gutil.env['clearCore'];
+        if (fs.existsSync(server.coreOutputDir()) && !doClear) {
             if (gutil.env['debug']) {
                 putils.logDebug(gutil, "Core plugins exist in directory " + server.coreOutputDir() + "/ . Skipping download...");
             }
@@ -55,7 +56,6 @@ module.exports = function (gulp, gutil) {
         //Download core plugins
         pluginExport.exportPlugin(server, {
             pluginType: 'core',
-            doClear: gutil.env['doClear'],
             verboseMode: gutil.env['verbose'],
             debugMode: gutil.env['debug'],
             coreOutputDir: server.coreOutputDir()

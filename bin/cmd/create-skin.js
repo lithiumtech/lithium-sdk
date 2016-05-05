@@ -22,5 +22,6 @@ module.exports = {
         }, cb);
     },
     help: 'Creates a new skin.' + gutil.colors.bold('\nOptions:') +
-    '\n--clearFalse:   Downloads the core plugins from server even when directory is already present. Defaults to false'
+    '\n--clearCore:  Gets the most recent versions of parent skins from the server. Running without --clearCore is faster, '+
+    '\n             but you will be using the cached versions of the core skins, not necessarily the latest versions'
 };
