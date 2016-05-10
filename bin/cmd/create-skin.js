@@ -17,8 +17,13 @@ module.exports = {
             return true;
         }
         var server = require('../../lib/server.js')(gulp, gutil);
+        var serverVersion = {
+            "supportedVersionMajor": "16",
+            "supportedVersionMinor": "4"
+        };
         require('../../lib/version-check.js')(gulp, gutil).process(server, {
-            debugMode: gutil.env['debug']
+            debugMode: gutil.env['debug'],
+            version: serverVersion
         }, cb);
     },
     help: 'Creates a new skin.' + gutil.colors.bold('\nOptions:') +
