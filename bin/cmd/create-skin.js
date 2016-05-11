@@ -17,11 +17,9 @@ module.exports = {
             return true;
         }
         var server = require('../../lib/server.js')(gulp, gutil);
-        var serverVersion = {
-            "supportedVersionMajor": "16",
-            "supportedVersionMinor": "4"
-        };
-        require('../../lib/version-check.js')(gulp, gutil).process(server, {
+        var versionCheck = require('../../lib/version-check.js')(gulp, gutil);
+        var serverVersion = versionCheck.createVersion("16.4");
+        versionCheck.process(server, {
             debugMode: gutil.env['debug'],
             version: serverVersion
         }, cb);
