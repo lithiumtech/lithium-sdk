@@ -36,7 +36,7 @@ describe('test project creation', function() {
         return nock(url)
             .log(console.log)
             .get(versionCheckApi)
-            .reply(200, '{"status":"OK", "version": "16.4"}');
+            .reply(200, '{"status":"OK", "version": "'+serverVersion+'"}');
     }
 
     describe('create project tests', function() {
