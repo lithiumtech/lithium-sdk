@@ -11,10 +11,7 @@ var spawn = require('child_process').spawn;
 var rewire = require('rewire');
 var serverMocks = require('./server-mocks');
 var badErrorRespnse = 'Bad response';
-var successVersion = 16.2;
-var higherVersion = '16.4';
-var higherVersion2 = '16.3.1';
-var higherVersion3 = '16.10';
+
 var lowerVersion = 12.1;
 var lowerVersion1 = 15.4;
 var errorResponse = 'Invalid version check response';
@@ -67,7 +64,7 @@ describe('test version check', function() {
   }
 
   describe('version check response', function() {
-    var server;
+    var server, successVersion, higherVersion, higherVersion2, higherVersion3;
 
     function check(expects, versionNumber, opts) {
 
@@ -94,6 +91,11 @@ describe('test version check', function() {
 
     before(function() {
       server = serverMocks.createDefaultServerMock();
+      var defaultVersion = require(testRoot + '/../lib/server-version.json');
+      successVersion = defaultVersion.supportedVersionMajor + '.' + defaultVersion.supportedVersionMinor;
+      higherVersion = defaultVersion.supportedVersionMajor + '.' + (parseInt(defaultVersion.supportedVersionMinor)+1);
+      higherVersion2 = defaultVersion.supportedVersionMajor + '.' + (parseInt(defaultVersion.supportedVersionMinor)+1) +'.1';
+      higherVersion3 = (parseInt(defaultVersion.supportedVersionMajor)+1) + '.' + defaultVersion.supportedVersionMinor;
     });
 
     beforeEach(function() {

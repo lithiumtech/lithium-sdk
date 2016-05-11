@@ -22,6 +22,7 @@ describe('test project creation', function() {
     var stdin;
     var sandbox;
     var sandboxTestFolder = "/tmp/sandboxtest/";
+    var defaultVersion;
 
     function createErrorResponse() {
         return nock(apiHost)
@@ -31,10 +32,11 @@ describe('test project creation', function() {
     }
 
     function createResponse(url) {
+        var serverVersion = defaultVersion.supportedVersionMajor + '.' + defaultVersion.supportedVersionMinor;
         return nock(url)
             .log(console.log)
             .get(versionCheckApi)
-            .reply(200, '{"status":"OK", "version": "16.2"}');
+            .reply(200, '{"status":"OK", "version": "'+serverVersion+'"}');
     }
 
     describe('create project tests', function() {
@@ -123,6 +125,7 @@ describe('test project creation', function() {
 
         before(function() {
             sandbox = sinon.sandbox.create();
+            defaultVersion = require(testRoot + '/../lib/server-version.json');
         });
 
         beforeEach(function() {
