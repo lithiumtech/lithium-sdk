@@ -81,7 +81,8 @@
     "grunt",
     "phantom",
     "WebPage",
-    "Promise"
+    "Promise",
+    "before"
   ],
   "proto" : false,
   "prototypejs" : false,

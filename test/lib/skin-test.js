@@ -14,9 +14,9 @@ describe('test skin object creation', function() {
 
   before(function() {
     var fixResSkinsDir = function(dir) {
-      if (dir == 'res/skins') {
+      if (dir === 'res/skins') {
         dir = testRoot + '/lib/skins/' + dir;
-      } else if (dir == 'coreplugin') {
+      } else if (dir === 'coreplugin') {
         dir = testRoot + '/lib/' + dir;
       }
 
@@ -58,14 +58,14 @@ describe('test skin object creation', function() {
     var errMsg = '';
 
     try {
-      new skinLib.Skin(null, skinDir);
+      skinLib.Skin(null, skinDir);
     } catch (err) {
       errMsg = err.message;
     }
     expect(errMsg).to.equal('id must be a string!');
 
     try {
-      new skinLib.Skin(skinId, null);
+      skinLib.Skin(skinId, null);
     } catch (err) {
       errMsg = err.message;
     }
@@ -95,9 +95,6 @@ describe('test skin object creation', function() {
   });
 
   it('should return all the responsive skins', function(done) {
-    var config = {
-      skins: [ 'responsive_peak' ]
-    };
     var responsiveSkinIds = skinLib.getResponsiveSkinIds();
     var responsiveSkins = skinLib.getResponsiveSkins();
     console.log(JSON.stringify(responsiveSkins));

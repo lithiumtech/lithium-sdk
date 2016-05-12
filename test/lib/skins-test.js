@@ -18,7 +18,7 @@ describe('test skin compile', function() {
   before(function() {
     tempDir = temp.mkdirSync('skins-test');
     var fixResSkinsDir = function(dir) {
-      if (dir == 'res/skins') {
+      if (dir === 'res/skins') {
         dir = testRoot + '/lib/skins/' + dir;
       }
 
@@ -61,11 +61,13 @@ describe('test skin compile', function() {
     });
   });
 
-  it('should download an asset to tmp directory', function(done){
-     skinsLib.downloadFile("http://community.lithium.com/html/assets/footer-menu-1.png", {}, tempDir+"/footer-menu-1.png", function(msg){
-      expect(fs.existsSync(tempDir + '/footer-menu-1.png'));
-      expect(msg.indexOf( "Successfully downloaded asset") > -1);
-      done();
-    });
-  });
+  // FIXME: downloadFile was moved to local-server
+  //it('should download an asset to tmp directory', function(done){
+  //   skinsLib.downloadFile('http://community.lithium.com/html/assets/footer-menu-1.png', {}, tempDir +
+  //      '/footer-menu-1.png', function(msg) {
+  //    expect(fs.existsSync(tempDir + '/footer-menu-1.png'));
+  //    expect(msg.indexOf( 'Successfully downloaded asset') > -1);
+  //    done();
+  //  });
+  //});
 });
