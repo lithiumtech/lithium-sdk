@@ -33,7 +33,7 @@ module.exports = function (gulp, gutil) {
   }
 
   function validateSkinId(val) {
-    return typeof val != 'undefined' && val.trim().length > 4;
+    return typeof val !== 'undefined' && val.trim().length > 4;
   }
 
   function validatePort(val) {
@@ -43,12 +43,12 @@ module.exports = function (gulp, gutil) {
   gulp.task('responsive-options', ['version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
-    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-      var skinId = gutil.env['skin'];
-      var port = gutil.env['port'];
-      var anon = gutil.env['anon'];
+    if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
+      var skinId = gutil.env.skin;
+      var port = gutil.env.port;
+      var anon = gutil.env.anon;
 
-      if (typeof skinId == 'undefined' || typeof port == 'undefined') {
+      if (typeof skinId === 'undefined' || typeof port === 'undefined') {
         throw new Error('must pass both --skin and --port parameters when using the --force flag');
       }
 
@@ -58,7 +58,7 @@ module.exports = function (gulp, gutil) {
 
       var portValidate = validatePort(port);
 
-      if (portValidate != true) {
+      if (portValidate !== true) {
         throw new Error('port: ' + portValidate);
       }
 
@@ -67,20 +67,20 @@ module.exports = function (gulp, gutil) {
           enabled: true,
           id: skinId,
           url: 'http://localhost:' + port + '/style/' + skinId + '.css',
-          anonymous_viewing: (typeof anon != 'undefined')
+          anonymous_viewing: (typeof anon !== 'undefined')
         },
-        verboseMode: gutil.env['verbose'],
-        debugMode: gutil.env['debug'],
-        configDir: gutil.env['configdir'] || server.configDir()
+        verboseMode: gutil.env.verbose,
+        debugMode: gutil.env.debug,
+        configDir: gutil.env.configdir || server.configDir()
       }, function(err) {
         if (err) throw err;
       }).pipe(stream);
     } else {
       var skins = getSkinLib().getResponsiveSkinIds();
       if (skins.length < 1) {
-        throw new Error('There are no responsive skins. You should create a skin in the res/skins folder and make its ' +
-        'parent a responsive skin (such as the responsive_peak skin) by setting the parent property in the ' +
-        'skin.properties file');
+        throw new Error('There are no responsive skins. You should create a skin in the res/skins folder and make ' +
+          'its parent a responsive skin (such as the responsive_peak skin) by setting the parent property in the ' +
+          'skin.properties file');
       }
       inquirer().prompt([
         {
@@ -108,9 +108,9 @@ module.exports = function (gulp, gutil) {
             url: 'http://localhost:' + answers.port + '/styles/' + answers.skinId + '.css',
             anonymous_viewing: true
           },
-          verboseMode: gutil.env['verbose'],
-          debugMode: gutil.env['debug'],
-          configDir: gutil.env['configdir'] || server.configDir()
+          verboseMode: gutil.env.verbose,
+          debugMode: gutil.env.debug,
+          configDir: gutil.env.configdir || server.configDir()
         }, function(err) {
           if (err) throw err;
         }).pipe(stream);

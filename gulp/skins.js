@@ -1,7 +1,5 @@
 'use strict';
 
-var lazyReq = require('lazy-req')(require);
-
 module.exports = function (gulp, gutil) {
   var skins = require('../lib/skins.js')(gulp, gutil);
 

@@ -80,7 +80,8 @@
     "jQuery",
     "grunt",
     "phantom",
-    "WebPage"
+    "WebPage",
+    "Promise"
   ],
   "proto" : false,
   "prototypejs" : false,

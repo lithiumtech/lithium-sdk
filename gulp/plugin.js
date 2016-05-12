@@ -1,13 +1,10 @@
 'use strict';
 
 var lazyReq = require('lazy-req')(require);
-var inquirer = lazyReq('inquirer');
-var through = lazyReq('through2');
 var path = lazyReq('path');
 var runSequence = require('run-sequence');
-var rsync = require('../lib/rsync.js');
-var _ = require('lodash');
-var extend = require('node.extend');
+var rsync = lazyReq('../lib/rsync.js');
+var extend = lazyReq('node.extend');
 
 module.exports = function (gulp, gutil) {
   var pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
@@ -31,11 +28,11 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-build-res', function (cb) {
-    rsync('res', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
+    rsync()('res', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
   });
 
   gulp.task('plugin-build-web', function (cb) {
-    rsync('web', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
+    rsync()('web', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
   });
 
   /* plugin task */
@@ -74,7 +71,7 @@ module.exports = function (gulp, gutil) {
       var query = {};
       if (filesChanged) {
         filesChanged.forEach(function (filePath) {
-          extend(query, sandboxApi.createReloadQuery(filePath));
+          extend()(query, sandboxApi.createReloadQuery(filePath));
         });
       }
       return sandboxApi.refreshPlugin(query);

@@ -5,7 +5,7 @@ var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 
 module.exports = function (gulp, gutil) {
-	var pluginExport, pluginServer;
+  var pluginExport, pluginServer;
 
   function getPluginServer() {
     if (!pluginServer) {
@@ -23,8 +23,8 @@ module.exports = function (gulp, gutil) {
     return pluginExport.exportPlugin(getPluginServer().getServer(), {
         pluginType: 'studio',
         doClear: true,
-        verboseMode: gutil.env['verbose'],
-        debugMode: gutil.env['debug']
+        verboseMode: gutil.env.verbose,
+        debugMode: gutil.env.debug
     }, pluginPointAnswers, function() {});
   }
 
@@ -47,7 +47,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin-clear', ['clean'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
-    if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+    if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
       clearPlugin(getPluginServer().getPluginPoints()).pipe(stream);
     } else {
       inquirer().prompt({
@@ -58,21 +58,21 @@ module.exports = function (gulp, gutil) {
         if (answers.pluginExport) {
           clearPluginFinalCheck(stream, getPluginServer().getPluginPoints());
         } else {
-        	inquirer().prompt({
-        		name: 'pluginPoints',
-        		message: 'What plugin points would you like to clear? (choose up to 5)',
-        		type: 'checkbox',
-        		choices: getPluginServer().getPluginPointChoices(),
-        		validate: function(answer) {
-  						if (answer.length < 1) {
-  							return 'You must choose at least one plugin point.';
-  						} else if (answer.length > 5) {
-  							return 'You cannot choose more than 5 plugin points.';
-  						}
+          inquirer().prompt({
+            name: 'pluginPoints',
+            message: 'What plugin points would you like to clear? (choose up to 5)',
+            type: 'checkbox',
+            choices: getPluginServer().getPluginPointChoices(),
+            validate: function(answer) {
+              if (answer.length < 1) {
+                return 'You must choose at least one plugin point.';
+              } else if (answer.length > 5) {
+                return 'You cannot choose more than 5 plugin points.';
+              }
 
-  						return true;
-  					}
-  				}, function(answers) {
+              return true;
+            }
+          }, function(answers) {
             if (answers.pluginPoints) {
               clearPluginFinalCheck(stream, answers);
             } else {

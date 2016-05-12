@@ -1,9 +1,5 @@
 'use strict';
 
-var lazyReq = require('lazy-req')(require);
-var jscs = lazyReq('gulp-jscs');
-var test = lazyReq('../lib/test.js');
-
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
 

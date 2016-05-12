@@ -9,12 +9,11 @@ var fs = require('fs-extra');
 
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
-  var text = text = require('../lib/text.js')(gulp, gutil);
+  var text = require('../lib/text.js')(gulp, gutil);
   var server = require('../lib/server.js')(gulp, gutil);
   var skins = require('../lib/skins.js')(gulp, gutil);
   var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
 
-  var lrListening;
   var watchOpts = { debounceTimeout: 250 };
 
   function refreshServer(file) {
@@ -41,7 +40,8 @@ module.exports = function (gulp, gutil) {
     watch()(scripts.JS_MAIN_PATTERN, watchOpts, function (file) {
       var startTime = process.hrtime();
       gutil.log('Starting script compile');
-      return scripts.processScripts(file.path, scripts.PLUGIN_SCRIPTS_PATH + '/' + (file.relative.replace(file.basename, '')),
+      return scripts.processScripts(file.path,
+          scripts.PLUGIN_SCRIPTS_PATH + '/' + (file.relative.replace(file.basename, '')),
         [file.path], true, true).on('end', function () {
           if (!server.useLocalCompile()) {
             refreshServer(file);
@@ -90,7 +90,8 @@ module.exports = function (gulp, gutil) {
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     watch()(textPropPattern, watchOpts, function (file) {
-      return text.processText(textPropPattern, 'plugin/res/lang/feature').on('end', function () { refreshServer(file); });
+      return text.processText(textPropPattern, 'plugin/res/lang/feature')
+        .on('end', function () { refreshServer(file); });
     });
     cb();
   });
