@@ -4,7 +4,7 @@
 
 module.exports = {
   run: function () {
-    require('../../lib/spawn-gulp')(['plugin', '--skip-upload']);
+    require('../../lib/spawn-gulp')(['plugin-package']);
   },
   help: 'Packages and validates the plugin locally. ' +
     '\nRun this command from the root directory of a project.'

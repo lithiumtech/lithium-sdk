@@ -5,7 +5,7 @@
 var gutil = require('gulp-util');
 module.exports = {
   run: function () {
-    require('../../lib/spawn-gulp')(['plugin'].concat(process.argv.splice(3)));
+    require('../../lib/spawn-gulp')(['plugin-upload'].concat(process.argv.splice(3)));
   },
   help: 'Packages and validates the plugin locally and then prompts to upload the plugin to the server.' +
     '\nRun this command from the root directory of an lithium-sdk project.' +
