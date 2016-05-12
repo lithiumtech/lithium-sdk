@@ -86,37 +86,14 @@ module.exports = function (gulp, gutil) {
   });
 
   // SDK dev flow - upload
-  // - plugin-upload
-  // -- plugin-build
-  // --- plugin-verify (skins-vars-template, plugin-res, plugin-web)
-  // --- skins-vars-template
-  // --- plugin-res
-  // --- plugin-web
-  // --- plugin-git-version
   gulp.task('plugin-upload', ['plugin-verify'], function () {
     return pluginUpload.upload();
   });
 
   // SDK dev flow - package
-  // - plugin-verify
-  // -- plugin-build
-  // --- skins-vars-template
-  // --- plugin-res
-  // --- plugin-web
-  // --- plugin-git-version
   gulp.task('plugin-package', ['plugin-verify']);
 
   // Core dev flow
-  // - dev
-  // -- plugin-dev-refresh
-  // --- plugin-dev-sync
-  // ---- plugin-verify
-  // ----- plugin-build
-  // ------ skins-vars-template
-  // ------ plugin-res
-  // ------ plugin-web
-  // ------ plugin-git-version
-  // -- watch
   gulp.task('default', [
     'plugin-dev-refresh',
     'watch',

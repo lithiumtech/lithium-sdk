@@ -14,7 +14,6 @@ module.exports = function (gulp, gutil) {
         lrListening = true;
         livereload().listen();
       }
-      // skins.compile(true);
       localServer.startLocalServer();
     }
     cb();
