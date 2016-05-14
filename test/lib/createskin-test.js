@@ -17,9 +17,9 @@ describe('skin creation', function() {
     before(function() {
         tempDir = temp.mkdirSync('skins-test');
         var fixResSkinsDir = function(dir) {
-            if (dir == 'res/skins') {
+            if (dir === 'res/skins') {
                 dir = tempDir + '/';
-            } else if (dir == 'coreplugin') {
+            } else if (dir === 'coreplugin') {
                 dir = testRoot + '/lib/' + dir;
             }
 
@@ -27,14 +27,14 @@ describe('skin creation', function() {
         };
         var pathMock = {
             resolve: function(dir, file) {
-                var tailPath = "";
+                var tailPath = '';
                 for( var i = 2; i < arguments.length; i++) {
                     tailPath += arguments[i];
                 }
                 return path.resolve(fixResSkinsDir(dir), file, tailPath);
             },
             join: function(dir, file) {
-                var tailPath = "";
+                var tailPath = '';
                 for( var i = 2; i < arguments.length; i++) {
                     tailPath += arguments[i];
                 }
@@ -53,7 +53,7 @@ describe('skin creation', function() {
                 return fs.readdirSync(fixResSkinsDir(path));
             },
             mkdirSync: function(path) {
-                return fs.mkdirSync(tempDir+"/"+path);
+                return fs.mkdirSync(tempDir+'/'+path);
             }
         };
         skinsLib = rewire(testRoot + '/../lib/skins.js');
@@ -76,7 +76,7 @@ describe('skin creation', function() {
         var skinId = 'newSkinWithlegacySkin';
         var skinInfo = {};
         skinInfo.name = skinId;
-        skinInfo.parentSkin = new skinLib.Skin("admin", testRoot+"/lib/testcoreplugin/res/skins/admin");
+        skinInfo.parentSkin = new skinLib.Skin('admin', testRoot+'/lib/testcoreplugin/res/skins/admin');
         skinInfo.errorCb = function(err) {
             chai.assert.isNotOk(true, err.message);
             done();
@@ -90,11 +90,11 @@ describe('skin creation', function() {
                 expect(fs.existsSync(path.join(tempDir, skinId, folder, skinLib.cssDir)));
                 expect(fs.existsSync(path.join(tempDir, skinId, folder, skinLib.skinPropertiesFileName)));
             });
-            var newSkin = new skinLib.Skin(skinId, tempDir+"/"+skinId);
-            var title = newSkin.lookupProperty("title");
+            var newSkin = new skinLib.Skin(skinId, tempDir+'/'+skinId);
+            var title = newSkin.lookupProperty('title');
             expect(title === skinId);
-            var parent = newSkin.lookupProperty("parent");
-            expect(parent === "admin");
+            var parent = newSkin.lookupProperty('parent');
+            expect(parent === 'admin');
             done();
         };
         skinsLib.createNewSkin(skinInfo);
@@ -104,7 +104,8 @@ describe('skin creation', function() {
         var skinId = 'newSkinWithRespPeak';
         var skinInfo = {};
         skinInfo.name = skinId;
-        skinInfo.parentSkin = new skinLib.Skin("responsive_peak", testRoot+"/lib/testcoreplugin/res/feature/responsivepeak/v1.8-lia16.3/res/skins/responsive_peak");
+        skinInfo.parentSkin = new skinLib.Skin('responsive_peak',
+          testRoot+'/lib/testcoreplugin/res/feature/responsivepeak/v1.8-lia16.3/res/skins/responsive_peak');
         var parentCopySass = skinInfo.parentSkin.lookupProperty(skinLib.skinPropertyCopySass);
         skinInfo.errorCb = function(err) {
             chai.assert.isNotOk(true, err.message);
@@ -115,11 +116,11 @@ describe('skin creation', function() {
             expect(fs.existsSync(path.join(tempDir, skinId)));
             expect(fs.existsSync(path.join(tempDir, skinId, skinLib.skinPropertiesFileName)));
             expect(fs.existsSync(path.join(tempDir, skinId, skinLib.sassDir)));
-            var newSkin = new skinLib.Skin(skinId, tempDir+"/"+skinId);
-            var title = newSkin.lookupProperty("title");
+            var newSkin = new skinLib.Skin(skinId, tempDir+'/'+skinId);
+            var title = newSkin.lookupProperty('title');
             expect(title === skinId);
-            var parent = newSkin.lookupProperty("parent");
-            expect(parent === "responsive_peak");
+            var parent = newSkin.lookupProperty('parent');
+            expect(parent === 'responsive_peak');
             var copySass = newSkin.lookupProperty(skinLib.skinPropertyCopySass);
             copySass.forEach(function(prop) {
                 expect(parentCopySass.indexOf(prop) <= -1);
@@ -133,7 +134,7 @@ describe('skin creation', function() {
         var skinId = 'newSdkParent';
         var skinInfo = {};
         skinInfo.name = skinId;
-        skinInfo.parentSkin = new skinLib.Skin("newsui", testRoot+"/lib/testcoreplugin/res/skins/newsui");
+        skinInfo.parentSkin = new skinLib.Skin('newsui', testRoot+'/lib/testcoreplugin/res/skins/newsui');
         skinInfo.errorCb = function(err) {
             chai.assert.isNotOk(true, err.message);
             done();
@@ -141,17 +142,17 @@ describe('skin creation', function() {
         skinInfo.cb = function() {
             //Validate if skin was created
             expect(fs.existsSync(path.join(tempDir, skinId)));
-            var newSdkId = "newSdkSkinWithParentSdkSkin";
+            var newSdkId = 'newSdkSkinWithParentSdkSkin';
             skinInfo.name = newSdkId;
-            skinInfo.parentSkin = new skinLib.Skin(skinId, tempDir+"/"+skinId);
+            skinInfo.parentSkin = new skinLib.Skin(skinId, tempDir+'/'+skinId);
             skinInfo.cb = function() {
-                var newSkin = new skinLib.Skin(newSdkId, tempDir+"/"+newSdkId);
-                var title = newSkin.lookupProperty("title");
+                var newSkin = new skinLib.Skin(newSdkId, tempDir+'/'+newSdkId);
+                var title = newSkin.lookupProperty('title');
                 expect(title === newSdkId);
-                var parent = newSkin.lookupProperty("parent");
+                var parent = newSkin.lookupProperty('parent');
                 expect(parent === skinId);
                 done();
-            }
+            };
             skinsLib.createNewSkin(skinInfo);
         };
         skinsLib.createNewSkin(skinInfo);
@@ -161,7 +162,7 @@ describe('skin creation', function() {
         var skinId = 'newSkinWithOtherSkinParent';
         var skinInfo = {};
         skinInfo.name = skinId;
-        skinInfo.parentSkin = new skinLib.Skin("newsui", testRoot+"/lib/testcoreplugin/other/res/skins/testnewskin");
+        skinInfo.parentSkin = new skinLib.Skin('newsui', testRoot+'/lib/testcoreplugin/other/res/skins/testnewskin');
         var parentCopySass = skinInfo.parentSkin.lookupProperty(skinLib.skinPropertyCopySass);
         skinInfo.errorCb = function(err) {
             chai.assert.isNotOk(true, err.message);
@@ -172,11 +173,11 @@ describe('skin creation', function() {
             expect(fs.existsSync(path.join(tempDir, skinId)));
             expect(fs.existsSync(path.join(tempDir, skinId, skinLib.skinPropertiesFileName)));
             expect(fs.existsSync(path.join(tempDir, skinId, skinLib.sassDir)));
-            var newSkin = new skinLib.Skin(skinId, tempDir+"/"+skinId);
-            var title = newSkin.lookupProperty("title");
+            var newSkin = new skinLib.Skin(skinId, tempDir+'/'+skinId);
+            var title = newSkin.lookupProperty('title');
             expect(title === skinId);
-            var parent = newSkin.lookupProperty("parent");
-            expect(parent === "testnewskin");
+            var parent = newSkin.lookupProperty('parent');
+            expect(parent === 'testnewskin');
             var copySass = newSkin.lookupProperty(skinLib.skinPropertyCopySass);
             copySass.forEach(function(prop) {
                 expect(parentCopySass.indexOf(prop) <= -1);

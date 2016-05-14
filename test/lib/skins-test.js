@@ -13,6 +13,7 @@ var testRoot = path.resolve(__dirname) + '/..';
 
 describe('test skin compile', function() {
   var skinsLib;
+  var localServerLib;
   var tempDir;
 
   before(function() {
@@ -34,14 +35,16 @@ describe('test skin compile', function() {
     skinsLib.__set__({
       path: pathMock
     });
+    localServerLib = rewire(testRoot + '/../lib/local-server.js');
     var serverConfPath = path.join('lib', 'test.server.conf.json');
     gutil.env.serverConfig = path.join('test', serverConfPath);
     skinsLib = skinsLib(gulp, gutil);
+    localServerLib = localServerLib(gulp, gutil);
   });
 
   it('should compile a skin without deleting compile dir, no livereload', function(done) {
     var skinId = 'my_responsive_skin';
-    var stream = through.obj();
+    through.obj();
     skinsLib.doCompile({
       includePathsPrefix: '',
       skin: skinId,
@@ -50,24 +53,25 @@ describe('test skin compile', function() {
         testRoot + '/lib/sasstest/coreplugin/res/feature/corefeature/v1.7-lia16.2/res/skins/'
       ],
       skinPathPrefix: testRoot + '/lib/sasstest/'
-    }).pipe(stream).on('finish', function() {
+    }).then(function() {
       console.log('tempDir' + tempDir);
       fs.readFile(tempDir + '/' + skinId + '.css' , 'utf8', function (err, data) {
         if (err) throw err;
         //console.log(data.replace(/\r?\n|\r/g, ''));
-       expect(data.replace(/\r?\n|\r/g, '')).to.contain('.lia-first-component .first-component-tab .first-component-link:hover {  cursor: pointer; }.lia-first-component .first-component-batch {  left: 12px;  position: absolute; }/*');
+       expect(data.replace(/\r?\n|\r/g, '')).to.contain('.lia-first-component ' +
+         '.first-component-tab .first-component-link:hover {  cursor: pointer; }.lia-first-component ' +
+         '.first-component-batch {  left: 12px;  position: absolute; }/*');
       });
       done();
     });
   });
 
-  // FIXME: downloadFile was moved to local-server
-  //it('should download an asset to tmp directory', function(done){
-  //   skinsLib.downloadFile('http://community.lithium.com/html/assets/footer-menu-1.png', {}, tempDir +
-  //      '/footer-menu-1.png', function(msg) {
-  //    expect(fs.existsSync(tempDir + '/footer-menu-1.png'));
-  //    expect(msg.indexOf( 'Successfully downloaded asset') > -1);
-  //    done();
-  //  });
-  //});
+  it('should download an asset to tmp directory', function(done){
+    localServerLib.downloadFile('http://community.lithium.com/html/assets/footer-menu-1.png', {}, tempDir +
+        '/footer-menu-1.png', function(msg) {
+      expect(fs.existsSync(tempDir + '/footer-menu-1.png'));
+      expect(msg.indexOf( 'Successfully downloaded asset') > -1);
+      done();
+    });
+  });
 });
