@@ -1,6 +1,7 @@
 /**
  * Created by nikhil.modak on 5/13/15.
  */
+'use strict';
 
 module.exports = {
   run: function () {
