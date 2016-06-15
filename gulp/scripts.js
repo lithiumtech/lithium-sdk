@@ -13,9 +13,13 @@ module.exports = function (gulp, gutil) {
     return scripts.processTpls(scripts.TPL_MAIN_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false);
   });
 
-  gulp.task('scripts-deps', function () {
-    return gulp.src(gutil.env.ng.moduleDependencies, { base: './bower_components' })
-      .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
+  gulp.task('scripts-deps', function (cb) {
+    if (gutil.env.ng.moduleDependencies) {
+      return gulp.src(gutil.env.ng.moduleDependencies, {base: './bower_components'})
+        .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
+    } else {
+      cb();
+    }
   });
 
   gulp.task('scripts-deps-metadata', ['scripts-main'], function () {
