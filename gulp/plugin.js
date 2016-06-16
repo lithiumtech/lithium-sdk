@@ -11,6 +11,7 @@ module.exports = function (gulp, gutil) {
   var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
   var plugin = require('../lib/plugin-create.js')(gulp, gutil);
   var gitVersion = require('../lib/git-version.js')(gulp, gutil);
+  var pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
 
   runSequence = runSequence.use(gulp);
 
@@ -40,10 +41,7 @@ module.exports = function (gulp, gutil) {
     runSequence([
       'plugin-build-res',
       'plugin-build-web',
-      'plugin-git-version',
-      'scripts',
-      'skins',
-      'text'],
+      'plugin-git-version'],
     cb);
   });
 
@@ -84,7 +82,9 @@ module.exports = function (gulp, gutil) {
 
   // SDK dev flow - upload
   gulp.task('plugin-upload', ['plugin-verify'], function () {
-    return pluginUpload.upload();
+    return pluginUpload.upload(pluginServer.getServer(), {
+      debugMode: gutil.env['debug']
+    });
   });
 
   // SDK dev flow - package
