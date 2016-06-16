@@ -47,7 +47,6 @@ module.exports = function (gulp, gutil) {
         'plugin-build-web',
         'plugin-git-version',
         'scripts',
-        'skins',
         'text'],
       cb);
     } else {
@@ -55,8 +54,7 @@ module.exports = function (gulp, gutil) {
       runSequence('clean', [
         'plugin-build-res',
         'plugin-build-web',
-        'plugin-git-version',
-        'skins'],
+        'plugin-git-version'],
       cb);
     }
   });
@@ -110,6 +108,9 @@ module.exports = function (gulp, gutil) {
   gulp.task('default', [
     'plugin-dev-refresh',
     'watch',
-    'local-server'
+    'local-server',
+    'skins'
   ]);
+
+  gulp.task('serve-sass', ['watch-res-sass', 'local-server']);
 };
