@@ -38,11 +38,27 @@ module.exports = function (gulp, gutil) {
 
   /* plugin task */
   gulp.task('plugin-build', function (cb) {
-    runSequence([
-      'plugin-build-res',
-      'plugin-build-web',
-      'plugin-git-version'],
-    cb);
+    // HACK: When for local angular, do not clean
+    // and include tasks to build scripts and text used
+    // by angular based components.
+    if (gutil.env.ng) {
+      runSequence([
+        'plugin-build-res',
+        'plugin-build-web',
+        'plugin-git-version',
+        'scripts',
+        'skins',
+        'text'],
+      cb);
+    } else {
+      // clean is required for plugin-upload
+      runSequence('clean', [
+        'plugin-build-res',
+        'plugin-build-web',
+        'plugin-git-version',
+        'skins'],
+      cb);
+    }
   });
 
   gulp.task('plugin-verify', ['plugin-build'], function (cb) {
@@ -83,7 +99,7 @@ module.exports = function (gulp, gutil) {
   // SDK dev flow - upload
   gulp.task('plugin-upload', ['plugin-verify'], function () {
     return pluginUpload.upload(pluginServer.getServer(), {
-      debugMode: gutil.env['debug']
+      debugMode: gutil.env.debug
     });
   });
 
