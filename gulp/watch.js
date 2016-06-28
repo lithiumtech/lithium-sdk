@@ -37,16 +37,17 @@ module.exports = function (gulp, gutil) {
   ]);
 
   gulp.task('watch-scripts', function (cb) {
-    watch()(scripts.JS_MAIN_PATTERN, watchOpts, function (file) {
+    watch()([scripts.JS_MAIN_PATTERN, scripts.TPL_DIRECTIVE_PATTERN], watchOpts, function (file) {
       var startTime = process.hrtime();
       gutil.log('Starting script compile');
-      return scripts.processScripts(file.path,
+      var filePath = file.path.replace('.tpl.html', '.js');
+      return scripts.processScripts(filePath,
           scripts.PLUGIN_SCRIPTS_PATH + '/' + (file.relative.replace(file.basename, '')),
-        [file.path], true, true).on('end', function () {
+        [filePath], true, true, true).on('end', function () {
           if (!server.useLocalCompile()) {
-            refreshServer(file);
+            refreshServer(filePath);
           } else {
-            livereload().reload(file);
+            livereload().reload(filePath);
           }
           gutil.log('Completed script compile in: ' + gutil.colors.green(prettyTime()(process.hrtime(startTime))));
         });
@@ -55,7 +56,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-script-tpls', function (cb) {
-    watch()(scripts.TPL_MAIN_PATTERN, watchOpts, function (file) {
+    watch()(scripts.TPL_SERVICES_PATTERN, watchOpts, function (file) {
       var startTime = process.hrtime();
       gutil.log('Starting script tpl compile');
       return scripts.processTpls(file.path, scripts.PLUGIN_SCRIPTS_PATH,
@@ -73,7 +74,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('watch-script-deps', function (cb) {
     watch()('./sdk.conf.json', watchOpts, function (file) {
-      return scripts.createDependencies(
+      return scripts.createDepsMetadata(
         scripts.PLUGIN_SCRIPTS_PATH,
         scripts.SCRIPT_DEPENDENCIES_PATH,
         true

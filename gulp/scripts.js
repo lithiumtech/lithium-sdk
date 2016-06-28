@@ -15,16 +15,27 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('scripts-tpls', function (cb) {
     if (gutil.env.ng) {
-      return scripts.processTpls(scripts.TPL_MAIN_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false);
+      return scripts.processTpls(scripts.TPL_SERVICES_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false);
     } else {
       cb();
     }
   });
 
-  gulp.task('scripts-deps', function (cb) {
+  gulp.task('scripts-deps', ['scripts-deps-from-npm'], function (cb) {
     if (gutil.env.ng) {
       return gulp.src(gutil.env.ng.moduleDependencies, {base: './bower_components'})
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
+    } else {
+      cb();
+    }
+  });
+
+  gulp.task('scripts-deps-from-npm', function (cb) {
+    if (gutil.env.ng) {
+      return Promise.all([
+        gulp.src('./node_modules/angular2/bundles/*.*').pipe(gulp.dest('./bower_components/angular2/bundles')),
+        gulp.src('./node_modules/rxjs/bundles/*.*').pipe(gulp.dest('./bower_components/rxjs/bundles'))
+      ]);
     } else {
       cb();
     }
