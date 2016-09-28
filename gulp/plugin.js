@@ -1,6 +1,8 @@
 'use strict';
 
 var lazyReq = require('lazy-req')(require);
+var inquirer = lazyReq('inquirer');
+var through = lazyReq('through2');
 var path = lazyReq('path');
 var runSequence = require('run-sequence');
 var rsync = lazyReq('../lib/rsync.js');
@@ -94,11 +96,46 @@ module.exports = function (gulp, gutil) {
     return sandboxApi.refreshPlugin({ all: true });
   });
 
+  gulp.task('plugin-ready', ['plugin-verify'], function (cb) {
+    gutil.log(gutil.colors.green('Done compiling plugin: ' +
+    path().join(process.cwd(), '/plugin')));
+    cb();
+  });
+
   // SDK dev flow - upload
-  gulp.task('plugin-upload', ['plugin-verify'], function () {
-    return pluginUpload.upload(pluginServer.getServer(), {
-      debugMode: gutil.env.debug
-    });
+  gulp.task('plugin-upload', ['plugin-ready'], function () {
+    var stream = through().obj();
+    var server = pluginServer.getServer();
+    var uploadCallBack = function() {
+      if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+        console.log("forced!");
+        pluginUpload.upload(server, {
+          debugMode: gutil.env['debug']
+        }).pipe(stream);
+      } else {
+        inquirer().prompt({
+          name: 'pluginUpload',
+          message: 'Would you like to upload plugin to server?',
+          type: 'confirm'
+        }, function (answers) {
+          if (answers.pluginUpload) {
+            pluginUpload.upload(server, {
+              debugMode: gutil.env['debug']
+            }).pipe(stream);
+          } else {
+            stream.end();
+          }
+        });
+      }
+      return stream;
+    };
+
+    if (!gutil.env['skip-version-check']) {
+      var versioncheck = require('../lib/version-check.js')(gulp, gutil);
+      versioncheck.validate(server.serverUrl(), server.pluginToken(), server, uploadCallBack);
+    } else {
+      uploadCallBack();
+    }
   });
 
   // SDK dev flow - package
@@ -112,5 +149,5 @@ module.exports = function (gulp, gutil) {
     'skins'
   ]);
 
-  gulp.task('serve-sass', ['watch-res-sass', 'local-server']);
+  gulp.task('serve-sass', ['skins-compile', 'watch-res-sass', 'local-server']);
 };
