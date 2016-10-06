@@ -82,7 +82,8 @@ function createDefaultServerMock(options) {
     strictMode: false,
     verbose: false,
     toolVersion: '1.0.0',
-    allowStudioOverrides: false
+    allowStudioOverrides: false,
+    skipTemplateValidation: false
   }, options);
 }
 
@@ -113,7 +114,8 @@ describe('test uploading plugin', function() {
         strictMode: defined(options.strictMode) ? options.strictMode : false,
         verbose: false,
         allowStudioOverrides: defined(options.allowStudioOverrides) ? options.allowStudioOverrides : false,
-        toolVersion: '1.0.0'
+        toolVersion: '1.0.0',
+        skipTemplateValidation: false
       }, options);
 
       if (!defined(opts)) {
