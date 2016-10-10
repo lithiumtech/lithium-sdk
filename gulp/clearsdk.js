@@ -36,7 +36,7 @@ module.exports = function (gulp, gutil) {
     } else {
       inquirer().prompt({
         name: 'pluginClear',
-        message: 'Would you like to clear the entire sdk plugin from the server?',
+        message: 'Running this command will remove all plugin points that you uploaded via the SDK from the server. Do you want to continue?',
         type: 'confirm'
       }, function (answers) {
         if (answers.pluginClear) {
