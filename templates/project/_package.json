@@ -1,7 +1,9 @@
 {
   "name": "<%= name %>",
   "dependencies": {
-    "gulp": "3.8.11"
+    "clone-stats": "1.0.0",
+    "gulp": "3.8.8",
+    "has-color": "0.1.7"
   },
   "devDependencies": {
     "lithium-sdk": "0.0.4"
