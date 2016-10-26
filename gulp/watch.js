@@ -6,6 +6,7 @@ var watch = lazyReq('gulp-debounced-watch');
 var prettyTime = lazyReq('pretty-hrtime');
 var path = lazyReq('path');
 var fs = require('fs-extra');
+// var filelog = require('gulp-filelog');
 
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
@@ -26,6 +27,14 @@ module.exports = function (gulp, gutil) {
     });
   }
 
+  function watchSrc(src) {
+    src = Array.isArray(src) ? src : [src];
+    src = src.concat(gutil.env.watchResIgnore || []);
+    // Used for debugging
+    // gulp.src(src, { read: false }).pipe(filelog()).pipe(gulp.dest('.tmp/test'));
+    return src;
+  }
+
   gulp.task('watch', [
     'watch-scripts',
     'watch-script-tpls',
@@ -37,17 +46,16 @@ module.exports = function (gulp, gutil) {
   ]);
 
   gulp.task('watch-scripts', function (cb) {
-    watch()([scripts.JS_MAIN_PATTERN, scripts.TPL_DIRECTIVE_PATTERN], watchOpts, function (file) {
+    watch()(watchSrc([scripts.JS_MAIN_PATTERN]), watchOpts, function (file) {
       var startTime = process.hrtime();
       gutil.log('Starting script compile');
-      var filePath = file.path.replace('.tpl.html', '.js');
-      return scripts.processScripts(filePath,
+      return scripts.processScripts(file.path,
           scripts.PLUGIN_SCRIPTS_PATH + '/' + (file.relative.replace(file.basename, '')),
-        [filePath], true, true, true).on('end', function () {
+        [file.path], true, true, true).on('end', function () {
           if (!server.useLocalCompile()) {
-            refreshServer(filePath);
+            refreshServer(file.path);
           } else {
-            livereload().reload(filePath);
+            livereload().reload(file.path);
           }
           gutil.log('Completed script compile in: ' + gutil.colors.green(prettyTime()(process.hrtime(startTime))));
         });
@@ -56,7 +64,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-script-tpls', function (cb) {
-    watch()(scripts.TPL_SERVICES_PATTERN, watchOpts, function (file) {
+    watch()(watchSrc(scripts.TPL_PATTERN), watchOpts, function (file) {
       var startTime = process.hrtime();
       gutil.log('Starting script tpl compile');
       return scripts.processTpls(file.path, scripts.PLUGIN_SCRIPTS_PATH,
@@ -73,7 +81,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-script-deps', function (cb) {
-    watch()('./sdk.conf.json', watchOpts, function (file) {
+    watch()(watchSrc('./sdk.conf.json'), watchOpts, function (file) {
       return scripts.createDepsMetadata(
         scripts.PLUGIN_SCRIPTS_PATH,
         scripts.SCRIPT_DEPENDENCIES_PATH,
@@ -90,7 +98,7 @@ module.exports = function (gulp, gutil) {
 
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
-    watch()(textPropPattern, watchOpts, function (file) {
+    watch()(watchSrc(textPropPattern), watchOpts, function (file) {
       return text.processText(textPropPattern, 'plugin/res/lang/feature')
         .on('end', function () { refreshServer(file); });
     });
@@ -98,14 +106,14 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-res', function (cb) {
-    watch()(['res/**', '!res/**/*.scss'], watchOpts, function (file) {
+    watch()(watchSrc('res/**/*.{js,json,xml}'), watchOpts, function (file) {
       fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
     });
     cb();
   });
 
   gulp.task('watch-res-sass', function (cb) {
-    watch()(['res/**/*.scss'].concat(gutil.env.watchResIgnore || []), watchOpts, function (file) {
+    watch()(watchSrc(['res/**/' + server.localSkinCompileVersion() + '/**/*.{scss,properties}']), watchOpts, function (file) {
       if (server.useLocalCompile()) {
         var startTime = process.hrtime();
 
@@ -121,7 +129,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-web', function (cb) {
-    watch()('web/**', watchOpts, function (file) {
+    watch()(watchSrc('web/**/*.*'), watchOpts, function (file) {
       return fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
     });
     cb();

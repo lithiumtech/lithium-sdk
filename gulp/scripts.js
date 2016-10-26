@@ -15,7 +15,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('scripts-tpls', function (cb) {
     if (gutil.env.ng) {
-      return scripts.processTpls(scripts.TPL_SERVICES_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false);
+      return scripts.processTpls(scripts.TPL_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false);
     } else {
       cb();
     }

@@ -107,10 +107,10 @@ module.exports = function (gulp, gutil) {
     var stream = through().obj();
     var server = pluginServer.getServer();
     var uploadCallBack = function() {
-      if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
-        console.log("forced!");
+      if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
+        console.log('forced!');
         pluginUpload.upload(server, {
-          debugMode: gutil.env['debug']
+          debugMode: gutil.env.debug
         }).pipe(stream);
       } else {
         inquirer().prompt({
@@ -120,7 +120,7 @@ module.exports = function (gulp, gutil) {
         }, function (answers) {
           if (answers.pluginUpload) {
             pluginUpload.upload(server, {
-              debugMode: gutil.env['debug']
+              debugMode: gutil.env.debug
             }).pipe(stream);
           } else {
             stream.end();
