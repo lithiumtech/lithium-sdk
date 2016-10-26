@@ -7,7 +7,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('version-check', function(cb, errorCallback) {
     var server = require('../lib/server.js')(gulp, gutil);
     require('../lib/version-check.js')(gulp, gutil).process(server, {
-      debugMode: gutil.env['debug']
+      debugMode: gutil.env.debug
     }, cb, errorCallback);
   });
 };

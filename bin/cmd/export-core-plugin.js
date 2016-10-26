@@ -1,6 +1,7 @@
 /**
  * Created by doug.schroeder on 2/17/16.
  */
+'use strict';
 
 var gutil = require('gulp-util');
 module.exports = {

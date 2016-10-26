@@ -34,6 +34,11 @@ module.exports = function (req) {
   require('./responsiveoptions')(gulp, gutil);
   require('./createskin.js')(gulp, gutil);
   require('./versioncheck')(gulp, gutil);
+  require('./scripts')(gulp, gutil);
+  require('./watch')(gulp, gutil);
+  require('./local-server')(gulp, gutil);
+  require('./skins')(gulp, gutil);
+  require('./text')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {

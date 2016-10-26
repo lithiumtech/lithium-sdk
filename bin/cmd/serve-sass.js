@@ -1,10 +1,11 @@
 /**
  * Created by doug.schroeder on 2/10/16.
  */
+'use strict';
 
 module.exports = {
   run: function () {
-    require('../../lib/spawn-gulp')(['watch-res-sass'].concat(process.argv.splice(3)));
+    require('../../lib/spawn-gulp')(['serve-sass'].concat(process.argv.splice(3)));
   },
   help: 'Compiles and serves SCSS files for the responsive skin selected with li set-responsive-options.' +
   '\nSaved changes to local SCSS appears in the browser upon reload. View the compiled CSS at the URL set '+
