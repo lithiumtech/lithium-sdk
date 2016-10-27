@@ -24,7 +24,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-git-version', function (cb) {
     if (gutil.env.gitStatusVersion) {
-      return gitVersion.create('plugin', cb);
+      gitVersion.create('plugin', cb);
     } else {
       cb();
     }
