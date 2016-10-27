@@ -23,7 +23,7 @@ module.exports = function (gulp, gutil) {
   }
 
   gulp.task('plugin-git-version', function (cb) {
-    if (false && gutil.env.gitStatusVersion) {
+    if (gutil.env.gitStatusVersion) {
       return gitVersion.create('plugin');
     } else {
       cb();
