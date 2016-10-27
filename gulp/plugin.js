@@ -12,7 +12,7 @@ module.exports = function (gulp, gutil) {
   var pluginUpload = require('../lib/plugin-upload.js')(gulp, gutil);
   var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
   var plugin = require('../lib/plugin-create.js')(gulp, gutil);
-  var gitVersion = require('../lib/git-version.js')(gulp, gutil);
+  var gitVersion = require('../lib/git-version.js')();
   var pluginServer = require('../lib/plugin-server.js')(gulp, gutil);
 
   runSequence = runSequence.use(gulp);
@@ -24,7 +24,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-git-version', function (cb) {
     if (gutil.env.gitStatusVersion) {
-      return gitVersion.create('plugin');
+      return gitVersion.create('plugin', cb);
     } else {
       cb();
     }
