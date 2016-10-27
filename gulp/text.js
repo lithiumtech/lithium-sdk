@@ -2,6 +2,7 @@
 
 var lazyReq = require('lazy-req')(require);
 var path = lazyReq('path');
+var stripBom = require('gulp-stripbom');
 
 module.exports = function (gulp, gutil) {
   var text = require('../lib/text.js')(gulp, gutil);
@@ -15,5 +16,9 @@ module.exports = function (gulp, gutil) {
     } else {
       cb();
     }
+  });
+
+  gulp.task('text-remove-bom', function () {
+    gulp.src('./res/**/*.properties').pipe(stripBom()).pipe(gulp.dest('./res'));
   });
 };
