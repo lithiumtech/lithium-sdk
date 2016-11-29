@@ -23,7 +23,6 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('scripts-deps', ['scripts-deps-from-npm'], function (cb) {
     if (gutil.env.ng) {
-      console.log("Gulp", gutil.env.ng.moduleDependencies);
       return gulp.src(gutil.env.ng.moduleDependencies, {base: './bower_components'})
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
