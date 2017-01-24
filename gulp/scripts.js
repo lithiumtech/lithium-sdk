@@ -49,6 +49,14 @@ module.exports = function (gulp, gutil) {
     }
   });
 
+  gulp.task('scripts-activecast', function (cb) {
+    if (gutil.env.ng) {
+      scripts.processActivecast('src/activecast/Main.js', 'plugin/web/html/assets/js/activecast', true, true);
+    } else {
+      cb();
+    }
+  });
+
   gulp.task('jshint', function (cb) {
     if (gutil.env.ng) {
       return gulp.src(scripts.JS_MAIN_PATTERN).pipe(scripts.jshint(true));

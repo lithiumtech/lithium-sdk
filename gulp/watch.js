@@ -134,4 +134,10 @@ module.exports = function (gulp, gutil) {
     });
     cb();
   });
+
+  gulp.task('watch-activecast', function () {
+    watch()('plugin/web/html/assets/js/activecast/bundle.js', watchOpts, function (file) {
+      livereload().reload(file);
+    });
+  });
 };
