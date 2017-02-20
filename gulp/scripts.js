@@ -3,7 +3,7 @@
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
 
-  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata']);
+  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata', 'scripts-activecast']);
 
   gulp.task('scripts-main', function (cb) {
     if (gutil.env.ng) {
