@@ -42,7 +42,8 @@ module.exports = function (gulp, gutil) {
     'watch-text',
     'watch-res',
     'watch-res-sass',
-    'watch-web'
+    'watch-web',
+    'watch-activecast'
   ]);
 
   gulp.task('watch-scripts', function (cb) {
@@ -133,5 +134,11 @@ module.exports = function (gulp, gutil) {
       return fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
     });
     cb();
+  });
+
+  gulp.task('watch-activecast', function () {
+    watch()('plugin/web/html/assets/js/activecast/bundle.js', watchOpts, function (file) {
+      refreshServer(file);
+    });
   });
 };
