@@ -50,8 +50,10 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('scripts-activecast', function (cb) {
+    var originalTask = this.seq[this.seq.length - 1];
+    var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      scripts.processActivecast('src/activecast/Main.js', 'plugin/web/html/assets/js/activecast', true, true);
+      return scripts.processActivecast('src/activecast/Main.js', 'plugin/web/html/assets/js/activecast', useWatch, true);
     } else {
       cb();
     }
