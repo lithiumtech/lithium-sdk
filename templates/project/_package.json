@@ -1,12 +1,10 @@
 {
   "name": "<%= name %>",
   "dependencies": {
-    "clone-stats": "1.0.0",
-    "gulp": "3.8.8",
-    "has-color": "0.1.7"
+    "gulp": "3.9.1"
   },
   "devDependencies": {
-    "lithium-sdk": "0.0.4"
+    "lithium-sdk": "<%= version %>"
   },
   "engines": {
     "node": ">=0.8.0"
