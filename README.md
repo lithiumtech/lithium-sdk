@@ -4,14 +4,14 @@
 
 1. Install Node.js and npm. Usually, npm (Node Package Manager) gets bundled with the node environment, but verify that you have it.
 
-   Run `node -v` at the command line to check whether node is installed
-   Run `npm` at the command line to check whether npm is installed
+   Run `node -v` at the command line to check whether node is installed.
+   Run `npm` at the command line to check whether npm is installed.
 
-2. *lithium-sdk* supports Node.js version => 4.8.4, 6.11.2 and 8.3.0
+2. *lithium-sdk* supports Node.js version => 4.8.4, 6.11.2 and 8.3.0.
 
-3. Install gulp by issuing the following statement in a command line: `npm install gulp -g`
+3. Install gulp by issuing the following statement in a command line: `npm install gulp -g`.
 
-4. Install lithium-sdk by issuing the following statement in a command line: `npm install lithium-sdk -g`
+4. Install lithium-sdk by issuing the following statement in a command line: `npm install lithium-sdk -g`.
 
 ## Lithium-Klout SDK
 
