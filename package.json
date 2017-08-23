@@ -59,7 +59,7 @@
     "inquirer": "^0.8.0",
     "is_js": "^0.7.3",
     "jshint-stylish": "0.4.0",
-    "karma": "1.7.0",
+    "karma": "^0.12.23",
     "karma-chrome-launcher": "0.1.4",
     "karma-commonjs": "0.0.8",
     "karma-coverage": "0.2.6",
