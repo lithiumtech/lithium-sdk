@@ -3,7 +3,7 @@
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
 
-  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata', 'scripts-activecast']);
+  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata', 'scripts-activecast', 'scripts-activecast-tracker']);
 
   gulp.task('scripts-main', function (cb) {
     if (gutil.env.ng) {
@@ -53,7 +53,17 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processActivecast('src/activecast/Main.js', 'plugin/web/html/assets/js/activecast', useWatch, true);
+      return scripts.processBundle('src/activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'activecast.js', useWatch, true);
+    } else {
+      cb();
+    }
+  });
+
+  gulp.task('scripts-activecast-tracker', function (cb) {
+    var originalTask = this.seq[this.seq.length - 1];
+    var useWatch = originalTask === 'default';
+    if (gutil.env.ng) {
+      return scripts.processBundle('src/activecast/TrackerMain.js', 'plugin/web/html/assets/js/activecast', 'tracker.js', useWatch, true);
     } else {
       cb();
     }

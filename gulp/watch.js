@@ -137,7 +137,11 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-activecast', function () {
-    watch()('plugin/web/html/assets/js/activecast/bundle.js', watchOpts, function (file) {
+    watch()('plugin/web/html/assets/js/activecast/activecast.js', watchOpts, function (file) {
+      refreshServer(file);
+    });
+
+    watch()('plugin/web/html/assets/js/activecast/tracker.js', watchOpts, function (file) {
       refreshServer(file);
     });
   });
