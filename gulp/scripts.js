@@ -53,7 +53,7 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processBundle('src/activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'activecast.js', useWatch, true);
+      return scripts.processBundle('src/activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'widget.js', useWatch, true);
     } else {
       cb();
     }
