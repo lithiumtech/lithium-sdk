@@ -114,7 +114,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-res-sass', function (cb) {
-      watch()(watchSrc(['res/**/*.{scss,properties}']), watchOpts, function (file) {
+      watch()(watchSrc(['res/feature/responsivepeak/' + server.localSkinCompileVersion() + '/**/*.{scss,properties}', 'res/**/!(responsivepeak)/**/*.{scss,properties}']), watchOpts, function (file) {
       if (server.useLocalCompile()) {
         var startTime = process.hrtime();
 
