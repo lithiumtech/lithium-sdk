@@ -122,17 +122,18 @@
   "homepage": "https://github.com/lithiumtech/lithium-sdk",
   "main": "index.js",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "chai": "^3.2.0",
     "coveralls": "^2.11.4",
+    "glob-stream": "^3.1.5",
     "istanbul": "^0.4.3",
     "mocha": "2.2.5",
     "mocha-lcov-reporter": "0.0.2",
+    "mock-stdin": "^0.3.0",
     "nock": "^2.9.1",
     "rewire": "^2.3.4",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "glob-stream": "^3.1.5",
-    "mock-stdin": "^0.3.0",
     "temp": "^0.8.3"
   },
   "scripts": {
