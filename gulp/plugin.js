@@ -40,11 +40,11 @@ module.exports = function (gulp, gutil) {
   gulp.task('plugin-copy-files', function (cb) {
     if (Array.isArray(gutil.env.copyFiles)) {
       var promises = [];
-      gutil.env.copyFiles.forEach(function (item) {
-        if (item.src && item.dest) {
-          promises.push(rsync()(item.src, item.dest));
-        }
-      });
+
+      gutil.env.copyFiles
+        .filter(i => i.src && i.dest)
+        .map(i => rsync()(i.src, i.dest));
+
       Promise.all(promises).catch(handleRsyncError).finally(cb);
     } else {
       cb();
