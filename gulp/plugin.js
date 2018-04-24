@@ -43,7 +43,7 @@ module.exports = function (gulp, gutil) {
 
       gutil.env.copyFiles
         .filter(i => i.src && i.dest)
-        .map(i => rsync()(i.src, i.dest));
+        .map(i => promises.push(rsync()(i.src, i.dest)));
 
       Promise.all(promises).catch(handleRsyncError).finally(cb);
     } else {
