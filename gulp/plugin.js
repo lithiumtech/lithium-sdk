@@ -17,9 +17,8 @@ module.exports = function (gulp, gutil) {
 
   runSequence = runSequence.use(gulp);
 
-  function handleRsyncError(cb) {
-    gutil.log(gutil.colors.red('Failed to sync files'));
-    cb();
+  function handleRsyncError(e) {
+    gutil.log(gutil.colors.red('Failed to sync files: ' + e));
   }
 
   gulp.task('plugin-git-version', function (cb) {
@@ -31,11 +30,25 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-build-res', function (cb) {
-    rsync()('res', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
+    rsync()('res', 'plugin').catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-build-web', function (cb) {
-    rsync()('web', 'plugin').then(function () { cb(); }, function () { handleRsyncError(cb); });
+    rsync()('web', 'plugin').catch(handleRsyncError).finally(cb);
+  });
+
+  gulp.task('plugin-copy-files', function (cb) {
+    if (Array.isArray(gutil.env.copyFiles)) {
+      var promises = [];
+
+      gutil.env.copyFiles
+        .filter(i => i.src && i.dest)
+        .map(i => promises.push(rsync()(i.src, i.dest)));
+
+      Promise.all(promises).catch(handleRsyncError).finally(cb);
+    } else {
+      cb();
+    }
   });
 
   /* plugin task */
@@ -47,6 +60,7 @@ module.exports = function (gulp, gutil) {
       runSequence([
         'plugin-build-res',
         'plugin-build-web',
+        'plugin-copy-files',
         'plugin-git-version',
         'scripts',
         'text'],
@@ -56,6 +70,7 @@ module.exports = function (gulp, gutil) {
       runSequence('clean', [
         'plugin-build-res',
         'plugin-build-web',
+        'plugin-copy-files',
         'plugin-git-version'],
       cb);
     }

@@ -25,16 +25,16 @@ module.exports = function (gulp, gutil) {
         return pluginExport.exportPlugin(server, {
             pluginType: 'sdk',
             doClear: false,
-            verboseMode: gutil.env['verbose'],
-            debugMode: gutil.env['debug'],
-            sdkOutputDir: gutil.env['todir'] || server.sdkOutputDir()
+            verboseMode: gutil.env.verbose,
+            debugMode: gutil.env.debug,
+            sdkOutputDir: gutil.env.todir || server.sdkOutputDir()
         }, pluginPointAnswers, function() {});
     }
 
     gulp.task('sdk-plugin-export', ['clean','version-check'], function () {
         var stream = through().obj();
         var server = getPluginServer().getServer();
-        if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
+        if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
             exportPlugin(getPluginServer().getPluginPoints()).pipe(stream);
         } else {
             inquirer().prompt({
