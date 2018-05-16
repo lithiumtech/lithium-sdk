@@ -32,10 +32,8 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('scripts-deps-from-npm', function (cb) {
     if (gutil.env.ng) {
-      return Promise.all([
-        gulp.src('./node_modules/angular2/bundles/*.*').pipe(gulp.dest('./bower_components/angular2/bundles')),
-        gulp.src('./node_modules/rxjs/bundles/*.*').pipe(gulp.dest('./bower_components/rxjs/bundles'))
-      ]);
+      return gulp.src(gutil.env.ng.moduleDependencies, {base: './node_modules'})
+        .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
     }
