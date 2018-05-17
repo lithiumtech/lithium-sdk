@@ -21,18 +21,9 @@ module.exports = function (gulp, gutil) {
     }
   });
 
-  gulp.task('scripts-deps', ['scripts-deps-from-npm'], function (cb) {
+  gulp.task('scripts-deps', function (cb) {
     if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies, {base: './bower_components'})
-        .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
-    } else {
-      cb();
-    }
-  });
-
-  gulp.task('scripts-deps-from-npm', function (cb) {
-    if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies, {base: './node_modules'})
+      return gulp.src(gutil.env.ng.moduleDependencies)
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
