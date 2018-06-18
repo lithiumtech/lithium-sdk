@@ -2,8 +2,10 @@
 
 module.exports = function (gulp, gutil) {
   var scripts = require('../lib/scripts.js')(gulp, gutil);
+  var componentDepedencies = require('../lib/component-dependencies');
 
-  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata', 'scripts-activecast', 'scripts-activecast-tracker']);
+  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata',
+    'scripts-activecast', 'scripts-activecast-tracker', 'scripts-deps-react-li']);
 
   gulp.task('scripts-main', function (cb) {
     if (gutil.env.ng) {
@@ -39,9 +41,20 @@ module.exports = function (gulp, gutil) {
     }
   });
 
-  gulp.task('scripts-deps-metadata', ['scripts-main'], function (cb) {
+  gulp.task('scripts-deps-metadata', function (cb) {
+    console.log(1001);
     if (gutil.env.ng) {
       return scripts.createDepsMetadata(scripts.PLUGIN_SCRIPTS_PATH, scripts.SCRIPTS_DEPS_METADATA_PATH);
+    } else {
+      cb();
+    }
+  });
+
+  gulp.task('scripts-deps-react-li', function (cb) {
+    // TODO: refactor "ng" flag name to be more general and include anything done in angular-li project
+    if (gutil.env.ng) {
+      componentDepedencies.createDepFile(componentDepedencies.COMPONENT_DEPS_SRC_PATH,
+        componentDepedencies.COMPONENT_DEPS_DEST_PATH, cb);
     } else {
       cb();
     }

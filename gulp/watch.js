@@ -14,6 +14,7 @@ module.exports = function (gulp, gutil) {
   var server = require('../lib/server.js')(gulp, gutil);
   var skins = require('../lib/skins.js')(gulp, gutil);
   var sandboxApi = require('../lib/sandbox-api-hack.js')(gulp, gutil);
+  var componentDepedencies = require('../lib/component-dependencies');
 
   var watchOpts = { debounceTimeout: 250 };
 
@@ -43,7 +44,8 @@ module.exports = function (gulp, gutil) {
     'watch-res',
     'watch-res-sass',
     'watch-web',
-    'watch-activecast'
+    'watch-activecast',
+    'watch-scripts-deps-react-li'
   ]);
 
   gulp.task('watch-scripts', function (cb) {
@@ -88,6 +90,16 @@ module.exports = function (gulp, gutil) {
         scripts.SCRIPT_DEPENDENCIES_PATH,
         true
       ).on('end', function () { refreshServer(file); });
+    });
+    cb();
+  });
+
+  gulp.task('watch-scripts-deps-react-li', function (cb) {
+    watch()(watchSrc('./src/react-li/**/*.jsx'), watchOpts, function () {
+      componentDepedencies.createDepFile(componentDepedencies.COMPONENT_DEPS_SRC_PATH,
+        componentDepedencies.COMPONENT_DEPS_DEST_PATH, function () {
+        refreshServer(componentDepedencies.COMPONENT_DEPS_DEST_PATH);
+      });
     });
     cb();
   });

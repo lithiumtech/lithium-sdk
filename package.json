@@ -20,6 +20,7 @@
     "concat-stream": "1.4.6",
     "connect-history-api-fallback": "0.0.5",
     "del": "^2.2.0",
+    "dependency-tree": "^6.1.0",
     "dgeni": "^0.4.1",
     "dgeni-packages": "^0.10.5",
     "diveSync": "0.2.1",
