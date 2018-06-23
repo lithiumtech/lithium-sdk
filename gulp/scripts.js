@@ -42,7 +42,6 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('scripts-deps-metadata', function (cb) {
-    console.log(1001);
     if (gutil.env.ng) {
       return scripts.createDepsMetadata(scripts.PLUGIN_SCRIPTS_PATH, scripts.SCRIPTS_DEPS_METADATA_PATH);
     } else {
