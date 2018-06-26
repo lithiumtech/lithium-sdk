@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function (gulp, gutil) {
-  var scripts = require('../lib/scripts.js')(gulp, gutil);
-  var componentDepedencies = require('../lib/component-dependencies');
+  const scripts = require('../lib/scripts.js')(gulp, gutil);
+  const ComponentDepedencies = require('../lib/component-dependencies');
 
   gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata',
     'scripts-activecast', 'scripts-activecast-tracker', 'scripts-deps-react-li']);
@@ -52,8 +52,8 @@ module.exports = function (gulp, gutil) {
   gulp.task('scripts-deps-react-li', function (cb) {
     // TODO: refactor "ng" flag name to be more general and include anything done in angular-li project
     if (gutil.env.ng) {
-      componentDepedencies.createDepFile(componentDepedencies.COMPONENT_DEPS_SRC_PATH,
-        componentDepedencies.COMPONENT_DEPS_DEST_PATH, cb);
+      new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
+          scripts.REACT_LI_COMPONENT_PATH).createDepFile().then(cb);
     } else {
       cb();
     }
