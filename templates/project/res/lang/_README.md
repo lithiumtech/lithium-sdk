@@ -5,7 +5,7 @@ Subdirectories are allowed in this directory up to a depth of 3.
 
 An example structure for a community supporting American English and French might look like this:
 
-
+```
 ├── res/lang/text.en/
 │   ├── docs.liql.collections.text
 │   ├── email_content.template.<template.name>.text
@@ -15,6 +15,7 @@ An example structure for a community supporting American English and French migh
 │   ├── ...
 ├── res/lang/text.en.properties
 └── res/lang/text.fr.(UTF-8).properties
+```
 
 
 See 'Languages that Lithium Supports' (https://community.lithium.com/t5/Community-display/Languages-that-Lithium-supports/ta-p/6566) for supported language codes.
