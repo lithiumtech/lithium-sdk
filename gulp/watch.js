@@ -45,7 +45,7 @@ module.exports = function (gulp, gutil) {
     'watch-res-sass',
     'watch-web',
     'watch-activecast',
-    'watch-scripts-deps-react-li'
+    'watch-scripts-deps-limuirs'
   ]);
 
   gulp.task('watch-scripts', function (cb) {
@@ -94,10 +94,10 @@ module.exports = function (gulp, gutil) {
     cb();
   });
 
-  gulp.task('watch-scripts-deps-react-li', function (cb) {
-    watch()(watchSrc('./src/react-li/**/*.jsx'), watchOpts, function () {
+  gulp.task('watch-scripts-deps-limuirs', function (cb) {
+    watch()(watchSrc('./src/limuirs/src/components/**/*.jsx'), watchOpts, function () {
       new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
-          scripts.REACT_LI_COMPONENT_PATH).createDepFile().then(() => {
+          scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(() => {
         refreshServer(scripts.COMPONENT_DEPS_DEST_PATH);
       });
     });
