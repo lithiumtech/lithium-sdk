@@ -30,11 +30,11 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-build-res', function (cb) {
-    rsync()('res', 'plugin').catch(handleRsyncError).finally(cb);
+    rsync()('angular-li/res', 'plugin').catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-build-web', function (cb) {
-    rsync()('web', 'plugin').catch(handleRsyncError).finally(cb);
+    rsync()('angular-li/web', 'plugin').catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-copy-files', function (cb) {
