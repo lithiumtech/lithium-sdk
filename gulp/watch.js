@@ -119,7 +119,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-res', function (cb) {
-    watch()(watchSrc('res/**/*.{js,json,xml}'), watchOpts, function (file) {
+    watch()(watchSrc('res/**/*.{js,json,xml,json.ftl}'), watchOpts, function (file) {
       fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
     });
     cb();
