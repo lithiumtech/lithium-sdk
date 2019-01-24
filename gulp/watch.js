@@ -95,7 +95,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-scripts-deps-limuirs', function (cb) {
-    watch()(watchSrc('./limuirs/src/components/**/*.jsx'), watchOpts, function () {
+    watch()(watchSrc('../limuirs/src/components/**/*.jsx'), watchOpts, function () {
       new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
           scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(() => {
         refreshServer(scripts.COMPONENT_DEPS_DEST_PATH);

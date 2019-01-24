@@ -52,8 +52,8 @@ module.exports = function (gulp, gutil) {
   gulp.task('scripts-deps-limuirs', function (cb) {
     // TODO: refactor "ng" flag name to be more general and include anything done in angular-li project
     if (gutil.env.ng) {
-      new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
-          scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(cb);
+      new ComponentDepedencies( scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
+        scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(cb);
     } else {
       cb();
     }
@@ -63,7 +63,7 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processBundle('src/activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'widget.js', useWatch, true);
+      return scripts.processBundle('../activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'widget.js', useWatch, true);
     } else {
       cb();
     }
@@ -73,7 +73,7 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processBundle('src/activecast/TrackerMain.js', 'plugin/web/html/assets/js/activecast', 'tracker.js', useWatch, true);
+      return scripts.processBundle('../activecast/TrackerMain.js', 'plugin/web/html/assets/js/activecast', 'tracker.js', useWatch, true);
     } else {
       cb();
     }
