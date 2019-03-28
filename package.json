@@ -1,6 +1,6 @@
 {
   "name": "lithium-sdk",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "author": "peterasher",
   "bin": {
     "li": "bin/li.js"
@@ -82,7 +82,7 @@
     "minimatch": "^3.0.0",
     "node-fs-extra": "^0.8.1",
     "node-html-encoder": "0.0.2",
-    "node.extend": "^1.1.3",
+    "node.extend": "2.0.2",
     "pretty-hrtime": "^0.2.1",
     "q": "1.0.1",
     "request": "2.45.0",
