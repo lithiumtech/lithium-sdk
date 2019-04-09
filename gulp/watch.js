@@ -112,7 +112,7 @@ module.exports = function (gulp, gutil) {
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     watch()(watchSrc(textPropPattern), watchOpts, function (file) {
-      return text.processText(textPropPattern, 'plugin/res/lang/feature')
+      return text.processText(textPropPattern, '../dist/plugin/res/lang/feature')
         .on('end', function () { refreshServer(file); });
     });
     cb();
@@ -152,8 +152,8 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-activecast', function () {
-    watch()(['plugin/web/html/assets/js/activecast/widget.js',
-             'plugin/web/html/assets/js/activecast/tracker.js'], watchOpts, function (file) {
+    watch()(['../dist/plugin/web/html/assets/js/activecast/widget.js',
+             '../dist/plugin/web/html/assets/js/activecast/tracker.js'], watchOpts, function (file) {
       refreshServer(file);
     });
   });

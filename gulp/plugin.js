@@ -23,18 +23,18 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-git-version', function (cb) {
     if (gutil.env.gitStatusVersion) {
-      gitVersion.create('plugin', cb);
+      gitVersion.create('../dist/plugin', cb);
     } else {
       cb();
     }
   });
 
   gulp.task('plugin-build-res', function (cb) {
-    rsync()('../plugins/res', 'plugin').catch(handleRsyncError).finally(cb);
+    rsync()('../plugins/res', '../dist/plugin').catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-build-web', function (cb) {
-    rsync()('../plugins/web', 'plugin').catch(handleRsyncError).finally(cb);
+    rsync()('../plugins/web', '../dist/plugin').catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-copy-files', function (cb) {

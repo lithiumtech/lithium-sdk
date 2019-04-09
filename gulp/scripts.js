@@ -63,7 +63,7 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processBundle('../activecast/ActivecastMain.js', 'plugin/web/html/assets/js/activecast', 'widget.js', useWatch, true);
+      return scripts.processBundle('../activecast/ActivecastMain.js', '../dist/plugin/web/html/assets/js/activecast', 'widget.js', useWatch, true);
     } else {
       cb();
     }
@@ -73,7 +73,7 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      return scripts.processBundle('../activecast/TrackerMain.js', 'plugin/web/html/assets/js/activecast', 'tracker.js', useWatch, true);
+      return scripts.processBundle('../activecast/TrackerMain.js', '../dist/plugin/web/html/assets/js/activecast', 'tracker.js', useWatch, true);
     } else {
       cb();
     }
