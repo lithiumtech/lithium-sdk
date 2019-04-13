@@ -95,7 +95,8 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-scripts-deps-limuirs', function (cb) {
-    watch()(watchSrc('../limuirs/src/components/**/*.jsx'), watchOpts, function () {
+    var srcPath = gutil.env.newStructure ? '../limuirs/src/components/**/*.jsx' : './limuirs/src/components/**/*.jsx';
+    watch()(watchSrc(srcPath), watchOpts, function () {
       new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
           scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(() => {
         refreshServer(scripts.COMPONENT_DEPS_DEST_PATH);
@@ -112,7 +113,8 @@ module.exports = function (gulp, gutil) {
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     watch()(watchSrc(textPropPattern), watchOpts, function (file) {
-      return text.processText(textPropPattern, '../dist/plugin/res/lang/feature')
+      var dirPath = '../dist/plugin/res/lang/feature' || 'plugin/res/lang/feature';
+      return text.processText(textPropPattern, dirPath)
         .on('end', function () { refreshServer(file); });
     });
     cb();
@@ -152,8 +154,9 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-activecast', function () {
-    watch()(['../dist/plugin/web/html/assets/js/activecast/widget.js',
-             '../dist/plugin/web/html/assets/js/activecast/tracker.js'], watchOpts, function (file) {
+    var widgetPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
+    var trackerPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
+    watch()([widgetPath, trackerPath], watchOpts, function (file) {
       refreshServer(file);
     });
   });
