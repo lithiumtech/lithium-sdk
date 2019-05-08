@@ -23,7 +23,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('plugin-git-version', function (cb) {
     if (gutil.env.gitStatusVersion) {
-      var srcPath = gutil.env.newStructure ? '../dist/plugin' : 'plugin';
+      var srcPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
       gitVersion.create(srcPath, cb);
     } else {
       cb();
@@ -31,14 +31,14 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('plugin-build-res', function (cb) {
-    var srcPath = gutil.env.newStructure ? '../plugins/res' : 'res';
-    var destPath = gutil.env.newStructure ? '../dist/plugin' : 'plugin';
+    var srcPath = gutil.env.newStructure ? 'plugin/res' : 'res';
+    var destPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
     rsync()(srcPath, destPath).catch(handleRsyncError).finally(cb);
   });
 
   gulp.task('plugin-build-web', function (cb) {
-    var srcPath = gutil.env.newStructure ? '../plugins/web' : 'web';
-    var destPath = gutil.env.newStructure ? '../dist/plugin' : 'plugin';
+    var srcPath = gutil.env.newStructure ? 'plugin/web' : 'web';
+    var destPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
     rsync()(srcPath, destPath).catch(handleRsyncError).finally(cb);
   });
 
