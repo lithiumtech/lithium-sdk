@@ -95,7 +95,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-scripts-deps-limuirs', function (cb) {
-    var srcPath = gutil.env.newStructure ? '../limuirs/src/components/**/*.jsx' : './limuirs/src/components/**/*.jsx';
+    var srcPath = gutil.env.newStructure ? 'limuirs/src/components/**/*.jsx' : './limuirs/src/components/**/*.jsx';
     watch()(watchSrc(srcPath), watchOpts, function () {
       new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
           scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(() => {
@@ -154,8 +154,8 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-activecast', function () {
-    var widgetPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
-    var trackerPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
+    var widgetPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
+    var trackerPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
     watch()([widgetPath, trackerPath], watchOpts, function (file) {
       refreshServer(file);
     });

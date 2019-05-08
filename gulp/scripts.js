@@ -63,8 +63,8 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      var pattern = gutil.env.newStructure ? '../activecast/ActivecastMain.js' : 'src/activecast/ActivecastMain.js';
-      var destPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
+      var pattern = gutil.env.newStructure ? 'activecast/ActivecastMain.js' : 'src/activecast/ActivecastMain.js';
+      var destPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
       return scripts.processBundle(pattern, destPath, 'widget.js', useWatch, true);
     } else {
       cb();
@@ -75,8 +75,8 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      var pattern = gutil.env.newStructure ? '../activecast/TrackerMain.js' : 'src/activecast/TrackerMain.js';
-      var destPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
+      var pattern = gutil.env.newStructure ? 'activecast/TrackerMain.js' : 'src/activecast/TrackerMain.js';
+      var destPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
       return scripts.processBundle(pattern, destPath, 'tracker.js', useWatch, true);
     } else {
       cb();
