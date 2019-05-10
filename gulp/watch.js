@@ -113,7 +113,7 @@ module.exports = function (gulp, gutil) {
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     watch()(watchSrc(textPropPattern), watchOpts, function (file) {
-      var dirPath = '../dist/plugin/res/lang/feature' || 'plugin/res/lang/feature';
+      var dirPath = 'plugin/res/lang/feature';
       return text.processText(textPropPattern, dirPath)
         .on('end', function () { refreshServer(file); });
     });
