@@ -33,8 +33,9 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('scripts-deps-npm', function (cb) {
+    var ignorePaths = gutil.env.newStructure ? ['!angular-li/bower_components/**'] : ['!bower_components/**'];
     if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!bower_components/**']), { base: 'node_modules' })
+      return gulp.src(gutil.env.ng.moduleDependencies.concat(ignorePaths), { base: 'node_modules' })
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
