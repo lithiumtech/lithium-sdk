@@ -26,7 +26,7 @@ module.exports = function (gulp, gutil) {
   gulp.task('scripts-deps', ['scripts-deps-npm'], function (cb) {
     var basePath = gutil.env.newStructure ? 'angular-li/bower_components' : 'bower_components';
     if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: 'angular-li/bower_components' })
+      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: basePath })
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
