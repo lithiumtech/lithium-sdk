@@ -18,13 +18,15 @@ module.exports = function (gulp, gutil) {
 
   var watchOpts = { debounceTimeout: 250 };
 
-  function refreshServer(file) {
-    gutil.log(gutil.colors.cyan('Staging file for upload: ', file.path));
+  function refreshServer(filePath) {
+    gutil.log(gutil.colors.cyan('Staging file for upload: ', filePath));
     sandboxApi.syncPlugin().then(function () {
-      var reloadQuery = sandboxApi.createReloadQuery(file.relative);
+      var reloadQuery = sandboxApi.createReloadQuery(filePath);
       return sandboxApi.refreshPlugin(reloadQuery);
     }).then(function () {
-      livereload().reload(file);
+      livereload().reload(filePath);
+    }).catch(e => {
+      gutil.log(gutil.colors.red('Failed to update server after file changed. \n' + e));
     });
   }
 
@@ -73,7 +75,7 @@ module.exports = function (gulp, gutil) {
       return scripts.processTpls(file.path, scripts.PLUGIN_SCRIPTS_PATH,
         [file.path], true).on('end', function () {
           if (!server.useLocalCompile()) {
-            refreshServer(file);
+            refreshServer(file.path);
           } else {
             livereload().reload(file);
           }
@@ -89,7 +91,7 @@ module.exports = function (gulp, gutil) {
         scripts.PLUGIN_SCRIPTS_PATH,
         scripts.SCRIPT_DEPENDENCIES_PATH,
         true
-      ).on('end', function () { refreshServer(file); });
+      ).on('end', function () { refreshServer(file.path); });
     });
     cb();
   });
@@ -115,14 +117,14 @@ module.exports = function (gulp, gutil) {
     watch()(watchSrc(textPropPattern), watchOpts, function (file) {
       var dirPath = '../dist/plugin/res/lang/feature' || 'plugin/res/lang/feature';
       return text.processText(textPropPattern, dirPath)
-        .on('end', function () { refreshServer(file); });
+        .on('end', function () { refreshServer(file.path); });
     });
     cb();
   });
 
   gulp.task('watch-res', function (cb) {
     watch()(watchSrc('res/**/*.{js,json,xml,json.ftl}'), watchOpts, function (file) {
-      fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
+      fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file.path); });
     });
     cb();
   });
@@ -140,7 +142,7 @@ module.exports = function (gulp, gutil) {
         });
       } else {
         fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'));
-        refreshServer(file);
+        refreshServer(file.path);
       }
     });
     cb();
@@ -157,7 +159,7 @@ module.exports = function (gulp, gutil) {
     var widgetPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
     var trackerPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
     watch()([widgetPath, trackerPath], watchOpts, function (file) {
-      refreshServer(file);
+      refreshServer(file.path);
     });
   });
 };
