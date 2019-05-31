@@ -97,7 +97,7 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-scripts-deps-limuirs', function (cb) {
-    var srcPath = gutil.env.newStructure ? '../limuirs/src/components/**/*.jsx' : './limuirs/src/components/**/*.jsx';
+    var srcPath = 'limuirs/src/components/**/*.jsx';
     watch()(watchSrc(srcPath), watchOpts, function () {
       new ComponentDepedencies(scripts.COMPONENT_DEPS_SRC_PATH, scripts.COMPONENT_DEPS_DEST_PATH,
           scripts.LIMUIRS_COMPONENT_PATH).createDepFile().then(() => {
@@ -115,7 +115,7 @@ module.exports = function (gulp, gutil) {
     // TODO: currently goes through all files -
     // try optimizing this for processing updated file only
     watch()(watchSrc(textPropPattern), watchOpts, function (file) {
-      var dirPath = '../dist/plugin/res/lang/feature' || 'plugin/res/lang/feature';
+      var dirPath = gutil.env.newStructure ? 'dist/plugin/res/lang/feature' : 'plugin/res/lang/feature';
       return text.processText(textPropPattern, dirPath)
         .on('end', function () { refreshServer(file.path); });
     });
@@ -123,13 +123,15 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-res', function (cb) {
+    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
     watch()(watchSrc('res/**/*.{js,json,xml,json.ftl}'), watchOpts, function (file) {
-      fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file.path); });
+      fs.copy(file.path, file.path.replace(process.cwd(), dirPath), function () { refreshServer(file.path); });
     });
     cb();
   });
 
   gulp.task('watch-res-sass', function (cb) {
+    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
     watch()(watchSrc([
       'res/feature/responsivepeak/' + server.localSkinCompileVersion() + '/**/*.{scss,properties}',
       'res/**/!(responsivepeak)/**/*.{scss,properties}'
@@ -141,7 +143,7 @@ module.exports = function (gulp, gutil) {
           gutil.log('Completed sass skin compile in: ' + gutil.colors.green(prettyTime()(process.hrtime(startTime))));
         });
       } else {
-        fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'));
+        fs.copy(file.path, file.path.replace(process.cwd(), dirPath));
         refreshServer(file.path);
       }
     });
@@ -149,15 +151,16 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-web', function (cb) {
+    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
     watch()(watchSrc('web/**/*.*'), watchOpts, function (file) {
-      return fs.copy(file.path, file.path.replace(process.cwd(), 'plugin'), function () { refreshServer(file); });
+      return fs.copy(file.path, file.path.replace(process.cwd(), dirPath), function () { refreshServer(file); });
     });
     cb();
   });
 
   gulp.task('watch-activecast', function () {
-    var widgetPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
-    var trackerPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
+    var widgetPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast/widget.js' : 'plugin/web/html/assets/js/activecast/widget.js';
+    var trackerPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast/tracker.js' : 'plugin/web/html/assets/js/activecast/tracker.js';
     watch()([widgetPath, trackerPath], watchOpts, function (file) {
       refreshServer(file.path);
     });

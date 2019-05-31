@@ -24,8 +24,9 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('scripts-deps', ['scripts-deps-npm'], function (cb) {
+    var basePath = gutil.env.newStructure ? 'angular-li/bower_components' : 'bower_components';
     if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: 'bower_components' })
+      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: basePath })
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
@@ -33,8 +34,9 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('scripts-deps-npm', function (cb) {
+    var ignorePaths = gutil.env.newStructure ? ['!angular-li/bower_components/**'] : ['!bower_components/**'];
     if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies.concat(['!bower_components/**']), { base: 'node_modules' })
+      return gulp.src(gutil.env.ng.moduleDependencies.concat(ignorePaths), { base: 'node_modules' })
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
@@ -63,8 +65,8 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      var pattern = gutil.env.newStructure ? '../activecast/ActivecastMain.js' : 'src/activecast/ActivecastMain.js';
-      var destPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
+      var pattern = gutil.env.newStructure ? 'activecast/ActivecastMain.js' : 'src/activecast/ActivecastMain.js';
+      var destPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
       return scripts.processBundle(pattern, destPath, 'widget.js', useWatch, true);
     } else {
       cb();
@@ -75,8 +77,8 @@ module.exports = function (gulp, gutil) {
     var originalTask = this.seq[this.seq.length - 1];
     var useWatch = originalTask === 'default';
     if (gutil.env.ng) {
-      var pattern = gutil.env.newStructure ? '../activecast/TrackerMain.js' : 'src/activecast/TrackerMain.js';
-      var destPath = gutil.env.newStructure ? '../dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
+      var pattern = gutil.env.newStructure ? 'activecast/TrackerMain.js' : 'src/activecast/TrackerMain.js';
+      var destPath = gutil.env.newStructure ? 'dist/plugin/web/html/assets/js/activecast' : 'plugin/web/html/assets/js/activecast';
       return scripts.processBundle(pattern, destPath, 'tracker.js', useWatch, true);
     } else {
       cb();
