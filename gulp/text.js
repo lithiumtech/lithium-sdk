@@ -20,7 +20,7 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('text-remove-bom', function () {
     var srcPath = gutil.env.newStructure ? 'plugin/res/**/*.properties' :'./res/**/*.properties';
-    var destPath = gutil.env.newStructure ? 'dist/plugin/res' : './res';
+    var destPath = gutil.env.newStructure ? 'plugin/res' : './res';
     gulp.src(srcPath).pipe(stripBom()).pipe(gulp.dest(destPath));
   });
 };
