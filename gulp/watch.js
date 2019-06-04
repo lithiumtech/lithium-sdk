@@ -123,18 +123,20 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-res', function (cb) {
-    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
-    watch()(watchSrc('res/**/*.{js,json,xml,json.ftl}'), watchOpts, function (file) {
+    var dirPath = gutil.env.newStructure ? 'dist' : 'plugin';
+    var watchPrefix = gutil.env.newStructure ? 'plugin/' : '';
+    watch()(watchSrc(watchPrefix + 'res/**/*.{js,json,xml,json.ftl}'), watchOpts, function (file) {
       fs.copy(file.path, file.path.replace(process.cwd(), dirPath), function () { refreshServer(file.path); });
     });
     cb();
   });
 
   gulp.task('watch-res-sass', function (cb) {
-    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
+    var dirPath = gutil.env.newStructure ? 'dist' : 'plugin';
+    var watchPrefix = gutil.env.newStructure ? 'plugin/' : '';
     watch()(watchSrc([
-      'res/feature/responsivepeak/' + server.localSkinCompileVersion() + '/**/*.{scss,properties}',
-      'res/**/!(responsivepeak)/**/*.{scss,properties}'
+      watchPrefix + 'res/feature/responsivepeak/' + server.localSkinCompileVersion() + '/**/*.{scss,properties}',
+      watchPrefix + 'res/**/!(responsivepeak)/**/*.{scss,properties}'
       ]), watchOpts, function (file) {
       if (server.useLocalCompile()) {
         var startTime = process.hrtime();
@@ -151,8 +153,9 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('watch-web', function (cb) {
-    var dirPath = gutil.env.newStructure ? 'dist/plugin' : 'plugin';
-    watch()(watchSrc('web/**/*.*'), watchOpts, function (file) {
+    var dirPath = gutil.env.newStructure ? 'dist' : 'plugin';
+    var watchPrefix = gutil.env.newStructure ? 'plugin/' : '';
+    watch()(watchSrc(watchPrefix + 'web/**/*.*'), watchOpts, function (file) {
       return fs.copy(file.path, file.path.replace(process.cwd(), dirPath), function () { refreshServer(file); });
     });
     cb();
