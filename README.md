@@ -14,29 +14,25 @@
 
 4. Install lithium-sdk by issuing the following statement in a command line: `npm install lithium-sdk -g`.
 
-## Lithium-Klout SDK
+## Community Plugin SDK
 
 [![Build Status][travis-image]][travis-url]
 
-[Lithium SDK documentation](https://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=sdk)
+[Community Plugin SDK documentation](https://developer.khoros.com/khoroscommunitydevdocs/docs/about-the-community-plugin-sdk)
 
-### Lithium Developer Resources
+### Khoros Developer Resources
 
-[Lithium Developer Documentation Portal](http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=docportalhome)
+[Khoros Developer Documentation Portal](https://developer.khoros.com/)
 
-[Lithium Community API v1](http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=commv1)
+[Khoros Community API v1](https://developer.khoros.com/khoroscommunitydevdocs/docs/getting-started-with-api-1)
 
-[Lithium Community API v2](http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=commv2)
+[Khoros Community API v2](https://developer.khoros.com/khoroscommunitydevdocs/docs/getting-started-with-community-api-2-1)
 
-[Lithium Social Web (LSW) APIs](http://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=lsw)
+[Khoros Care Developer Documentation](https://developer.khoros.com/khoroscaredevdocs)
 
-[Lithium FreeMarker context objects](https://community.lithium.com/t5/Developer-Documentation/bd-p/dev-doc-portal?section=freemarker)
+[Khoros FreeMarker context objects](https://developer.khoros.com/khoroscommunitydevdocs/docs/context-object-index)
 
-[Developers Knowledge Base](http://community.lithium.com/t5/Developers-Knowledge-Base/tkb-p/studio%40tkb)
-
-[Developers Discussion forum](http://community.lithium.com/t5/Developers-Discussion/bd-p/studio)
-
-[Klout Developer Portal](https://klout.com/s/developers/home)
+[Developers Discussion forum](http://community.khoros.com/t5/Developers-Discussion/bd-p/studio)
 
 ### Other useful resources
 [FreeMarker documentation](http://freemarker.org/docs/index.html)
