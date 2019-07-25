@@ -10,7 +10,8 @@ module.exports = function (gulp, gutil) {
   });
 
   gulp.task('clean-dist', function () {
-    return del()('dist', { force: true });
+    var delPath = gutil.env.newStructure ? 'dist' : 'plugin';
+    return del()(delPath, { force: true });
   });
 
   gulp.task('clean-plugin-zip', function () {
