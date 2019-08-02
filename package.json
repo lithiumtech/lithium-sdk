@@ -19,6 +19,7 @@
     "clone-stats": "1.0.0",
     "concat-stream": "1.4.6",
     "connect-history-api-fallback": "0.0.5",
+    "convert-source-map": "^1.6.0",
     "del": "^2.2.0",
     "dependency-tree": "^6.1.0",
     "dgeni": "^0.4.1",
