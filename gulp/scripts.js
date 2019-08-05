@@ -1,5 +1,9 @@
 'use strict';
 
+var lazyReq = require('lazy-req')(require);
+var replace = lazyReq('gulp-replace');
+var convert = lazyReq('convert-source-map');
+
 module.exports = function (gulp, gutil) {
   const scripts = require('../lib/scripts.js')(gulp, gutil);
   const ComponentDepedencies = require('../lib/component-dependencies');
@@ -27,6 +31,7 @@ module.exports = function (gulp, gutil) {
     var basePath = gutil.env.newStructure ? 'angular-li/bower_components' : 'bower_components';
     if (gutil.env.ng) {
       return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: basePath })
+        .pipe(replace()(convert().mapFileCommentRegex, ''))
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
@@ -37,6 +42,7 @@ module.exports = function (gulp, gutil) {
     var ignorePaths = gutil.env.newStructure ? ['!angular-li/bower_components/**'] : ['!bower_components/**'];
     if (gutil.env.ng) {
       return gulp.src(gutil.env.ng.moduleDependencies.concat(ignorePaths), { base: 'node_modules' })
+        .pipe(replace()(convert().mapFileCommentRegex, ''))
         .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
     } else {
       cb();
