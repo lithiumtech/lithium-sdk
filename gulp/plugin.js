@@ -18,6 +18,7 @@ module.exports = function (gulp, gutil) {
   runSequence = runSequence.use(gulp);
 
   function handleRsyncError(e) {
+    process.exitCode = 1;
     gutil.log(gutil.colors.red('Failed to sync files: ' + e));
   }
 

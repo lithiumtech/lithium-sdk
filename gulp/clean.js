@@ -44,6 +44,7 @@ module.exports = function (gulp, gutil) {
         });
       });
     }).catch(err => {
+      process.exitCode = 1;
       gutil.log(gutil.colors.red(err));
     });
   });

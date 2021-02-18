@@ -32,6 +32,7 @@ module.exports = function (gulp, gutil) {
    */
   function normalizeSkinId(value) {
     if (value === '') {
+      process.exitCode = 1;
       throw Error('Bad input value');
     }
     return value.trim().replace(/ /g, '_').toLowerCase();
@@ -192,6 +193,7 @@ module.exports = function (gulp, gutil) {
       try {
         skinUtil.createNewSkin(options.skinInfo);
       } catch(err) {
+        process.exitCode = 1;
         options.skinInfo.errorCb(err);
       }
     });

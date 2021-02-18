@@ -4,6 +4,11 @@ var gutil = require('gulp-util');
 var path = require('path');
 var fs = require('fs');
 
+process.on('uncaughtException', err => {
+  console.error('li.js: uncaught error:\n', err);
+  process.exit(1);
+});
+
 function addSpaces (word, length) {
   word = '  ' + word;
   while (word.length < length + 2) {
