@@ -32,7 +32,7 @@ module.exports = function (gulp, gutil) {
    */
   function normalizeSkinId(value) {
     if (value === '') {
-      process.exitCode = 1;
+      process.exitCode = 9;
       throw Error('Bad input value');
     }
     return value.trim().replace(/ /g, '_').toLowerCase();
