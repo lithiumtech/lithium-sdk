@@ -45,6 +45,7 @@ module.exports = function (req) {
       req(ext + '/gulp/includes')(gulp, gutil);
     } catch (err) {
       if (err.code !== 'MODULE_NOT_FOUND') {
+        process.exitCode = 1;
         throw err;
       } else {
         extensions[ext].forEach(function (task) {

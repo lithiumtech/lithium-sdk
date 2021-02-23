@@ -4,6 +4,11 @@ var gutil = require('gulp-util');
 var path = require('path');
 var fs = require('fs');
 
+process.on('uncaughtException', err => {
+  console.error('li.js: uncaught error:\n', err);
+  process.exit(1);
+});
+
 function addSpaces (word, length) {
   word = '  ' + word;
   while (word.length < length + 2) {
@@ -31,6 +36,7 @@ if (cmds.indexOf(cmd) > -1) {
 	require('./cmd/' + cmd).run();
 } else {
   if (cmd != 'help') {
+    process.exitCode = 9;
     console.log(gutil.colors.red(gutil.colors.bold('Command not found: ' + cmd)));
   }
   console.log(gutil.colors.bold('\nUsage:') + "li command [--options]");
