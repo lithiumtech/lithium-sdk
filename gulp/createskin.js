@@ -8,6 +8,7 @@ var through = lazyReq('through2');
 var putils = require('../lib/plugin-utils');
 
 module.exports = function (gulp, gutil) {
+  var skinLib = require('../lib/skin')(gulp, gutil);
 
   /**
    * This function should match all validations for studio skin creation. As of 16.4, studio skin creation does not
@@ -78,7 +79,6 @@ module.exports = function (gulp, gutil) {
    * skin directory structure under skin base dir of sdk project.
    */
   function createNewSkin() {
-    var skinLib = require('../lib/skin')(gulp, gutil);
     var putils = require('../lib/plugin-utils');
 
     var options = {
@@ -126,6 +126,9 @@ module.exports = function (gulp, gutil) {
         choices: function(repo) {
           var otherCommunitySkins = skinLib.getOtherCommunitySkins();
 
+          var version = require('../lib/version-check')(gulp, gutil).getVersion();
+          skinLib.setLiaVersion(version);
+
           if (repo.isResponsive) {
             var communityResponsiveSkinIds = otherCommunitySkins.filter(function(skin) {
               return skin.isResponsive();
@@ -139,7 +142,7 @@ module.exports = function (gulp, gutil) {
           } else {
             //All core and community skins plus all sdk local skins are valid parents
             var communitySkinIds = otherCommunitySkins.filter(function(skin) {
-              return !skin.isResponsive();
+              return !skin.isResponsive() && !skin.getIsTheme();
             }).map(function(skin) {
               return skin.getId();
             });
