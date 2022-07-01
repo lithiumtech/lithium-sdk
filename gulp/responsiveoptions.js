@@ -40,7 +40,7 @@ module.exports = function (gulp, gutil) {
     return putils.validate(val, /^[0-9]+$/);
   }
 
-  gulp.task('responsive-options', ['version-check'], function () {
+  gulp.task('responsive-options', ['skins-version-check'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
@@ -82,10 +82,7 @@ module.exports = function (gulp, gutil) {
         }
       }).pipe(stream);
     } else {
-      var version = require('../lib/version-check')(gulp, gutil).getVersion();
-      var skinLibVar = getSkinLib();
-      skinLibVar.setLiaVersion(version);
-      var skins = skinLibVar.getResponsiveSkinIds();
+      var skins = getSkinLib().getResponsiveSkinIds();
       if (skins.length < 1) {
         process.exitCode = 1;
         throw new Error('There are no responsive skins. You should create a skin in the res/skins folder and make ' +
