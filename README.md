@@ -8,7 +8,7 @@
 
    Run `npm` at the command line to check whether npm is installed.
 
-2. *lithium-sdk* supports Node.js version => 4.8.4, 6.11.2 and 8.3.0.
+2. *lithium-sdk* supports Node.js version >= 8.2.0.
 
 3. Install gulp by issuing the following statement in a command line: `npm install gulp -g`.
 

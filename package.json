@@ -70,7 +70,7 @@
     "karma-coverage": "0.2.6",
     "karma-growl-reporter": "0.1.1",
     "karma-jasmine": "^0.1.6",
-    "karma-junit-reporter": "0.2.2",
+    "karma-junit-reporter": "1.2.0",
     "karma-phantomjs-launcher": "1.0.2",
     "karma-spec-reporter": "0.0.13",
     "karma-story-reporter": "0.2.2",
@@ -94,11 +94,11 @@
     "shelljs": "^0.3.0",
     "spawn-series": "0.2.3",
     "stringmap": "^0.2.2",
+    "sync-request": "^6.1.0",
     "through2": "0.6.2",
     "url": "^0.11.0",
     "urllib": "^2.3.4",
-    "webpack-stream": "^4.0.3",
-    "synchronized-promise": "0.3.1"
+    "webpack-stream": "^4.0.3"
   },
   "engines": {
     "node": ">=0.8.0"
