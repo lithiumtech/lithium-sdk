@@ -39,6 +39,7 @@ module.exports = function (req) {
   require('./local-server')(gulp, gutil);
   require('./skins')(gulp, gutil);
   require('./text')(gulp, gutil);
+  require('./checkThemes')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {

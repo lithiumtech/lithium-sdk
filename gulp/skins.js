@@ -5,8 +5,8 @@ module.exports = function (gulp, gutil) {
 
   gulp.task('skins', ['skins-vars-template', 'skins-compile']);
 
-  gulp.task('skins-compile', function (cb) {
-    skins.compile().then(cb);
+  gulp.task('skins-compile', ['check-themes'], function (cb) {
+  	 skins.compile().then(cb);
   });
 
   gulp.task('skins-vars-template', function () {
