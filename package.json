@@ -91,7 +91,7 @@
     "rsyncwrapper": "^1.0.0",
     "run-sequence": "^1.1.5",
     "semver": "^4.1.0",
-    "shelljs": "^0.3.0",
+    "shelljs": "^0.8.5",
     "spawn-series": "0.2.3",
     "stringmap": "^0.2.2",
     "through2": "0.6.2",
