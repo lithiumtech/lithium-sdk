@@ -170,5 +170,9 @@ module.exports = function (gulp, gutil) {
     'skins'
   ]);
 
-  gulp.task('serve-sass', ['skins-compile', 'watch-res-sass', 'local-server']);
+  gulp.task('serve-sass', function(done) {
+      runSequence('skins-compile', 'watch-res-sass', 'local-server', function() {
+          done();
+      });
+  });
 };
