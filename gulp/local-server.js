@@ -8,7 +8,7 @@ module.exports = function (gulp, gutil) {
   var server = require('../lib/server.js')(gulp, gutil);
   var lrListening;
 
-  gulp.task('local-server', ['check-themes'], function (cb) {
+  gulp.task('local-server', function (cb) {
     if (server.useLocalCompile()) {
       if (!lrListening) {
         lrListening = true;
