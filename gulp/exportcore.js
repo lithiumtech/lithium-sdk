@@ -31,7 +31,7 @@ module.exports = function (gulp, gutil) {
     }, undefined, function() {});
   }
 
-  gulp.task('core-plugin-export', ['clean','version-check'], function () {
+  gulp.task('core-plugin-export', gulp.series('clean','version-check', function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env['force'] || server.force()) && !gutil.env['prompt']) {
@@ -51,7 +51,7 @@ module.exports = function (gulp, gutil) {
     }
 
     return stream;
-  });
+  }));
 
-  gulp.task('exportcore', ['core-plugin-export']);
+  gulp.task('exportcore', gulp.series('core-plugin-export'));
 };

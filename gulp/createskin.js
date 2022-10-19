@@ -42,7 +42,7 @@ module.exports = function (gulp, gutil) {
   /**
    * Exports core plugin skins for sdk if core plugins are not already downloaded.
    */
-  function downloadCorePlugins() {
+  function downloadCorePlugins(done) {
 
     var server = require('../lib/plugin-server.js')(gulp, gutil).getServer();
     var doClear = gutil.env.clearCore;
@@ -52,7 +52,7 @@ module.exports = function (gulp, gutil) {
           server.coreOutputDir() + '/ . Skipping download...');
       }
       //Start skin creation process
-      return createNewSkin();
+      return createNewSkin(done);
     }
     var stream = through().obj();
     var pluginExport = require('../lib/plugin-export.js')(gulp, gutil);
@@ -68,7 +68,7 @@ module.exports = function (gulp, gutil) {
         process.exit(1);
       }
       //Start skin creation process
-      return createNewSkin();
+      return createNewSkin(done);
     }).pipe(stream);
   }
 
@@ -78,7 +78,7 @@ module.exports = function (gulp, gutil) {
    * SDK skins are also valid skin parents. Creates a blank
    * skin directory structure under skin base dir of sdk project.
    */
-  function createNewSkin() {
+  function createNewSkin(done) {
     var putils = require('../lib/plugin-utils');
 
     var options = {
@@ -104,6 +104,7 @@ module.exports = function (gulp, gutil) {
             console.log(gutil.colors.red('Skin ID ' +
               gutil.colors.bold(normalizedSkinId) + ' already exists' +
               '\nChoose a different skin ID.'));
+            done();
             process.exit(1);
           } else {
             return false;
@@ -174,7 +175,7 @@ module.exports = function (gulp, gutil) {
         new skinLib.Skin(answers.parentSkin, skinLib.findBaseDirForSkin(answers.parentSkin));
 
       // Register a error call back to warn user of a failed skin creation process.
-      options.skinInfo.errorCb = function(err) {
+      options.skinInfo.errorCb = function(err, done) {
         if (err) {
           putils.logError(gutil, 'Error creating skin: ' + normalizedSkinId + ' Error: ' + err.message);
           console.log(err, err.stack.split('\n'));
@@ -185,26 +186,28 @@ module.exports = function (gulp, gutil) {
           putils.logWarning(gutil, 'Please delete the directory ' + normalizedSkinId +
             ' under ' + skinLib.skinsBaseDir + ' and try again.');
         }
+        done();
       };
 
       var skinUtil = require('../lib/skins')(gulp, gutil);
 
       //Success function when all skin creation process is completed successfully
-      options.skinInfo.cb = function() {
+      options.skinInfo.cb = function(done) {
         putils.logSuccess(gutil, gutil.colors.green('Created new skin: ' +
           normalizedSkinId + ' under ' + skinLib.skinsBaseDir + ' dir.'));
+        done();
         return;
       };
       try {
-        skinUtil.createNewSkin(options.skinInfo);
+        skinUtil.createNewSkin(options.skinInfo, done);
       } catch(err) {
         process.exitCode = 1;
-        options.skinInfo.errorCb(err);
+        options.skinInfo.errorCb(err, done);
       }
     });
   }
 
-  gulp.task('create-new-skin', ['check-themes'], function () {
+  gulp.task('create-new-skin', gulp.series('check-themes', function (done) {
     //Check if we are creating skin on a sdk project
     if (!fs.existsSync('./server.conf.json')) {
       console.log(gutil.colors.red('Please run create-skin under your Lithium SDK project directory.' +
@@ -213,9 +216,9 @@ module.exports = function (gulp, gutil) {
       return null;
     }
     var stream = through().obj();
-    downloadCorePlugins();
+    downloadCorePlugins(done);
     return stream;
-  });
+  }));
 
   return {
     createNewSkin: downloadCorePlugins

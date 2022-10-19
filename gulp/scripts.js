@@ -8,9 +8,6 @@ module.exports = function (gulp, gutil) {
   const scripts = require('../lib/scripts.js')(gulp, gutil);
   const ComponentDepedencies = require('../lib/component-dependencies');
 
-  gulp.task('scripts', ['scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata',
-    'scripts-activecast', 'scripts-activecast-tracker', 'scripts-deps-limuirs']);
-
   gulp.task('scripts-main', function (cb) {
     if (gutil.env.ng) {
       return scripts.processScripts(scripts.JS_MAIN_PATTERN, scripts.PLUGIN_SCRIPTS_PATH, undefined, false, true);
@@ -27,7 +24,18 @@ module.exports = function (gulp, gutil) {
     }
   });
 
-  gulp.task('scripts-deps', ['scripts-deps-npm'], function (cb) {
+  gulp.task('scripts-deps-npm', function (cb) {
+    var ignorePaths = gutil.env.newStructure ? ['!angular-li/bower_components/**'] : ['!bower_components/**'];
+    if (gutil.env.ng) {
+      return gulp.src(gutil.env.ng.moduleDependencies.concat(ignorePaths), { base: 'node_modules' })
+          .pipe(replace()(convert().mapFileCommentRegex, ''))
+          .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
+    } else {
+      cb();
+    }
+  });
+
+  gulp.task('scripts-deps', gulp.series('scripts-deps-npm', function (cb) {
     var basePath = gutil.env.newStructure ? 'angular-li/bower_components' : 'bower_components';
     if (gutil.env.ng) {
       return gulp.src(gutil.env.ng.moduleDependencies.concat(['!node_modules/**']), { base: basePath })
@@ -36,26 +44,15 @@ module.exports = function (gulp, gutil) {
     } else {
       cb();
     }
-  });
+  }));
 
-  gulp.task('scripts-deps-npm', function (cb) {
-    var ignorePaths = gutil.env.newStructure ? ['!angular-li/bower_components/**'] : ['!bower_components/**'];
-    if (gutil.env.ng) {
-      return gulp.src(gutil.env.ng.moduleDependencies.concat(ignorePaths), { base: 'node_modules' })
-        .pipe(replace()(convert().mapFileCommentRegex, ''))
-        .pipe(gulp.dest(scripts.SCRIPTS_DEPS_PATH));
-    } else {
-      cb();
-    }
-  });
-
-  gulp.task('scripts-deps-metadata', ['scripts-main'], function (cb) {
+  gulp.task('scripts-deps-metadata', gulp.series('scripts-main', function (cb) {
     if (gutil.env.ng) {
       return scripts.createDepsMetadata(scripts.PLUGIN_SCRIPTS_PATH, scripts.SCRIPTS_DEPS_METADATA_PATH);
     } else {
       cb();
     }
-  });
+  }));
 
   gulp.task('scripts-deps-limuirs', function (cb) {
     // TODO: refactor "ng" flag name to be more general and include anything done in angular-li project
@@ -102,4 +99,8 @@ module.exports = function (gulp, gutil) {
   gulp.task('jscs', function () {
     gulp.src(scripts.JS_MAIN_PATTERN).pipe(scripts.jscs(true));
   });
+
+  gulp.task('scripts', gulp.series('scripts-main', 'scripts-tpls', 'scripts-deps', 'scripts-deps-metadata',
+      'scripts-activecast', 'scripts-activecast-tracker', 'scripts-deps-limuirs'));
+
 };

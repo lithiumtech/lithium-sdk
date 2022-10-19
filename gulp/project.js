@@ -12,9 +12,9 @@ module.exports = function (gulp, gutil) {
 
   /** update the lia instance url and plugin token for a project
    **/
-  gulp.task('update', ['version-check'], function (cb) {
+  gulp.task('update', gulp.series('version-check', function (cb) {
     projectLib().update(cb);
-  });
+  }));
 
   /** Verifies that a project has the proper files before we turn on angular support.
    **/
@@ -25,8 +25,8 @@ module.exports = function (gulp, gutil) {
   /** Designed to be run inside a customer project.
    * Adds the necessary configuration to write or customize angular components.
    **/
-  gulp.task('enable-angular', ['verify-project'], function (cb) {
+  gulp.task('enable-angular', gulp.series('verify-project', function (cb) {
     projectLib().enableAngular(cb);
-  });
+  }));
 
 };

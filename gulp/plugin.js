@@ -82,7 +82,7 @@ module.exports = function (gulp, gutil) {
     }
   });
 
-  gulp.task('plugin-verify', ['plugin-build'], function (cb) {
+  gulp.task('plugin-verify', gulp.series('plugin-build', function (cb) {
     var originalTask = gutil.env._[0];
 
     function pluginVerificationSuccess() {
@@ -95,13 +95,13 @@ module.exports = function (gulp, gutil) {
     } else {
       return plugin.verify().on('end', pluginVerificationSuccess);
     }
-  });
+  }));
 
-  gulp.task('plugin-dev-sync', ['plugin-verify'], function () {
+  gulp.task('plugin-dev-sync', gulp.series('plugin-verify', function () {
     return sandboxApi.syncPlugin();
-  });
+  }));
 
-  gulp.task('plugin-dev-refresh', ['plugin-verify'], function () {
+  gulp.task('plugin-dev-refresh', gulp.series('plugin-verify', function () {
     return sandboxApi.syncPlugin().then(function (filesChanged) {
       var query = {};
       if (filesChanged) {
@@ -111,20 +111,20 @@ module.exports = function (gulp, gutil) {
       }
       return sandboxApi.refreshPlugin(query);
     });
-  });
+  }));
 
-  gulp.task('plugin-dev-refresh-all', ['plugin-dev-sync'], function () {
+  gulp.task('plugin-dev-refresh-all', gulp.series('plugin-dev-sync', function () {
     return sandboxApi.refreshPlugin({ all: true });
-  });
+  }));
 
-  gulp.task('plugin-ready', ['plugin-verify'], function (cb) {
+  gulp.task('plugin-ready', gulp.series('plugin-verify', function (cb) {
     gutil.log(gutil.colors.green('Done compiling plugin: ' +
     path().join(process.cwd(), '/plugin')));
     cb();
-  });
+  }));
 
   // SDK dev flow - upload
-  gulp.task('plugin-upload', ['plugin-ready'], function () {
+  gulp.task('plugin-upload', gulp.series('plugin-ready', function () {
     var stream = through().obj();
     var server = pluginServer.getServer();
     var uploadCallBack = function() {
@@ -157,18 +157,18 @@ module.exports = function (gulp, gutil) {
     } else {
       uploadCallBack();
     }
-  });
+  }));
 
   // SDK dev flow - package
-  gulp.task('plugin-package', ['plugin-verify']);
+  gulp.task('plugin-package', gulp.series('plugin-verify'));
 
   // Core dev flow
-  gulp.task('default', [
+  gulp.task('default', gulp.series(
     'plugin-dev-refresh',
     'watch',
     'local-server',
     'skins'
-  ]);
+  ));
 
   gulp.task('serve-sass', function(done) {
       runSequence('skins-compile', 'watch-res-sass', 'local-server', function() {

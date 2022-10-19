@@ -7,7 +7,7 @@ module.exports = function (gulp, gutil) {
 
   var sandboxApi = require('../lib/sandbox-api.js')(gulp, gutil);
 
-  gulp.task('sandbox-read', [], function () {
+  gulp.task('sandbox-read', function () {
     var stream = through().obj();
 
     sandboxApi.read({
@@ -17,7 +17,7 @@ module.exports = function (gulp, gutil) {
     return stream;
   });
 
-  gulp.task('sandbox-delete-item', [], function () {
+  gulp.task('sandbox-delete-item', function () {
     var stream = through().obj();
 
     sandboxApi.remove({
@@ -28,7 +28,7 @@ module.exports = function (gulp, gutil) {
     return stream;
   });
 
-  gulp.task('sandbox-write-item', [], function () {
+  gulp.task('sandbox-write-item', function () {
     var stream = through().obj();
 
     sandboxApi.write({
@@ -39,11 +39,11 @@ module.exports = function (gulp, gutil) {
     return stream;
   });
 
-  gulp.task('sandbox-write', ['sandbox-write-item'], function (cb) {
+  gulp.task('sandbox-write', gulp.series('sandbox-write-item', function (cb) {
     cb(null);
-  });
+  }));
 
-  gulp.task('sandbox-delete', ['sandbox-delete-item'], function (cb) {
+  gulp.task('sandbox-delete', gulp.series('sandbox-delete-item', function (cb) {
     cb(null);
-  });
+  }));
 };
