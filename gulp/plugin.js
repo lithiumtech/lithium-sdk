@@ -4,7 +4,7 @@ var lazyReq = require('lazy-req')(require);
 var inquirer = lazyReq('inquirer');
 var through = lazyReq('through2');
 var path = lazyReq('path');
-var runSequence = require('run-sequence');
+var runSequence = require('gulp4-run-sequence');
 var rsync = lazyReq('../lib/rsync.js');
 var extend = lazyReq('node.extend');
 
@@ -87,11 +87,11 @@ module.exports = function (gulp, gutil) {
 
     function pluginVerificationSuccess() {
       gutil.log(gutil.colors.green('Done compiling plugin: ' + path().join(process.cwd(), '/plugin')));
+      cb();
     }
 
     if (gutil.env.verifyPlugin === false && originalTask !== 'plugin-verify') {
       pluginVerificationSuccess();
-      cb();
     } else {
       return plugin.verify().on('end', pluginVerificationSuccess);
     }
@@ -124,7 +124,7 @@ module.exports = function (gulp, gutil) {
   }));
 
   // SDK dev flow - upload
-  gulp.task('plugin-upload', gulp.series('plugin-ready', function () {
+  gulp.task('plugin-upload', gulp.series('plugin-ready', function (done) {
     var stream = through().obj();
     var server = pluginServer.getServer();
     var uploadCallBack = function() {
@@ -142,8 +142,9 @@ module.exports = function (gulp, gutil) {
           if (answers.pluginUpload) {
             pluginUpload.upload(server, {
               debugMode: gutil.env.debug
-            }).pipe(stream);
+            }, done).pipe(stream);
           } else {
+            done();
             stream.end();
           }
         });
@@ -170,9 +171,5 @@ module.exports = function (gulp, gutil) {
     'skins'
   ));
 
-  gulp.task('serve-sass', function(done) {
-      runSequence('skins-compile', 'watch-res-sass', 'local-server', function() {
-          done();
-      });
-  });
+  gulp.task('serve-sass', gulp.series('skins-compile', 'watch-res-sass', 'local-server'));
 };
