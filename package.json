@@ -78,7 +78,7 @@
     "lazy-req": "^1.0.0",
     "lazypipe": "^1.0.1",
     "lodash": "^2.4.1",
-    "marked": "^0.3.2",
+    "marked": "^4.0.10",
     "merge-stream": "0.1.5",
     "minimatch": "^3.0.0",
     "node-fs-extra": "^0.8.1",
