@@ -13,7 +13,7 @@
     "babel-preset-env": "^1.6.1",
     "bluebird": "^3.1.1",
     "bower": "^1.8.2",
-    "browser-sync": "2.5.3",
+    "browser-sync": "2.27.10",
     "canonical-path": "0.0.2",
     "change-case": "2.1.5",
     "clone-stats": "1.0.0",
