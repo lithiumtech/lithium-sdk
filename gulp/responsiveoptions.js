@@ -40,7 +40,7 @@ module.exports = function (gulp, gutil) {
     return putils.validate(val, /^[0-9]+$/);
   }
 
-  gulp.task('responsive-options', ['check-themes'], function () {
+  gulp.task('responsive-options', gulp.series('check-themes', function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
@@ -133,5 +133,5 @@ module.exports = function (gulp, gutil) {
     }
 
     return stream;
-  });
+  }));
 };

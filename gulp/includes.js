@@ -21,7 +21,13 @@ module.exports = function (req) {
   var gutil = require('../lib/env-util.js')(gulp);
 
   require('./clean.js')(gulp, gutil);
+  require('./watch')(gulp, gutil);
+  require('./versioncheck')(gulp, gutil);
+  require('./checkThemes')(gulp, gutil);
+  require('./local-server')(gulp, gutil);
+  require('./skins')(gulp, gutil);
   require('./plugin.js')(gulp, gutil);
+  require('./scripts')(gulp, gutil);
   require('./test.js')(gulp, gutil);
   require('./sandbox.js')(gulp, gutil);
   require('./generate.js')(gulp, gutil);
@@ -33,13 +39,7 @@ module.exports = function (req) {
   require('./exportcore.js')(gulp, gutil);
   require('./responsiveoptions')(gulp, gutil);
   require('./createskin.js')(gulp, gutil);
-  require('./versioncheck')(gulp, gutil);
-  require('./scripts')(gulp, gutil);
-  require('./watch')(gulp, gutil);
-  require('./local-server')(gulp, gutil);
-  require('./skins')(gulp, gutil);
   require('./text')(gulp, gutil);
-  require('./checkThemes')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {
@@ -50,7 +50,7 @@ module.exports = function (req) {
         throw err;
       } else {
         extensions[ext].forEach(function (task) {
-          gulp.task(task, [], function () {
+          gulp.task(task, function () {
             var cyan = gutil.colors.cyan;
             var yellow = gutil.colors.yellow;
             var red = gutil.colors.red;

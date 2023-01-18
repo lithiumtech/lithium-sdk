@@ -38,18 +38,6 @@ module.exports = function (gulp, gutil) {
     return src;
   }
 
-  gulp.task('watch', [
-    'watch-scripts',
-    'watch-script-tpls',
-    'watch-script-deps',
-    'watch-text',
-    'watch-res',
-    'watch-res-sass',
-    'watch-web',
-    'watch-activecast',
-    'watch-scripts-deps-limuirs'
-  ]);
-
   gulp.task('watch-scripts', function (cb) {
     watch()(watchSrc([scripts.JS_MAIN_PATTERN]), watchOpts, function (file) {
       var startTime = process.hrtime();
@@ -168,4 +156,16 @@ module.exports = function (gulp, gutil) {
       refreshServer(file.path);
     });
   });
+
+  gulp.task('watch', gulp.series(
+      'watch-scripts',
+      'watch-script-tpls',
+      'watch-script-deps',
+      'watch-text',
+      'watch-res',
+      'watch-res-sass',
+      'watch-web',
+      'watch-activecast',
+      'watch-scripts-deps-limuirs'
+  ));
 };

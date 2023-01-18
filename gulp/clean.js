@@ -49,5 +49,5 @@ module.exports = function (gulp, gutil) {
     });
   });
 
-  gulp.task('clean', ['clean-tmp', 'clean-dist', 'clean-plugin-zip']);
+  gulp.task('clean', gulp.series('clean-tmp', 'clean-dist', 'clean-plugin-zip'));
 };

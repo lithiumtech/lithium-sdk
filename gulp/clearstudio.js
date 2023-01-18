@@ -44,7 +44,7 @@ module.exports = function (gulp, gutil) {
     });
   }
 
-  gulp.task('plugin-clear', ['clean'], function () {
+  gulp.task('plugin-clear', gulp.series('clean', function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
@@ -84,7 +84,7 @@ module.exports = function (gulp, gutil) {
     }
 
     return stream;
-  });
+  }));
 
-  gulp.task('clearstudio', ['plugin-clear']);
+  gulp.task('clearstudio', gulp.series('plugin-clear'));
 };

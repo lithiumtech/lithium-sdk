@@ -5,7 +5,7 @@ module.exports = function (gulp, gutil) {
    * Checks if a theme skin is enabled
    */
 
-  gulp.task('check-themes', ['version-check'], function(cb, errorCallback) {
+  gulp.task('check-themes', gulp.series('version-check', function(cb, errorCallback) {
     var server = require('../lib/server.js')(gulp, gutil);
     if (server.useLocalCompile()) {
         var version = require('../lib/version-check')(gulp, gutil).getVersion();
@@ -24,5 +24,5 @@ module.exports = function (gulp, gutil) {
             return cb();
         }
     }
-  });
+  }));
 };
