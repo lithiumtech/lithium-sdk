@@ -67,7 +67,7 @@
     "karma-babel-preprocessor": "^7.0.0",
     "karma-chrome-launcher": "0.1.4",
     "karma-commonjs": "0.0.8",
-    "karma-coverage": "0.2.6",
+    "karma-coverage": "^2.2.0",
     "karma-growl-reporter": "0.1.1",
     "karma-jasmine": "^0.1.6",
     "karma-junit-reporter": "0.2.2",
