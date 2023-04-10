@@ -43,8 +43,8 @@ jobs:
         sca_password: ${{ secrets.SCA_PASSWORD }} # To be stored in GitHub Secrets.
         break_build: false
         scanners: sca
-        incremental: false
-        bug_tracker: Sarif
+        incremental: true
+        bug_tracker: Github issue
         params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filterSeverity --cx-flow.filterCategory  --checkmarx.disable-clubbing=true
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v1
