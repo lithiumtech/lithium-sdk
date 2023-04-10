@@ -17,8 +17,7 @@ name: Checkmarx SAST Scan
 on:
   push:
     branches:
-      - main
-      - master
+      - develop
     
 jobs:
   build:
