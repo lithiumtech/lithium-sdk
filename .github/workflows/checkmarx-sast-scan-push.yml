@@ -13,7 +13,7 @@
 #
 # For full documentation, including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
 
-name: Checkmarx SAST Scan
+name: Checkmarx SCA Scan
 on:
   push:
     branches:
@@ -35,8 +35,14 @@ jobs:
         checkmarx_username: ${{ secrets.CHECKMARX_USER }} # To be stored in GitHub Secrets.
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
+        sca_api_url : ${{ secrets.SCA_API_URL }} # To be stored in GitHub Secrets.
+        sca_app_url: ${{ secrets.SCA_APP_URL }} # To be stored in GitHub Secrets.
+        sca_access_control_url: ${{ secrets.SCA_ACCESS_CONTROL_URL }} # To be stored in GitHub Secrets.
+        sca_tenant: ${{ secrets.SCA_TENANT }} # To be stored in GitHub Secrets.
+        sca_username: ${{ secrets.SCA_USERNAME }} # To be stored in GitHub Secrets.
+        sca_password: ${{ secrets.SCA_PASSWORD }} # To be stored in GitHub Secrets.
         break_build: false
-        scanners: sast
+        scanners: sca
         incremental: false
         bug_tracker: Sarif
         params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filterSeverity --cx-flow.filterCategory  --checkmarx.disable-clubbing=true
