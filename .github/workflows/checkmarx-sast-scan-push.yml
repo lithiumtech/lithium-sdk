@@ -13,7 +13,7 @@
 #
 # For full documentation, including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
 
-name: Checkmarx SCA Scan
+name: Checkmarx SAST Scan
 on:
   push:
     branches:
@@ -42,9 +42,9 @@ jobs:
         sca_username: ${{ secrets.SCA_USERNAME }} # To be stored in GitHub Secrets.
         sca_password: ${{ secrets.SCA_PASSWORD }} # To be stored in GitHub Secrets.
         break_build: false
-        scanners: sca
+        scanners: sast
         incremental: true
-        bug_tracker: Github issue
+        bug_tracker: Sarif
         params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filterSeverity --cx-flow.filterCategory  --checkmarx.disable-clubbing=true
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v1
