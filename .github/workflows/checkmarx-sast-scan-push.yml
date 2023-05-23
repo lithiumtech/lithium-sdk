@@ -22,7 +22,9 @@ on:
 jobs:
   build:
     environment: Dev
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - label-1
     steps:
     - name: Checkout
       uses: actions/checkout@v2
