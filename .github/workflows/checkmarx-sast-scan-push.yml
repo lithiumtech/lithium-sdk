@@ -24,7 +24,6 @@ jobs:
     environment: Dev
     runs-on:
       - self-hosted
-      - label-1
     steps:
     - name: Checkout
       uses: actions/checkout@v2
