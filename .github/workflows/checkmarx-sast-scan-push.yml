@@ -8,7 +8,8 @@
 #
 # The following variables must be inserted below:
 #   - <ProjectName>
-#
+
+#t
 # Update the 'team' field to reflect the team name used in Checkmarx.
 #
 # For full documentation, including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
