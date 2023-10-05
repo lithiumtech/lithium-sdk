@@ -39,12 +39,14 @@ module.exports = function (req) {
   require('./local-server')(gulp, gutil);
   require('./skins')(gulp, gutil);
   require('./text')(gulp, gutil);
+  require('./checkThemes')(gulp, gutil);
 
   Object.getOwnPropertyNames(extensions).forEach(function (ext) {
     try {
       req(ext + '/gulp/includes')(gulp, gutil);
     } catch (err) {
       if (err.code !== 'MODULE_NOT_FOUND') {
+        process.exitCode = 1;
         throw err;
       } else {
         extensions[ext].forEach(function (task) {

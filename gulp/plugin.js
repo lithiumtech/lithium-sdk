@@ -18,6 +18,7 @@ module.exports = function (gulp, gutil) {
   runSequence = runSequence.use(gulp);
 
   function handleRsyncError(e) {
+    process.exitCode = 1;
     gutil.log(gutil.colors.red('Failed to sync files: ' + e));
   }
 
@@ -169,5 +170,9 @@ module.exports = function (gulp, gutil) {
     'skins'
   ]);
 
-  gulp.task('serve-sass', ['skins-compile', 'watch-res-sass', 'local-server']);
+  gulp.task('serve-sass', function(done) {
+      runSequence('skins-compile', 'watch-res-sass', 'local-server', function() {
+          done();
+      });
+  });
 };

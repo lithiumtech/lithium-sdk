@@ -1,0 +1,55 @@
+# This workflow is to automate Checkmarx SAST scans.  It runs on a push to the main branch.
+#
+# The following GitHub Secrets must be first defined:
+#   - CHECKMARX_URL
+#   - CHECKMARX_USER
+#   - CHECKMARX_PASSWORD
+#   - CHECKMARX_CLIENT_SECRET
+#
+# The following variables must be inserted below:
+#   - <ProjectName>
+
+#
+# Update the 'team' field to reflect the team name used in Checkmarx.
+#
+# For the full documentation, including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
+
+name: Checkmarx SAST Scan
+on:
+  push:
+    branches:
+      - develop
+    
+jobs:
+  build:
+    environment: Dev
+    runs-on:
+      - self-hosted
+      -label-1
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Checkmarx CxFlow Action
+      uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.4 #Github Action version
+      with:
+        project: ${{ secrets.CHECKMARX_PROJECT }} # <-- Insert Checkmarx SAST Project Name
+        team: ${{ secrets.CHECKMARX_TEAMS }}
+        checkmarx_url: ${{ secrets.CHECKMARX_URL }} # To be stored in GitHub Secrets.
+        checkmarx_username: ${{ secrets.CHECKMARX_USER }} # To be stored in GitHub Secrets.
+        checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
+        checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
+        #sca_api_url : ${{ secrets.SCA_API_URL }} # To be stored in GitHub Secrets.
+        #sca_app_url: ${{ secrets.SCA_APP_URL }} # To be stored in GitHub Secrets.
+        #sca_access_control_url: ${{ secrets.SCA_ACCESS_CONTROL_URL }} # To be stored in GitHub Secrets.
+        #sca_tenant: ${{ secrets.SCA_TENANT }} # To be stored in GitHub Secrets.
+        #sca_username: ${{ secrets.SCA_USERNAME }} # To be stored in GitHub Secrets.
+        #sca_password: ${{ secrets.SCA_PASSWORD }} # To be stored in GitHub Secrets.
+        break_build: false
+        scanners: sast
+        incremental: false
+        bug_tracker: Sarif
+        params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filterSeverity --cx-flow.filterCategory  --checkmarx.disable-clubbing=true
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: cx.sarif

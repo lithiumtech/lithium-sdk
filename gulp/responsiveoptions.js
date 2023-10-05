@@ -40,7 +40,7 @@ module.exports = function (gulp, gutil) {
     return putils.validate(val, /^[0-9]+$/);
   }
 
-  gulp.task('responsive-options', ['version-check'], function () {
+  gulp.task('responsive-options', ['check-themes'], function () {
     var stream = through().obj();
     var server = getPluginServer().getServer();
     if ((gutil.env.force || server.force()) && !gutil.env.prompt) {
@@ -49,16 +49,19 @@ module.exports = function (gulp, gutil) {
       var anon = gutil.env.anon;
 
       if (typeof skinId === 'undefined' || typeof port === 'undefined') {
+        process.exitCode = 9;
         throw new Error('must pass both --skin and --port parameters when using the --force flag');
       }
 
       if (!validateSkinId(skinId)) {
+        process.exitCode = 9;
         throw new Error('the value passed for skin is not valid.');
       }
 
       var portValidate = validatePort(port);
 
       if (portValidate !== true) {
+        process.exitCode = 9;
         throw new Error('port: ' + portValidate);
       }
 
@@ -73,11 +76,20 @@ module.exports = function (gulp, gutil) {
         debugMode: gutil.env.debug,
         configDir: gutil.env.configdir || server.configDir()
       }, function(err) {
-        if (err) throw err;
+        if (err) {
+          process.exitCode = 1;
+          throw err;
+        }
       }).pipe(stream);
     } else {
-      var skins = getSkinLib().getResponsiveSkinIds();
+      var version = require('../lib/version-check')(gulp, gutil).getVersion();
+      var skinLibVar = getSkinLib();
+      skinLibVar.setLiaVersion(version);
+      var isThemeEnabled = require('../lib/check-themes')(gulp, gutil).getThemeEnabled();
+      skinLibVar.setThemesMap(isThemeEnabled);
+      var skins = skinLibVar.getResponsiveSkinIds();
       if (skins.length < 1) {
+        process.exitCode = 1;
         throw new Error('There are no responsive skins. You should create a skin in the res/skins folder and make ' +
           'its parent a responsive skin (such as the responsive_peak skin) by setting the parent property in the ' +
           'skin.properties file');
@@ -112,7 +124,10 @@ module.exports = function (gulp, gutil) {
           debugMode: gutil.env.debug,
           configDir: gutil.env.configdir || server.configDir()
         }, function(err) {
-          if (err) throw err;
+          if (err) {
+            process.exitCode = 1;
+            throw err;
+          }
         }).pipe(stream);
       });
     }
