@@ -116,7 +116,7 @@
     // Date in header - Show in desktop
     .lia-component-common-widget-date,
     .lia-component-post-date-last-edited {
-      width: 100%;
+      width: auto; // Fix LIA-96744: Changed from 100% to auto to prevent dates wrapping in table cells
 
       // when widget-date is nested in post-date-last-edited
       .lia-component-common-widget-date {
@@ -247,6 +247,17 @@
   .lia-component-solution-list {
     .lia-panel-message-content {
       border-top-color: $li-message-solution-color;
+    }
+  }
+
+  // Fix LIA-96744: Ensure dates in table cells don't wrap to two lines
+  table td,
+  table th {
+    .lia-component-common-widget-date,
+    .lia-component-post-date-last-edited,
+    .lia-message-post-date {
+      white-space: nowrap;
+      width: auto;
     }
   }
 }
