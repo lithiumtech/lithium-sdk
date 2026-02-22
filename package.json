@@ -80,7 +80,7 @@
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
     "merge-stream": "0.1.5",
-    "minimatch": "^3.0.0",
+    "minimatch": "^10.2.1",
     "node-fs-extra": "^0.8.1",
     "node-html-encoder": "0.0.2",
     "node.extend": "2.0.2",
